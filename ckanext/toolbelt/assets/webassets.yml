@@ -1,0 +1,14 @@
+# toolbelt-js:
+#   filter: rjsmin
+#   output: ckanext-toolbelt/%(version)s-toolbelt.js
+#   contents:
+#     - js/toolbelt.js
+#   extra:
+#     preload:
+#       - base/main
+
+# toolbelt-css:
+#   filter: cssrewrite
+#   output: ckanext-toolbelt/%(version)s-toolbelt.css
+#   contents:
+#     - css/toolbelt.css
