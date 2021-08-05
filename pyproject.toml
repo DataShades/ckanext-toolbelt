@@ -1,0 +1,24 @@
+[tool.black]
+line-length = 79
+
+[tool.towncrier]
+issue_format = ""
+directory = "changes"
+package = "ckanext.search_tweaks"
+package_dir = "ckanext"
+filename = "CHANGELOG.rst"
+name = "ckanext-search-tweaks"
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::sqlalchemy.exc.SADeprecationWarning",
+    "ignore::sqlalchemy.exc.SAWarning",
+    "ignore::DeprecationWarning",
+    "ignore::bs4.GuessedAtParserWarning"  # using lxml as default parser
+]
+
+markers = [
+
+]
+
+addopts = "--ckan-ini test.ini"

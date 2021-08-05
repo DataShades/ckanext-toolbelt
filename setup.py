@@ -16,7 +16,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='0.0.1',
+    version='0.0.2',
 
     description='''''',
     long_description=long_description,
@@ -45,7 +45,9 @@ setup(
 
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
 
 
@@ -56,13 +58,14 @@ setup(
     # simple. Or you can use find_packages().
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
         namespace_packages=['ckanext'],
-
+    python_requires=">=3.7",
     install_requires=[
       # CKAN extensions should not list dependencies here, but in a separate
       # ``requirements.txt`` file.
       #
       # http://docs.ckan.org/en/latest/extensions/best-practices.html
       # add-third-party-libraries-to-requirements-txt
+        "typing-extensions",
     ],
 
     # If there are data files included in your packages that need to be
@@ -82,13 +85,17 @@ setup(
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
     # pip to create the appropriate form of executable for the target platform.
-    entry_points='''
-        [ckan.plugins]
-        toolbelt=ckanext.toolbelt.plugin:ToolbeltPlugin
-
-        [babel.extractors]
-        ckan = ckan.lib.extract:extract_ckan
-    ''',
+    entry_points={
+        "ckan.plugins": [
+            "toolbelt=ckanext.toolbelt.plugin:ToolbeltPlugin"
+        ],
+        'ckan.click_command': [
+            'toolbelt = ckanext.toolbelt.cli:toolbelt',
+        ],
+        "babel.extractors": [
+            "ckan = ckan.lib.extract:extract_ckan",
+        ]
+    },
 
     # If you are changing from the default layout of your extension, you may
     # have to change the message extractors, you can read more about babel

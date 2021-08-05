@@ -2,122 +2,90 @@
 
 # ckanext-toolbelt
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
+Collection of different entities that are useful sometimes.
 
 
 ## Requirements
 
-**TODO:** For example, you might want to mention here which versions of CKAN this
-extension works with.
-
-If your extension works across different versions you can add the following table:
-
-Compatibility with core CKAN versions:
-
-| CKAN version    | Compatible?   |
-| --------------- | ------------- |
-| 2.6 and earlier | not tested    |
-| 2.7             | not tested    |
-| 2.8             | not tested    |
-| 2.9             | not tested    |
-
-Suggested values:
-
-* "yes"
-* "not tested" - I can't think of a reason why it wouldn't work
-* "not yet" - there is an intention to get it working
-* "no"
+| CKAN version    | Compatible? |
+|-----------------|-------------|
+| 2.8 and earlier | no          |
+| 2.9             | yes         |
+|                 |             |
 
 
-## Installation
+## Decorators (`ckanext.toolbelt.decorators`)
 
-**TODO:** Add any additional install steps to the list below.
-   For example installing any non-Python dependencies or adding any required
-   config settings.
+### `Collector`
 
-To install ckanext-toolbelt:
+Creates a decorator that can collect functions and return them in a
+dictionary. Originally designed for actions, auth functions, validators and
+helpers.
 
-1. Activate your CKAN virtual environment, for example:
+Can be used as decorator. Call `Collector.get_collection` when you need
+dictionary with names of helpers mapped to helper functions
 
-     . /usr/lib/ckan/default/bin/activate
+	helper = Collector()
 
-2. Clone the source and install it on the virtualenv
+	@helper
+	def func():
+		pass
 
-    git clone https://github.com/DataShades/ckanext-toolbelt.git
-    cd ckanext-toolbelt
-    pip install -e .
-	pip install -r requirements.txt
+	###
+    # ITemplateHelpers
+	def get_helpers(self):
+		return helper.get_collection()
 
-3. Add `toolbelt` to the `ckan.plugins` setting in your CKAN
-   config file (by default the config file is located at
-   `/etc/ckan/default/ckan.ini`).
+`Collector.split` allows you to visually separate decorator from the method,
+that returns collection
 
-4. Restart CKAN. For example if you've deployed CKAN with Apache on Ubuntu:
+	action, get_actions = Collector().split()
 
-     sudo service apache2 reload
+	@action
+	def func():
+		pass
 
+	###
+    # IActions
+	def get_actions(self):
+		return get_actions()
 
-## Config settings
-
-None at present
-
-**TODO:** Document any optional config settings here. For example:
-
-	# The minimum number of hours to wait before re-checking a resource
-	# (optional, default: 24).
-	ckanext.toolbelt.some_setting = some_default_value
-
-
-## Developer installation
-
-To install ckanext-toolbelt for development, activate your CKAN virtualenv and
-do:
-
-    git clone https://github.com/DataShades/ckanext-toolbelt.git
-    cd ckanext-toolbelt
-    python setup.py develop
-    pip install -r dev-requirements.txt
+If you want your functions prefixed by the plugin name, provide this prefix as
+a first argument to the `Collector`'s constructor. If particular items must
+remain unprefixed, you can specify what name to use, when decorating an item
 
 
-## Tests
+	validator, get_validators = Collector("toolbelt").split()
 
-To run the tests, do:
+	@validator
+	def func():
+		"""I am toolbelt_func
+		"""
+		pass
 
-    pytest --ckan-ini=test.ini
+	@validator("custom_func")
+	def func():
+		"""I am custom_func
+		"""
+		pass
+
+	###
+    # IValidators
+	def get_validators(self):
+		return get_validators()
+
+---
 
 
-## Releasing a new version of ckanext-toolbelt
+## CLI
 
-If ckanext-toolbelt should be available on PyPI you can follow these steps to publish a new version:
+As soon as you've installed ckanext-toolbelt, it will register `ckan toolbelt`
+route for CLI. You don't have to add `toolbelt` to the list of enabled
+plugins. But depending on the list of enabled plugins, extra subroutes will be
+added to the `ckan toolbelt` route.
 
-1. Update the version number in the `setup.py` file. See [PEP 440](http://legacy.python.org/dev/peps/pep-0440/#public-version-identifiers) for how to choose version numbers.
+Below are commands that do not depend on ckanext-toolbelt plugins. They are
+available all the time or when some particular requirement is satisfied(in that
+case, requirement itself is mentioned)
 
-2. Make sure you have the latest version of necessary packages:
-
-    pip install --upgrade setuptools wheel twine
-
-3. Create a source and binary distributions of the new version:
-
-       python setup.py sdist bdist_wheel && twine check dist/*
-
-   Fix any errors you get.
-
-4. Upload the source distribution to PyPI:
-
-       twine upload dist/*
-
-5. Commit any outstanding changes:
-
-       git commit -a
-       git push
-
-6. Tag the new release of the project on GitHub with the version number from
-   the `setup.py` file. For example if the version number in `setup.py` is
-   0.0.1 then do:
-
-       git tag 0.0.1
-       git push --tags
-
-## License
-
-[AGPL](https://www.gnu.org/licenses/agpl-3.0.en.html)
+	make deps-makefile    Print to stdout basic Makefile for ckan-deps-installer
