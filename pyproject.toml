@@ -4,10 +4,10 @@ line-length = 79
 [tool.towncrier]
 issue_format = ""
 directory = "changes"
-package = "ckanext.search_tweaks"
+package = "ckanext.toolbelt"
 package_dir = "ckanext"
 filename = "CHANGELOG.rst"
-name = "ckanext-search-tweaks"
+name = "ckanext-toolbelt"
 
 [tool.pytest.ini_options]
 filterwarnings = [
