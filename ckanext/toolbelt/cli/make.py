@@ -22,12 +22,7 @@ prepare:
 """
 
 
-@click.group(short_help="Variety of useful commands.")
-def toolbelt():
-    """Variety of useful commands."""
-
-
-@toolbelt.group()
+@click.group()
 def make():
     """Generate, make, produce, print different things."""
 
