@@ -1,3 +1,12 @@
+ckanext-toolbelt v0.0.6 (2021-10-11)
+====================================
+
+Features
+--------
+
+- Index-only packages can be removed via `ckan toolbelt search-index clear-missing` ()
+
+
 ckanext-toolbelt v0.0.5 (2021-10-07)
 ====================================
 
