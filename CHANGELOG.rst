@@ -1,3 +1,13 @@
+ckanext-toolbelt v0.0.7 (2021-10-15)
+====================================
+
+Features
+--------
+
+- Index-only packages can be removed via `ckan toolbelt search-index clear-missing` ()
+- `toolbelt_safe_upload` that restrict user/group upload types. ()
+
+
 ckanext-toolbelt v0.0.6 (2021-10-11)
 ====================================
 

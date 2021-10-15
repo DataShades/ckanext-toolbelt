@@ -3,6 +3,7 @@ from pytest_mock import MockerFixture
 
 from ckanext.toolbelt.utils import cache
 
+
 def mul2(v: int):
     return v * 2
 

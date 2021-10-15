@@ -16,7 +16,7 @@ setup(
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
     # http://packaging.python.org/en/latest/tutorial.html#version
-    version='0.0.6',
+    version='0.0.7',
 
     description='''''',
     long_description=long_description,
@@ -87,7 +87,8 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         "ckan.plugins": [
-            "toolbelt=ckanext.toolbelt.plugin:ToolbeltPlugin"
+            "toolbelt=ckanext.toolbelt.plugins:ToolbeltPlugin",
+            "toolbelt_safe_upload=ckanext.toolbelt.plugins.safe_upload:SafeUploadPlugin",
         ],
         'ckan.click_command': [
             'toolbelt = ckanext.toolbelt.cli:toolbelt',

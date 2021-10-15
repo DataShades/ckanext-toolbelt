@@ -1,2 +1,5 @@
 pytest-ckan
 pytest-mock
+
+Pillow
+faker>=9

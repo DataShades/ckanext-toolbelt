@@ -7,11 +7,14 @@ class TestCollector:
     def fun(self):
         pass
 
-    @pytest.mark.parametrize("prefix, separator, basic_name, prefixed_name", [
-        ("", "_", "xxx", "fun"),
-        ("toolbelt", "_", "xxx", "toolbelt_fun"),
-        ("toolbelt", "-", "xxx", "toolbelt-fun"),
-    ])
+    @pytest.mark.parametrize(
+        "prefix, separator, basic_name, prefixed_name",
+        [
+            ("", "_", "xxx", "fun"),
+            ("toolbelt", "_", "xxx", "toolbelt_fun"),
+            ("toolbelt", "-", "xxx", "toolbelt-fun"),
+        ],
+    )
     def test_basic(self, prefix, separator, basic_name, prefixed_name):
         collector, getter = Collector(prefix, separator).split()
 

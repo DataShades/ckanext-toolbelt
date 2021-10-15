@@ -39,10 +39,12 @@ Loader = Callable[[KeyStr], T]
 
 
 def default_key_strategy(func, *args, **kwargs) -> bytes:
-    return bytes(f"{func.__module__}:{func.__name__}", "utf8") + pickle.dumps((args, kwargs))
+    return bytes(f"{func.__module__}:{func.__name__}", "utf8") + pickle.dumps(
+        (args, kwargs)
+    )
+
 
 def decorate_key_strategy(prefix: bytes) -> KeyStrategy:
-
     def strategy(*args, **kwargs):
         return prefix + default_key_strategy(*args, **kwargs)
 
