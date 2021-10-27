@@ -1,3 +1,4 @@
+from pathlib import PosixPath
 import pytest
 import ckan.plugins.toolkit as tk
 import ckan.tests.helpers as helpers
@@ -74,4 +75,6 @@ class TestUserImageUrl(object):
             "action": "user_create",
             "upload_field_name": "image_upload",
         }
-        assert create_with_upload(faker.image(), "file.png", **params)
+        path = PosixPath(__file__).parent / "img.png"
+
+        assert create_with_upload(path.read_bytes(), "file.png", **params)
