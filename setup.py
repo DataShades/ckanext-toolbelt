@@ -65,6 +65,7 @@ setup(
       #
       # http://docs.ckan.org/en/latest/extensions/best-practices.html
       # add-third-party-libraries-to-requirements-txt
+        "click",
         "typing-extensions",
     ],
 
@@ -91,7 +92,10 @@ setup(
             "toolbelt_safe_upload=ckanext.toolbelt.plugins.safe_upload:SafeUploadPlugin",
         ],
         'ckan.click_command': [
-            'toolbelt = ckanext.toolbelt.cli:toolbelt',
+            'toolbelt = ckanext.toolbelt.cli.ckan:toolbelt',
+        ],
+        'console_scripts': [
+            "ctb = ckanext.toolbelt.cli:toolbelt"
         ],
         "babel.extractors": [
             "ckan = ckan.lib.extract:extract_ckan",

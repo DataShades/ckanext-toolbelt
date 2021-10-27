@@ -84,6 +84,10 @@ route for CLI. You don't have to add `toolbelt` to the list of enabled
 plugins. But depending on the list of enabled plugins, extra subroutes will be
 added to the `ckan toolbelt` route.
 
+In addition, there is global `ctb` command that allows to use this
+package without CKAN installed. But in this way some of commands
+(`search-index` for example) are not available, because they use CKAN core.
+
 Below are commands that do not depend on ckanext-toolbelt plugins. They are
 available all the time or when some particular requirement is satisfied(in that
 case, requirement itself is mentioned)
