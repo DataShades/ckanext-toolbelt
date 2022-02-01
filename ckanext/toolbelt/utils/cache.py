@@ -44,9 +44,14 @@ def default_key_strategy(func, *args, **kwargs) -> bytes:
     )
 
 
-def decorate_key_strategy(prefix: bytes) -> KeyStrategy:
+def decorate_key_strategy(prefix: bytes, after: bool = False) -> KeyStrategy:
     def strategy(*args, **kwargs):
-        return prefix + default_key_strategy(*args, **kwargs)
+        left = prefix
+        right = default_key_strategy(*args, **kwargs)
+        if after:
+            left, right = right, left
+
+        return left + right
 
     return strategy
 
@@ -76,6 +81,10 @@ class Cache(Generic[T]):
         self.key = key
 
         self.conn = redis.connect_to_redis()
+
+    @staticmethod
+    def dont_cache(value: T):
+        return DontCache(value)
 
     def __call__(self, func: CacheAwareCallable[T]) -> NaiveCallable[T]:
         @wraps(func)
