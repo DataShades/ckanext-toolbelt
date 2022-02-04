@@ -12,7 +12,6 @@ Collection of different entities that are useful sometimes.
 | master          | yes         |
 
 
-
 ## Decorators (`ckanext.toolbelt.decorators`)
 
 ### `Collector`
@@ -118,7 +117,7 @@ parameters. It can be changed by passing a function as `key` argument to the
 	    return v
 
 Cache duration(in seconds) can be configured via `duration` parameter of the
-constructor.
+constructor(which can be a callable that returns comuted duration).
 
 	cache = Cache(duration=3600)
 
@@ -140,6 +139,10 @@ ones, who follows a lot of entities) become really slow.
 
 	from ckan.toolbelt import magic
 	magic.conjure_fast_group_activities()
+
+---
+
+## Plugins
 
 ---
 
@@ -169,3 +172,6 @@ Commands that depends on CKAN core and available only via `ckan toolbelt` route:
 
 	# Drop packages that are only in search index but not in DB.
 	search-index clear-missing
+
+	# Clean the DB, optionally keeping data in the given tables.
+	db clean --yes [-k user] [-k group] [-k ...]
