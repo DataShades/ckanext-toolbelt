@@ -64,8 +64,9 @@ def _download_remote_file(res_id, url, max_size: int):
     Downloads remote resource and save it as temporary file
     Returns path to this file
     """
+
     try:
-        resp = requests.get(url, timeout=DEFAULT_DOWNLOAD_TIMEOUT, stream=True)
+        resp = requests.get(url, timeout=DEFAULT_DOWNLOAD_TIMEOUT, stream=True, headers={"user-agent": "python/toolbelt"})
     except Exception as e:
         log.warn(
             "Unable to make GET request for resource {} with url <{}>: {}".format(
@@ -89,18 +90,25 @@ def _download_remote_file(res_id, url, max_size: int):
         log.warn("Incorrect Content-length header from url <{}>".format(url))
         return
 
-    if 0 < size < max_size:
-        dest = tempfile.NamedTemporaryFile(delete=False)
-        try:
-            with dest:
-                for chunk in resp.iter_content(1024 * 64):
-                    dest.write(chunk)
-        except requests.exceptions.RequestException as e:
-            log.error(
-                "Cannot index remote resource {} with url <{}>: {}".format(
-                    res_id, url, e
-                )
+    if not size:
+        log.debug("Cannot determine size")
+        return
+
+    if size > max_size:
+        log.debug("File exceeds allowed size(%d): %d", max_size, size)
+        return
+
+    dest = tempfile.NamedTemporaryFile(delete=False)
+    try:
+        with dest:
+            for chunk in resp.iter_content(1024 * 64):
+                dest.write(chunk)
+    except requests.exceptions.RequestException as e:
+        log.error(
+            "Cannot index remote resource {} with url <{}>: {}".format(
+                res_id, url, e
             )
-            os.remove(dest.name)
-            return
-        return dest.name
+        )
+        os.remove(dest.name)
+        return
+    return dest.name
