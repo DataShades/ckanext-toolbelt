@@ -35,23 +35,9 @@ def conjure_fast_group_activities():
 
         q = model.Session.query(model.Activity)
         group_activity = q.filter(model.Activity.object_id == group_id)
-        member_activity = (
-            q.join(
-                model.Member,
-                model.Activity.object_id == model.Member.table_id,
-            )
-            .join(
-                model.Package,
-                and_(
-                    model.Package.id == model.Member.table_id,
-                    model.Package.private == False,
-                ),
-            )
-            .filter(
-                model.Member.group_id == group_id,
-                model.Member.state == model.Package.state,
-            )
-        )
+        packages_sq = model.Session.query(model.Package.id).filter_by(owner_org=group_id, private=False).subquery()
+
+        member_activity = model.Session.query(model.Activity).filter(model.Activity.object_id.in_(packages_sq))
 
         if not include_hidden_activity:
             group_activity = _filter_activitites_from_users(group_activity)

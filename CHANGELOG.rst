@@ -1,3 +1,18 @@
+ckanext-toolbelt 0.2.0 (2022-02-14)
+===================================
+
+Features
+--------
+
+- add `utils.path_to_resource` function that locates/download resource ()
+
+
+Misc
+----
+
+-
+
+
 ckanext-toolbelt v0.0.7 (2021-10-15)
 ====================================
 
