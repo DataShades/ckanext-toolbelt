@@ -46,5 +46,6 @@ def clear_missing(ctx, no_confirm: bool):
         if abort:
             raise click.Abort()
 
-    for id in ids:
-        clear(id)
+    with click.progressbar(ids) as bar:
+        for id_ in bar:
+            clear(id_)
