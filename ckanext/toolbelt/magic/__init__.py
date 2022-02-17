@@ -49,3 +49,23 @@ def conjure_fast_group_activities():
     _group_activity_query.__code__ = (
         ___group_activity_perfomance_patch.__code__
     )
+
+
+def transfigure_xloaded_file(func):
+    """Proces a file before uploading it to datastore.
+
+    Accepts callable, that receives path to original file and resource
+    ID. Callable can override file in order to provide a valid CSV that can be
+    ingested into datastore.
+
+    """
+    import ckanext.xloader.loader as loader
+    log.info("quae non sunt ut simplex")
+
+    _o = loader.load_csv
+
+    def _wrapper(csv_filepath, resource_id, mimetype='text/csv', logger=None):
+        new_path = func(csv_filepath, resource_id)
+        return  _o(new_path, resource_id, mimetype, logger)
+
+    loader.load_csv = _wrapper
