@@ -12,6 +12,7 @@ log = logging.getLogger(__name__)
 
 DEFAULT_DOWNLOAD_TIMEOUT = 2
 
+
 class StaticPath:
     def __init__(self, path: Optional[str]):
         self.path = path
@@ -59,6 +60,7 @@ def path_to_resource(res, max_size: int = 0) -> StaticPath:
 
     return StaticPath(None)
 
+
 def _download_remote_file(res_id, url, max_size: int):
     """
     Downloads remote resource and save it as temporary file
@@ -66,7 +68,12 @@ def _download_remote_file(res_id, url, max_size: int):
     """
 
     try:
-        resp = requests.get(url, timeout=DEFAULT_DOWNLOAD_TIMEOUT, stream=True, headers={"user-agent": "python/toolbelt"})
+        resp = requests.get(
+            url,
+            timeout=DEFAULT_DOWNLOAD_TIMEOUT,
+            stream=True,
+            headers={"user-agent": "python/toolbelt"},
+        )
     except Exception as e:
         log.warn(
             "Unable to make GET request for resource {} with url <{}>: {}".format(

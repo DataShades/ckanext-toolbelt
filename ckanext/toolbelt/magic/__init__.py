@@ -35,9 +35,15 @@ def conjure_fast_group_activities():
 
         q = model.Session.query(model.Activity)
         group_activity = q.filter(model.Activity.object_id == group_id)
-        packages_sq = model.Session.query(model.Package.id).filter_by(owner_org=group_id, private=False).subquery()
+        packages_sq = (
+            model.Session.query(model.Package.id)
+            .filter_by(owner_org=group_id, private=False)
+            .subquery()
+        )
 
-        member_activity = model.Session.query(model.Activity).filter(model.Activity.object_id.in_(packages_sq))
+        member_activity = model.Session.query(model.Activity).filter(
+            model.Activity.object_id.in_(packages_sq)
+        )
 
         if not include_hidden_activity:
             group_activity = _filter_activitites_from_users(group_activity)
@@ -60,12 +66,13 @@ def transfigure_xloaded_file(func):
 
     """
     import ckanext.xloader.loader as loader
+
     log.info("quae non sunt ut simplex")
 
     _o = loader.load_csv
 
-    def _wrapper(csv_filepath, resource_id, mimetype='text/csv', logger=None):
+    def _wrapper(csv_filepath, resource_id, mimetype="text/csv", logger=None):
         new_path = func(csv_filepath, resource_id)
-        return  _o(new_path, resource_id, mimetype, logger)
+        return _o(new_path, resource_id, mimetype, logger)
 
     loader.load_csv = _wrapper

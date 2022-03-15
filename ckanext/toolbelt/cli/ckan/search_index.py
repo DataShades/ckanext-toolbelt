@@ -14,8 +14,7 @@ def search_index():
 @click.option("-y", "--no-confirm", is_flag=True)
 @click.pass_context
 def clear_missing(ctx, no_confirm: bool):
-    """Drop packages that are only in search index but not in DB.
-    """
+    """Drop packages that are only in search index but not in DB."""
     q = query_for("package")
     with ctx.meta["flask_app"].test_request_context():
         limit = tk.get_action("package_search")(

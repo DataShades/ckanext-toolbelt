@@ -5,6 +5,7 @@ import email
 from aiosmtpd.controller import Controller
 from aiosmtpd.handlers import Debugging
 
+
 class DecodingDebugging(Debugging):
     def _print_message_content(self, peer, data: bytes):
         msg = email.message_from_bytes(data)
@@ -16,7 +17,10 @@ class DecodingDebugging(Debugging):
             print("---------- a part: ----------", file=self.stream)
             maybe_decoded_payload = part.get_payload(decode=True)
             if maybe_decoded_payload is not None:
-                print(bytes.decode(maybe_decoded_payload, encoding="utf-8"), file=self.stream)
+                print(
+                    bytes.decode(maybe_decoded_payload, encoding="utf-8"),
+                    file=self.stream,
+                )
 
 
 @click.group()

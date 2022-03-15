@@ -1,3 +1,12 @@
+ckanext-toolbelt 0.2.2 (2022-03-15)
+===================================
+
+Features
+--------
+
+- Add toolbelt_group_changes plugin ()
+
+
 ckanext-toolbelt 0.2.0 (2022-02-14)
 ===================================
 
