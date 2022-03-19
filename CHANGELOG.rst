@@ -1,3 +1,12 @@
+ckanext-toolbelt v0.2.3 (2022-03-19)
+====================================
+
+Features
+--------
+
+- add composite group/organization plugins ()
+
+
 ckanext-toolbelt 0.2.2 (2022-03-15)
 ===================================
 
