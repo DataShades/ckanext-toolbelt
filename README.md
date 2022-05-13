@@ -140,6 +140,25 @@ ones, who follows a lot of entities) become really slow.
 	from ckan.toolbelt import magic
 	magic.conjure_fast_group_activities()
 
+### Files requires preprocessing before pushing to Datastore by Xloader
+
+If you want to extract CSV from ZIP, or convert GeoJSON features set into CSV
+so that it can be ingested into the Datastore, you can register
+converter:
+
+* define a function which accepts original filepath(the one, downloaded by the
+  xloader and ready to be ingested into datastore) and resource's ID
+* return either original filepath if no processing is required or
+  new filepath, that contains processed data. You can rewrite the content of
+  the original file if you want.
+* decorate the converter with `transfigure_xloaded_file`
+
+        @transfigure_xloaded_file
+        def zip_into_csv(filepath: str, resource_id: str) -> str:
+            if filepath.endswith(".zip"):
+                return _path_of_the_extracted_csv(filepath)
+            return filepath
+
 ---
 
 ## Plugins
