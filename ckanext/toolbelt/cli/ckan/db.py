@@ -40,8 +40,9 @@ def clean(yes: bool, keep: tuple[str]):
             # skip `geometry_columns` or similar object from postgis
             continue
 
-        if table.name == "alembic_version":
+        if "alembic_version" in table.name:
             continue
+
         connection.execute('truncate "%s" cascade' % table.name)
     model.repo.session.commit()
     click.secho("Database table data deleted", fg="green")
