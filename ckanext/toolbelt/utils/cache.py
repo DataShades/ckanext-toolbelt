@@ -1,5 +1,6 @@
 import pickle
 import json
+import logging
 
 from functools import wraps
 from typing import Any, Callable, Generic, Optional, TypeVar, Union, cast
@@ -8,6 +9,7 @@ import ckan.lib.redis as redis
 
 from . import constantly
 
+log = logging.getLogger(__name__)
 T = TypeVar("T")
 
 
@@ -93,6 +95,7 @@ class Cache(Generic[T]):
             old_value = self.conn.get(key)
 
             if old_value:
+                log.debug("Hit cache for key %s", key)
                 return self.loader(old_value)
 
             value = func(*args, **kwargs)
@@ -100,7 +103,7 @@ class Cache(Generic[T]):
                 return cast(T, value.unwrap())
 
             duration = self.duration(func, *args, **kwargs)
-            self.conn.set(key, self.dumper(value), ex=duration)
+            self.conn.set(key, self.dumper(value), ex=duration or None)
             return value
 
         def reset(*args: Any, **kwargs: Any) -> int:

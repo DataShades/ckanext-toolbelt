@@ -1,14 +1,6 @@
 [tool.black]
 line-length = 79
 
-[tool.towncrier]
-issue_format = ""
-directory = "changes"
-package = "ckanext.toolbelt"
-package_dir = "ckanext"
-filename = "CHANGELOG.rst"
-name = "ckanext-toolbelt"
-
 [tool.pytest.ini_options]
 filterwarnings = [
     "ignore::sqlalchemy.exc.SADeprecationWarning",
