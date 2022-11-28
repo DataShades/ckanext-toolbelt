@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.6](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.5...v0.2.6) (2022-11-28)
+
+
+### Features
+
+* add SelectOption type ([6597943](https://github.com/DataShades/ckanext-toolbelt/commit/65979436f241e65f0409e6eb5627bc8de23b8343))
+
 ### [0.2.4](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.3...v0.2.4) (2022-08-28)
 
 
