@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Optional
 
 from typing_extensions import TypedDict, TypeAlias
 
@@ -9,3 +10,8 @@ import ckan.model as model_
 
 Model: TypeAlias = "model_"
 AlchemySession = ScopedSession
+
+
+class SelectOption(TypedDict):
+    text: Optional[str]
+    value: str
