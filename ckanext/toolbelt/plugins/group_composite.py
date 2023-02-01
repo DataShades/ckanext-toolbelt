@@ -115,5 +115,8 @@ class CompositeMixin:
 class CompositeGroupsPlugin(CompositeMixin, SchemingGroupsPlugin):
     pass
 
-class CompositeOrganizationsPlugin(CompositeMixin, SchemingOrganizationsPlugin):
+
+class CompositeOrganizationsPlugin(
+    CompositeMixin, SchemingOrganizationsPlugin
+):
     pass
