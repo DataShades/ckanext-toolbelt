@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.8](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.7...v0.2.8) (2023-02-01)
+
+
+### Features
+
+* add utils.hierarchy module ([cb7dbfb](https://github.com/DataShades/ckanext-toolbelt/commit/cb7dbfb75a38a3102ebc02c58bcc544376e7301d))
+
 ### [0.2.7](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.6...v0.2.7) (2023-02-01)
 
 
