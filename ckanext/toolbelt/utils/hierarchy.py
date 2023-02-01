@@ -9,16 +9,16 @@ from ckanext.toolbelt.utils.structures import Node
 
 PackageDict: TypeAlias = "dict[str, Any]"
 
-CONFIG_PARENT_FIELD = "ckanext.anzlic.package_relationship.parent_field"
+CONFIG_PARENT_FIELD = "ckanext.toolbelt.package_hierarchy.parent_field"
 DEFAULT_PARENT_FIELD = "parent_id"
 
-CONFIG_PARENT_DISTANCE = "ckanext.anzlic.package_relationship.parent_distance"
+CONFIG_PARENT_DISTANCE = "ckanext.toolbelt.package_hierarchy.parent_distance"
 DEFAULT_PARENT_DISTANCE = 10
 
-CONFIG_CHILD_DISTANCE = "ckanext.anzlic.package_relationship.child_distance"
+CONFIG_CHILD_DISTANCE = "ckanext.toolbelt.package_hierarchy.child_distance"
 DEFAULT_CHILD_DISTANCE = 10
 
-CONFIG_SIBLING_LIMIT = "ckanext.anzlic.package_relationship.sibling_limit"
+CONFIG_SIBLING_LIMIT = "ckanext.toolbelt.package_hierarchy.sibling_limit"
 DEFAULT_SIBLING_LIMIT = 20
 
 
