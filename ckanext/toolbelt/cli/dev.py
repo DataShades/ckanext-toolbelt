@@ -37,5 +37,4 @@ def mail_server(port, host):
     loop = asyncio.get_event_loop()
     ctrl = Controller(DecodingDebugging())
     ctrl.start()
-
     loop.run_forever()

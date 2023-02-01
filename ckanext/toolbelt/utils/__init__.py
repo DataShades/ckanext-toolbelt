@@ -3,8 +3,12 @@ from __future__ import annotations
 from typing import Callable, Optional, TypeVar, Union
 import ckan.plugins.toolkit as tk
 
+
 T = TypeVar("T")
 
+__all__ = [
+    "constantly", "config_getter",
+]
 
 def constantly(v: T) -> Callable[..., T]:
     return lambda *args, **kwargs: v
