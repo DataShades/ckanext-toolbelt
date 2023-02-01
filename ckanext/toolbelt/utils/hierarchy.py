@@ -68,7 +68,7 @@ class Strategy(abc.ABC):
                 )
             )
 
-            self.parent_distance = parent_distance
+        self.parent_distance = parent_distance
         self.child_distance = child_distance
         self.sibling_limit = sibling_limit
 
@@ -90,12 +90,12 @@ class ParentReference(Strategy):
         root: PackageDict = pkg
         i = 0
         while i < self.parent_distance:
-            if not pkg.get(self.parent_field):
+            if not root.get(self.parent_field):
                 break
 
             try:
                 root = tk.get_action("package_show")(
-                    dict(self.context), {"id": pkg[self.parent_field]}
+                    dict(self.context), {"id": root[self.parent_field]}
                 )
             except (tk.ObjectNotFound, tk.NotAuthorized):
                 break
