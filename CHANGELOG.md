@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.6...v0.2.7) (2023-02-01)
+
+
+### Features
+
+* add utils.structures.Node ([8bdec35](https://github.com/DataShades/ckanext-toolbelt/commit/8bdec3505e3684f16992a779ce61d59f54e51cee))
+
 ### [0.2.6](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.5...v0.2.6) (2022-11-28)
 
 
