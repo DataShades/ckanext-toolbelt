@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.10](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.9...v0.2.10) (2023-02-01)
+
+
+### Bug Fixes
+
+* fix parent depth for package_hierarchy ([2123ef1](https://github.com/DataShades/ckanext-toolbelt/commit/2123ef1d3a027d829bfd1c9cd20570720c7103d8))
+
 ### [0.2.9](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.8...v0.2.9) (2023-02-01)
 
 
