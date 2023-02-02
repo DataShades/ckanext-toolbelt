@@ -1,11 +1,14 @@
 from __future__ import annotations
 import abc
+import logging
 from typing import Any, Optional, Iterable, Type
 from typing_extensions import TypeAlias
 
 import ckan.plugins.toolkit as tk
 
 from ckanext.toolbelt.utils.structures import Node
+
+log = logging.getLogger(__name__)
 
 PackageDict: TypeAlias = "dict[str, Any]"
 
@@ -101,12 +104,19 @@ class ParentReference(Strategy):
             if not root.get(self.parent_field):
                 break
 
-            try:
-                root = tk.get_action("package_show")(
-                    dict(self.context), {self.reference_field: root[self.parent_field]}
-                )
-            except (tk.ObjectNotFound, tk.NotAuthorized):
+            results = tk.get_action("package_search")(
+                dict(self.context), {self.reference_field: root[self.parent_field]}
+            )["results"]
+            if not results:
                 break
+
+            if len(results) > 1:
+                log.warning(
+                    "Multiple packages found by %s with value %s",
+                    self.reference_field,
+                    root[self.parent_field]
+                )
+            root = results[0]
 
             i += 1
 
