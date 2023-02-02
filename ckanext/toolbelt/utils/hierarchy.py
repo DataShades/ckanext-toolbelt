@@ -12,6 +12,9 @@ PackageDict: TypeAlias = "dict[str, Any]"
 CONFIG_PARENT_FIELD = "ckanext.toolbelt.package_hierarchy.parent_field"
 DEFAULT_PARENT_FIELD = "parent_id"
 
+CONFIG_REFERENCE_FIELD = "ckanext.toolbelt.package_hierarchy.reference_field"
+DEFAULT_REFERENCE_FIELD = "id"
+
 CONFIG_PARENT_DISTANCE = "ckanext.toolbelt.package_hierarchy.parent_distance"
 DEFAULT_PARENT_DISTANCE = 10
 
@@ -24,6 +27,10 @@ DEFAULT_SIBLING_LIMIT = 20
 
 def config_parent_field() -> str:
     return tk.config.get(CONFIG_PARENT_FIELD, DEFAULT_PARENT_FIELD)
+
+
+def config_reference_field() -> str:
+    return tk.config.get(CONFIG_REFERENCE_FIELD, DEFAULT_REFERENCE_FIELD)
 
 
 def config_parent_distance() -> int:
@@ -85,6 +92,7 @@ class ParentReference(Strategy):
     def __init__(self, context: dict[str, Any]):
         super().__init__(context)
         self.parent_field = config_parent_field()
+        self.reference_field = config_reference_field()
 
     def root(self, pkg: PackageDict) -> tuple[PackageDict, int]:
         root: PackageDict = pkg
@@ -95,7 +103,7 @@ class ParentReference(Strategy):
 
             try:
                 root = tk.get_action("package_show")(
-                    dict(self.context), {"id": root[self.parent_field]}
+                    dict(self.context), {self.reference_field: root[self.parent_field]}
                 )
             except (tk.ObjectNotFound, tk.NotAuthorized):
                 break
@@ -108,7 +116,7 @@ class ParentReference(Strategy):
         return tk.get_action("package_search")(
             {},
             {
-                "fq": "{}:({})".format(self.parent_field, pkg["id"]),
+                "fq": "{}:({})".format(self.parent_field, pkg[self.reference_field]),
                 "rows": self.sibling_limit,
             },
         )["results"]
