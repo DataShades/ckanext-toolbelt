@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.12](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.11...v0.2.12) (2023-02-02)
+
+
+### Bug Fixes
+
+* fix search by non-id parent ([2733b53](https://github.com/DataShades/ckanext-toolbelt/commit/2733b53c1e6fa2799e47fde500c5fdc673b38118))
+
 ### [0.2.11](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.10...v0.2.11) (2023-02-02)
 
 
