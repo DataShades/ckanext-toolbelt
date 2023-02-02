@@ -5,6 +5,7 @@ from typing import Any, Optional, Iterable, Type
 from typing_extensions import TypeAlias
 
 import ckan.plugins.toolkit as tk
+from ckan.lib.search.query import solr_literal
 
 from ckanext.toolbelt.utils.structures import Node
 
@@ -105,7 +106,7 @@ class ParentReference(Strategy):
                 break
 
             results = tk.get_action("package_search")(
-                dict(self.context), {self.reference_field: root[self.parent_field]}
+                dict(self.context), {"q": f"{self.reference_field}:{solr_literal(root[self.parent_field])}"}
             )["results"]
             if not results:
                 break
