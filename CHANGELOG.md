@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.11](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.10...v0.2.11) (2023-02-02)
+
+
+### Features
+
+* allow referencing any field in hierarchy ([af687be](https://github.com/DataShades/ckanext-toolbelt/commit/af687be783345a1a8bcb8d80f0fe6b6557bb57e1))
+
 ### [0.2.10](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.9...v0.2.10) (2023-02-01)
 
 
