@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.14](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.13...v0.2.14) (2023-03-03)
+
+
+### Features
+
+* `make pyright-config` command ([ab93df7](https://github.com/DataShades/ckanext-toolbelt/commit/ab93df746ac0b64d0cb58c57d8f5b88c74681139))
+* add cascade_organization_updates plugin ([9fe713e](https://github.com/DataShades/ckanext-toolbelt/commit/9fe713ef6030c3e7be83ea11f21f30e644b1ba66))
+* make pyproject / make config-readme ([8b28deb](https://github.com/DataShades/ckanext-toolbelt/commit/8b28deb11a173f6049bdf61ab34943974e9b47c3))
+
 ### [0.2.13](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.12...v0.2.13) (2023-02-02)
 
 
