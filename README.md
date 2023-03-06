@@ -141,10 +141,6 @@ constructor(which can be a callable that returns comuted duration).
 
 ## Plugins
 
-### `toolbelt_fdt_scroll`
-
-[Restore scrolling for Flask-DebugToolbar](https://github.com/ckan/ckan/issues/6995)
-
 ---
 
 ## CLI
