@@ -1,6 +1,6 @@
 # ckanext-toolbelt
 
-Collection of different entities that are useful sometimes.
+Collection of different tools for daily use.
 
 
 ## Requirements
@@ -12,6 +12,15 @@ Collection of different entities that are useful sometimes.
 | master          | yes         |
 
 
+## Content
+
+* [Decorators](#decorators)
+  * [Collector](#collector)
+  * [Cache](#cache)
+* [Plugins](#plugins)
+* [CLI](#cli)
+
+
 ## Decorators (`ckanext.toolbelt.decorators`)
 
 ### `Collector`
@@ -19,6 +28,9 @@ Collection of different entities that are useful sometimes.
 Creates a decorator that can collect functions and return them in a
 dictionary. Originally designed for actions, auth functions, validators and
 helpers.
+
+:information_source: CKAN v2.10 has `tk.blanket` module. It does the same
+things in a bit different manner.
 
 Can be used as decorator. Call `Collector.get_collection` when you need
 dictionary with names of helpers mapped to helper functions
@@ -127,41 +139,11 @@ constructor(which can be a callable that returns comuted duration).
 
 ---
 
-## Magic
-
-Don't use it, really! But, in case you have to, here are some things that can
-**temporarily** solve your problems:
-
-### Application is slow, but only for some users.
-
-Change queries for user activities. Use it if only particular users(especially
-ones, who follows a lot of entities) become really slow.
-
-	from ckan.toolbelt import magic
-	magic.conjure_fast_group_activities()
-
-### Files requires preprocessing before pushing to Datastore by Xloader
-
-If you want to extract CSV from ZIP, or convert GeoJSON features set into CSV
-so that it can be ingested into the Datastore, you can register
-converter:
-
-* define a function which accepts original filepath(the one, downloaded by the
-  xloader and ready to be ingested into datastore) and resource's ID
-* return either original filepath if no processing is required or
-  new filepath, that contains processed data. You can rewrite the content of
-  the original file if you want.
-* decorate the converter with `transfigure_xloaded_file`
-
-        @transfigure_xloaded_file
-        def zip_into_csv(filepath: str, resource_id: str) -> str:
-            if filepath.endswith(".zip"):
-                return _path_of_the_extracted_csv(filepath)
-            return filepath
-
----
-
 ## Plugins
+
+### `toolbelt_fdt_scroll`
+
+[Restore scrolling for Flask-DebugToolbar](https://github.com/ckan/ckan/issues/6995)
 
 ---
 
@@ -180,14 +162,23 @@ core.
 
 Global commands, available via `ctb` and `ckan toolbelt` routes:
 
-	# Print to stdout basic Makefile for ckan-deps-installer
-	make deps-makefile
+```sh
+# Print basic Makefile for ckan-deps-installer
+make deps-makefile
 
-	# Start mail server that will catch outcomming mails.
-	dev mail-server
+# Print pyproject example with black, isort, pytest and pyright configuration.
+make pyproject -p <plugin_name>
 
+# Parse config declarations of the given plugins and print them in the format,
+# suitable for the README.md
+make config-readme <plugin1> <plugin2> <plugin3>
 
-Commands that depends on CKAN core and available only via `ckan toolbelt` route:
+# Start mail server that will catch outcomming mails.
+dev mail-server
+```
+
+Commands that depends on CKAN core and available only via `ckan toolbelt`
+route:
 
 	# Drop packages that are only in search index but not in DB.
 	search-index clear-missing
