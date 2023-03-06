@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.16](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.15...v0.2.16) (2023-03-06)
+
+
+### Features
+
+* toolbelt_fdt_sqlalchemy plugin ([f70a044](https://github.com/DataShades/ckanext-toolbelt/commit/f70a04488d81e537ba2a725c8f390110c99ad684))
+
 ### [0.2.15](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.14...v0.2.15) (2023-03-06)
 
 
