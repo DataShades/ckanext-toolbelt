@@ -29,10 +29,16 @@ prepare:
 	curl -O https://raw.githubusercontent.com/DataShades/ckan-deps-installer/$(_version)/deps.mk
 """
 
+
+TPL_RUFF_CONFIG = """\
+[tool.black]
+target-version = "py38"
+"""
+
 TPL_BLACK_CONFIG = """\
 [tool.black]
-line-length = 79
-preview = true
+# line-length = 88
+# preview = true
 """
 
 TPL_ISORT_CONFIG = """\
@@ -134,30 +140,35 @@ def make():
 
 @make.command()
 def deps_makefile():
-    """Print to stdout basic Makefile for ckan-deps-installer."""
+    """Print basic Makefile for ckan-deps-installer."""
     click.echo(TPL_DEPS_MAKEFILE)
 
 
 @make.command()
 def pyright_config():
-    """Print to stdout basic configuration of pyright."""
+    """Print basic configuration of pyright."""
     click.echo(TPL_PYRIGHT_CONFIG)
 
 @make.command()
 def black_config():
-    """Print to stdout basic configuration of black."""
+    """Print basic configuration of black."""
     click.echo(TPL_BLACK_CONFIG)
+
+@make.command()
+def ruff_config():
+    """Print basic configuration of ruff."""
+    click.echo(TPL_RUFF_CONFIG)
 
 
 @make.command()
 @click.option("-p", "--plugin", default="")
 def isort_config(plugin: str):
-    """Print to stdout basic configuration of isort."""
+    """Print basic configuration of isort."""
     click.echo(TPL_ISORT_CONFIG.format(plugin=f".{plugin}"))
 
 @make.command()
 def pytest_config():
-    """Print to stdout basic configuration of pytest."""
+    """Print basic configuration of pytest."""
     click.echo(TPL_PYTEST_CONFIG)
 
 
@@ -166,8 +177,9 @@ def pytest_config():
 @click.option("-p", "--plugin", default="")
 @click.pass_context
 def pyproject(ctx: click.Context, plugin: str):
-    """Print to stdout simple pyproject example."""
+    """Print simple pyproject example."""
     ctx.invoke(black_config)
+    ctx.invoke(ruff_config)
     ctx.forward(isort_config)
     ctx.invoke(pytest_config)
     ctx.invoke(pyright_config)
