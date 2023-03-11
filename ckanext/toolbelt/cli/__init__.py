@@ -1,7 +1,7 @@
 import click
 
-from .make import make
 from .dev import dev
+from .make import make
 
 
 @click.group(short_help="Variety of useful commands.")

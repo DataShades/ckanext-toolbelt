@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 from typing import Callable, Optional, TypeVar, Union
-import ckan.plugins.toolkit as tk
 
+import ckan.plugins.toolkit as tk
 
 T = TypeVar("T")
 

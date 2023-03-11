@@ -1,16 +1,16 @@
 import ckan.plugins.toolkit as tk
 
 from ckanext.scheming.plugins import (
-    SchemingOrganizationsPlugin,
     SchemingGroupsPlugin,
-    _field_output_validators_group,
+    SchemingOrganizationsPlugin,
     _field_create_validators,
+    _field_output_validators_group,
     _field_validators,
-    validation,
-    unflatten,
     convert_to_extras,
-    json,
     expand_form_composite,
+    json,
+    unflatten,
+    validation,
 )
 
 
@@ -24,9 +24,7 @@ class CompositeMixin:
         t = data_dict.get("type")
         if not t or t not in self._schemas:
             return data_dict, {
-                "type": "Unsupported {thing} type: {t}".format(
-                    thing=thing, t=t
-                )
+                "type": "Unsupported {thing} type: {t}".format(thing=thing, t=t)
             }
 
         scheming_schema = self._expanded_schemas[t]
@@ -116,7 +114,5 @@ class CompositeGroupsPlugin(CompositeMixin, SchemingGroupsPlugin):
     pass
 
 
-class CompositeOrganizationsPlugin(
-    CompositeMixin, SchemingOrganizationsPlugin
-):
+class CompositeOrganizationsPlugin(CompositeMixin, SchemingOrganizationsPlugin):
     pass

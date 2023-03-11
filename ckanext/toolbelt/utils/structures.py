@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import dataclasses
-from typing import Any, Generic, Optional, TypeVar
 from collections.abc import Collection
+from typing import Any, Generic, Optional, TypeVar
 
 T = TypeVar("T")
 

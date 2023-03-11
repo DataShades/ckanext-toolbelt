@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import ckan.plugins as p
-
 from ckan import model
 
 try:
@@ -21,7 +20,6 @@ class FdtSqlalchemyPlugin(p.SingletonPlugin):
             app.config["SQLALCHEMY_DATABASE_URI"] = config["sqlalchemy.url"]
             SQLAlchemy().init_app(app)
         return app
-
 
     def configure(self, config):
         if _EngineDebuggingSignalEvents:

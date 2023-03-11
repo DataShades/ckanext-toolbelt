@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from typing import Any, Callable, TypeVar, Generic, Union
-
 import copy
+from typing import Any, Callable, Generic, TypeVar, Union
 
 TFunc = TypeVar("TFunc", bound=Callable[..., Any])
 

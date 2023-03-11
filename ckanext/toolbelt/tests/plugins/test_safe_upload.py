@@ -1,5 +1,7 @@
 from pathlib import PosixPath
+
 import pytest
+
 import ckan.plugins.toolkit as tk
 import ckan.tests.helpers as helpers
 
@@ -20,9 +22,7 @@ class TestUserImageUrl(object):
         user_dict = helpers.call_action("user_create", {}, **params)
 
         assert user_dict["image_url"] == "https://example.com/mypic.png"
-        assert (
-            user_dict["image_display_url"] == "https://example.com/mypic.png"
-        )
+        assert user_dict["image_display_url"] == "https://example.com/mypic.png"
 
     def test_upload_non_picture_works_without_extra_config(
         self, create_with_upload, faker
@@ -45,15 +45,11 @@ class TestUserImageUrl(object):
             "action": "user_create",
             "upload_field_name": "image_upload",
         }
-        with pytest.raises(
-            tk.ValidationError, match="Unsupported upload type"
-        ):
+        with pytest.raises(tk.ValidationError, match="Unsupported upload type"):
             create_with_upload("hello world", "file.txt", **params)
 
     @pytest.mark.ckan_config("ckan.upload.user.types", "image")
-    def test_upload_non_picture_with_png_extension(
-        self, create_with_upload, faker
-    ):
+    def test_upload_non_picture_with_png_extension(self, create_with_upload, faker):
         params = {
             "name": faker.user_name(),
             "email": faker.email(),
@@ -61,9 +57,7 @@ class TestUserImageUrl(object):
             "action": "user_create",
             "upload_field_name": "image_upload",
         }
-        with pytest.raises(
-            tk.ValidationError, match="Unsupported upload type"
-        ):
+        with pytest.raises(tk.ValidationError, match="Unsupported upload type"):
             create_with_upload("hello world", "file.png", **params)
 
     @pytest.mark.ckan_config("ckan.upload.user.types", "image")

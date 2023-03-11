@@ -1,10 +1,9 @@
 from __future__ import annotations
+
 from typing import Optional
 
-from typing_extensions import TypedDict, TypeAlias
-
 from sqlalchemy.orm.scoping import ScopedSession
-from sqlalchemy.orm import Query
+from typing_extensions import TypeAlias, TypedDict
 
 import ckan.model as model_
 

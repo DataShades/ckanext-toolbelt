@@ -1,5 +1,3 @@
-import pytest
-
 from ckanext.toolbelt import decorators
 
 

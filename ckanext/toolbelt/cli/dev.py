@@ -1,7 +1,7 @@
-import click
-
 import asyncio
 import email
+
+import click
 from aiosmtpd.controller import Controller
 from aiosmtpd.handlers import Debugging
 

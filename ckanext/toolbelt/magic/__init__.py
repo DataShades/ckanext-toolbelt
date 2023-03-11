@@ -23,9 +23,7 @@ log = logging.getLogger(__name__)
 def conjure_fast_group_activities():
     log.info("ieiunium sicut ventus")
 
-    def ___group_activity_perfomance_patch(
-        group_id, include_hidden_activity=False
-    ):
+    def ___group_activity_perfomance_patch(group_id, include_hidden_activity=False):
         import ckan.model as model
 
         group = model.Group.get(group_id)
@@ -52,9 +50,7 @@ def conjure_fast_group_activities():
 
     from ckan.model.activity import _group_activity_query
 
-    _group_activity_query.__code__ = (
-        ___group_activity_perfomance_patch.__code__
-    )
+    _group_activity_query.__code__ = ___group_activity_perfomance_patch.__code__
 
 
 def transfigure_xloaded_file(func):

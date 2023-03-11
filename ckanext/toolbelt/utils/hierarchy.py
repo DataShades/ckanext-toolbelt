@@ -1,7 +1,9 @@
 from __future__ import annotations
+
 import abc
 import logging
-from typing import Any, Optional, Iterable, Type
+from typing import Any, Iterable, Optional, Type
+
 from typing_extensions import TypeAlias
 
 import ckan.plugins.toolkit as tk
@@ -38,15 +40,11 @@ def config_reference_field() -> str:
 
 
 def config_parent_distance() -> int:
-    return tk.asint(
-        tk.config.get(CONFIG_PARENT_DISTANCE, DEFAULT_PARENT_DISTANCE)
-    )
+    return tk.asint(tk.config.get(CONFIG_PARENT_DISTANCE, DEFAULT_PARENT_DISTANCE))
 
 
 def config_child_distance() -> int:
-    return tk.asint(
-        tk.config.get(CONFIG_CHILD_DISTANCE, DEFAULT_CHILD_DISTANCE)
-    )
+    return tk.asint(tk.config.get(CONFIG_CHILD_DISTANCE, DEFAULT_CHILD_DISTANCE))
 
 
 def config_sibling_limit() -> int:
@@ -63,20 +61,14 @@ class Strategy(abc.ABC):
 
         if tk.request:
             parent_distance = tk.asint(
-                tk.request.args.get(
-                    "__relationship_parent_distance", parent_distance
-                )
+                tk.request.args.get("__relationship_parent_distance", parent_distance)
             )
             child_distance = tk.asint(
-                tk.request.args.get(
-                    "__relationship_child_distance", child_distance
-                )
+                tk.request.args.get("__relationship_child_distance", child_distance)
             )
 
             sibling_limit = tk.asint(
-                tk.request.args.get(
-                    "__relationship_sibling_limit", sibling_limit
-                )
+                tk.request.args.get("__relationship_sibling_limit", sibling_limit)
             )
 
         self.parent_distance = parent_distance
@@ -106,7 +98,10 @@ class ParentReference(Strategy):
                 break
 
             results = tk.get_action("package_search")(
-                dict(self.context), {"q": f"{self.reference_field}:{solr_literal(root[self.parent_field])}"}
+                dict(self.context),
+                {
+                    "q": f"{self.reference_field}:{solr_literal(root[self.parent_field])}"
+                },
             )["results"]
             if not results:
                 break
@@ -115,7 +110,7 @@ class ParentReference(Strategy):
                 log.warning(
                     "Multiple packages found by %s with value %s",
                     self.reference_field,
-                    root[self.parent_field]
+                    root[self.parent_field],
                 )
             root = results[0]
 

@@ -13,18 +13,12 @@ def db():
 
 @db.command()
 @click.option("-y", "--yes", is_flag=True, help="Confirm your intention.")
-@click.option(
-    "-k", "--keep", multiple=True, help="Tables that should not be cleaned"
-)
+@click.option("-k", "--keep", multiple=True, help="Tables that should not be cleaned")
 def clean(yes: bool, keep: tuple[str]):
     if not yes:
         tk.error_shout("This command will erase data from your portal's DB.")
-        tk.error_shout(
-            "All the datasets, organizations and users will be removed"
-        )
-        tk.error_shout(
-            "Run it with `--yes` flag if you know what you are doing."
-        )
+        tk.error_shout("All the datasets, organizations and users will be removed")
+        tk.error_shout("Run it with `--yes` flag if you know what you are doing.")
         raise click.Abort()
 
     model.repo.session.remove()

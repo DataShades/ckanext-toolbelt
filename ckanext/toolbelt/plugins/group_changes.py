@@ -1,15 +1,15 @@
 from __future__ import annotations
 
-from datetime import datetime
 import logging
-
+from datetime import datetime
 from typing import Any
+
 from flask import Blueprint
 
 import ckan.model as model
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
-from ckan.views.group import group, organization, set_org, _replace_group_org
+from ckan.views.group import _replace_group_org, set_org
 
 log = logging.getLogger(__name__)
 
@@ -55,9 +55,7 @@ def check_metadata_org_changes(change_list, old, new):
     if old.get("image_url") != new.get("image_url"):
         _image_url_change(change_list, old, new)
 
-    watched = tk.aslist(
-        tk.config.get(CONFIG_WATCH_FIELDS, DEFAULT_WATCH_FIELDS)
-    )
+    watched = tk.aslist(tk.config.get(CONFIG_WATCH_FIELDS, DEFAULT_WATCH_FIELDS))
     for field in watched:
         if old.get(field) != new.get(field):
             _custom_field_change(change_list, old, new, field)
@@ -187,9 +185,7 @@ def _image_url_change(change_list, old, new):
         )
 
 
-def compare_group_dicts(
-    old: dict[str, Any], new: dict[str, Any], old_activity_id: str
-):
+def compare_group_dicts(old: dict[str, Any], new: dict[str, Any], old_activity_id: str):
     """
     Takes two package dictionaries that represent consecutive versions of
     the same organization and returns a list of detailed & formatted summaries
@@ -251,9 +247,7 @@ def changes(id: str) -> str:
     # Use the current version of the package, in case the name/title have
     # changed, and we need a link to it which works
     group_id = activity_diff["activities"][1]["data"]["group"]["id"]
-    current_group_dict = tk.get_action(group_type + "_show")(
-        context, {"id": group_id}
-    )
+    current_group_dict = tk.get_action(group_type + "_show")(context, {"id": group_id})
     group_activity_list = tk.get_action(group_type + "_activity_list")(
         context, {"id": group_id, "limit": 100}
     )
@@ -341,9 +335,7 @@ def changes_multiple() -> str:
             current_id = activity_diff["activities"][0]["id"]
 
     group_id: str = diff_list[0]["activities"][1]["data"]["group"]["id"]
-    current_group_dict = tk.get_action(group_type + "_show")(
-        context, {"id": group_id}
-    )
+    current_group_dict = tk.get_action(group_type + "_show")(context, {"id": group_id})
     group_activity_list = tk.get_action(group_type + "_activity_list")(
         context, {"id": group_id, "limit": 100}
     )

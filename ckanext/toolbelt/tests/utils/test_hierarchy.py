@@ -33,7 +33,9 @@ class TestPackageHierarchy:
         sister = package_factory(**{PARENT_FIELD: parent["id"]})
 
         parent_hierarchy = h.package_hierarchy(parent["id"], {"user": sysadmin["name"]})
-        brother_hierarchy = h.package_hierarchy(brother["id"], {"user": sysadmin["name"]})
+        brother_hierarchy = h.package_hierarchy(
+            brother["id"], {"user": sysadmin["name"]}
+        )
         sister_hierarchy = h.package_hierarchy(sister["id"], {"user": sysadmin["name"]})
 
         assert parent_hierarchy == brother_hierarchy == sister_hierarchy

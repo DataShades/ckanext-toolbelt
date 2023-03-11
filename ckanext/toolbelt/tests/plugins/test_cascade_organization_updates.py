@@ -1,13 +1,13 @@
-import pytest
-
 from unittest import mock
 
-import ckan.plugins.toolkit as tk
+import pytest
 
+import ckan.plugins.toolkit as tk
 from ckan.lib import jobs
-from ckan.tests.helpers import call_action, RQTestBase
+from ckan.tests.helpers import RQTestBase, call_action
 
 from ckanext.toolbelt.plugins.cascade_organization_updates import reindex_organization
+
 
 @pytest.mark.usefixtures("clean_db", "clean_index")
 @pytest.mark.ckan_config("ckan.plugins", "toolbelt_cascade_organization_updates")
@@ -44,6 +44,7 @@ class TestEnqueue:
             call_action("organization_update", id="not real")
 
         stub.assert_not_called()
+
 
 @pytest.mark.usefixtures("clean_db", "clean_index")
 @pytest.mark.ckan_config("ckan.plugins", "toolbelt_cascade_organization_updates")

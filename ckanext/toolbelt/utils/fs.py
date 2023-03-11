@@ -1,10 +1,12 @@
 from __future__ import annotations
-import os
+
 import logging
+import os
 import tempfile
 from typing import Optional
 
 import requests
+
 import ckan.plugins as p
 from ckan.lib.uploader import get_resource_uploader
 
@@ -112,9 +114,7 @@ def _download_remote_file(res_id, url, max_size: int):
                 dest.write(chunk)
     except requests.exceptions.RequestException as e:
         log.error(
-            "Cannot index remote resource {} with url <{}>: {}".format(
-                res_id, url, e
-            )
+            "Cannot index remote resource {} with url <{}>: {}".format(res_id, url, e)
         )
         os.remove(dest.name)
         return

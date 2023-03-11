@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import os
-from typing import Optional
 import uuid
+from typing import Optional
+
 import magic
 
+import ckan.lib.uploader as uploader
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
-import ckan.lib.uploader as uploader
 
 
 class SafeUploadPlugin(p.SingletonPlugin):
@@ -56,8 +57,6 @@ class SafeUpload(uploader.Upload):
             raise tk.ValidationError(err)
 
         type_ = actual.split("/")[0]
-        types = tk.aslist(
-            tk.config.get(f"ckan.upload.{self.object_type}.types")
-        )
+        types = tk.aslist(tk.config.get(f"ckan.upload.{self.object_type}.types"))
         if types and type_ not in types:
             raise tk.ValidationError(err)

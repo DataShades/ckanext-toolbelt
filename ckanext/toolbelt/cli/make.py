@@ -1,6 +1,6 @@
 from __future__ import annotations
+
 import textwrap
-from collections.abc import Iterable
 from typing import TYPE_CHECKING
 
 import click
@@ -31,7 +31,7 @@ prepare:
 
 
 TPL_RUFF_CONFIG = """\
-[tool.black]
+[tool.ruff]
 target-version = "py38"
 """
 
@@ -133,6 +133,7 @@ reportUnnecessaryTypeIgnoreComment = true
 reportMatchNotExhaustive = true
 """
 
+
 @click.group()
 def make():
     """Generate, make, produce, print different things."""
@@ -149,10 +150,12 @@ def pyright_config():
     """Print basic configuration of pyright."""
     click.echo(TPL_PYRIGHT_CONFIG)
 
+
 @make.command()
 def black_config():
     """Print basic configuration of black."""
     click.echo(TPL_BLACK_CONFIG)
+
 
 @make.command()
 def ruff_config():
@@ -166,11 +169,11 @@ def isort_config(plugin: str):
     """Print basic configuration of isort."""
     click.echo(TPL_ISORT_CONFIG.format(plugin=f".{plugin}"))
 
+
 @make.command()
 def pytest_config():
     """Print basic configuration of pytest."""
     click.echo(TPL_PYTEST_CONFIG)
-
 
 
 @make.command()
@@ -194,6 +197,7 @@ def config_readme(
 
     from ckan.cli.config import _declaration
     from ckan.config.declaration.serialize import handler
+
     handler.register("ckanext-readme")(_ckanext_readme)
 
     decl = _declaration(plugins, False, False)
@@ -201,9 +205,8 @@ def config_readme(
         click.echo(handler.handle(decl, "ckanext-readme"))
 
 
-
 def _ckanext_readme(declaration: "Declaration"):
-    from ckan.config.declaration import Key, Flag
+    from ckan.config.declaration import Flag, Key
 
     result = ""
 
@@ -213,12 +216,19 @@ def _ckanext_readme(declaration: "Declaration"):
 
         option = declaration._options[item]
 
-
         if option.has_flag(Flag.non_iterable()):
             continue
 
         if option.description:
-            result += textwrap.fill(option.description, width=77, initial_indent="# ", subsequent_indent="# ") + "\n"
+            result += (
+                textwrap.fill(
+                    option.description,
+                    width=77,
+                    initial_indent="# ",
+                    subsequent_indent="# ",
+                )
+                + "\n"
+            )
 
         if not option.has_default():
             value = option.placeholder or ""
@@ -229,7 +239,6 @@ def _ckanext_readme(declaration: "Declaration"):
 
         if not option.has_flag(Flag.required):
             result += f"# (optional, default: {value})\n"
-
 
         result += f"{item} = {option.example or value}\n\n"
 
