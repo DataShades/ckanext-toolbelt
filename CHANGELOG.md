@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.17](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.16...v0.2.17) (2023-03-11)
+
+
+### Features
+
+* add ruff config ([17841f4](https://github.com/DataShades/ckanext-toolbelt/commit/17841f4ad3dc266b6291f20dd2487c11c5701910))
+
 ### [0.2.16](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.15...v0.2.16) (2023-03-06)
 
 
