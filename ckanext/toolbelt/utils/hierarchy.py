@@ -97,11 +97,11 @@ class ParentReference(Strategy):
             if not root.get(self.parent_field):
                 break
 
+            key = self.reference_field
+            value = solr_literal(root[self.parent_field])
             results = tk.get_action("package_search")(
                 dict(self.context),
-                {
-                    "q": f"{self.reference_field}:{solr_literal(root[self.parent_field])}"
-                },
+                {"q": f"{key}:{value}"},
             )["results"]
             if not results:
                 break
@@ -119,10 +119,12 @@ class ParentReference(Strategy):
         return root, i
 
     def children(self, pkg: PackageDict):
+        key = self.parent_field
+        value = pkg[self.reference_field]
         return tk.get_action("package_search")(
             {},
             {
-                "fq": "{}:({})".format(self.parent_field, pkg[self.reference_field]),
+                "fq": f"{key}:({value})",
                 "rows": self.sibling_limit,
             },
         )["results"]
@@ -137,7 +139,7 @@ def package_hierarchy(
     hierarchy.
     """
     ctx = context or {}
-    root: PackageDict = tk.get_action("package_show")(ctx.copy(), {"id": id_})
+    root: PackageDict = tk.get_action("package_show")(dict(ctx), {"id": id_})
 
     strategy = strategy_factory(ctx)
     root, distance = strategy.root(root)

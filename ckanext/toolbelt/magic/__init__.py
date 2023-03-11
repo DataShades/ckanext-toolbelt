@@ -16,12 +16,16 @@
 ###############################################################################
 
 import logging
+import ckan.plugins.toolkit as tk
 
 log = logging.getLogger(__name__)
 
 
 def conjure_fast_group_activities():
     log.info("ieiunium sicut ventus")
+    if tk.check_ckan_version("2.10"):
+        log.error("This spell works only for CKAN v2.9")
+        return
 
     def ___group_activity_perfomance_patch(group_id, include_hidden_activity=False):
         import ckan.model as model
@@ -29,7 +33,7 @@ def conjure_fast_group_activities():
         group = model.Group.get(group_id)
         if not group:
             # Return a query with no results.
-            return model.Session.query(model.Activity).filter(text("0=1"))
+            return model.Session.query(model.Activity).filter(text("0=1"))  # noqa
 
         q = model.Session.query(model.Activity)
         group_activity = q.filter(model.Activity.object_id == group_id)
@@ -44,9 +48,9 @@ def conjure_fast_group_activities():
         )
 
         if not include_hidden_activity:
-            group_activity = _filter_activitites_from_users(group_activity)
-            member_activity = _filter_activitites_from_users(member_activity)
-        return _activities_union_all(group_activity, member_activity)
+            group_activity = _filter_activitites_from_users(group_activity)  # noqa
+            member_activity = _filter_activitites_from_users(member_activity)  # noqa
+        return _activities_union_all(group_activity, member_activity)  # noqa
 
     from ckan.model.activity import _group_activity_query
 

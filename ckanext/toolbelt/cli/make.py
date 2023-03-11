@@ -12,7 +12,7 @@ TPL_DEPS_MAKEFILE = """\
 ###############################################################################
 #                             requirements: start                             #
 ###############################################################################
-ckan_tag = ckan-2.9.3
+ckan_tag = ckan-2.10.0
 ext_list = spatial
 
 remote-spatial = https://github.com/ckan/ckanext-spatial.git branch master
@@ -26,8 +26,10 @@ _version = master
 -include deps.mk
 
 prepare:
-	curl -O https://raw.githubusercontent.com/DataShades/ckan-deps-installer/$(_version)/deps.mk
-"""
+	curl -O {repo}/$(_version)/deps.mk
+""".format(
+    repo="https://raw.githubusercontent.com/DataShades/ckan-deps-installer"
+)
 
 
 TPL_RUFF_CONFIG = """\
@@ -68,7 +70,7 @@ exclude = [
 ]
 strict = []
 
-strictParameterNoneValue = true # type must be Optional if default value is None
+strictParameterNoneValue = true
 
 # Check the meaning of rules here
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md
@@ -88,7 +90,7 @@ reportOptionalCall = true
 reportOptionalIterable = true
 reportOptionalContextManager = true
 reportOptionalOperand = true
-reportTypedDictNotRequiredAccess = false # We are using Context in a way that conflicts with this check
+reportTypedDictNotRequiredAccess = false # Context won't work with this rule
 reportConstantRedefinition = true
 reportIncompatibleMethodOverride = true
 reportIncompatibleVariableOverride = true
@@ -108,12 +110,12 @@ reportUnnecessaryCast = true
 reportUnnecessaryComparison = true
 reportAssertAlwaysTrue = true
 reportSelfClsParameterName = true
-reportUnusedCallResult = false # allow function calls for side-effect only (like logic.check_acces)
+reportUnusedCallResult = false # allow function calls for side-effect only
 useLibraryCodeForTypes = true
 reportGeneralTypeIssues = true
 reportPropertyTypeMismatch = true
 reportWildcardImportFromLibrary = true
-reportUntypedClassDecorator = false # authenticator relies on repoze.who class-decorator
+reportUntypedClassDecorator = false
 reportUntypedNamedTuple = true
 reportPrivateUsage = true
 reportPrivateImportUsage = true
