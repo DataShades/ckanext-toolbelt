@@ -49,5 +49,4 @@ jobs:
 
         ckan -c test.ini db init
     - name: Run tests
-      run: pytest --ckan-ini=test.ini --cov=ckanext.toolbelt --disable-warnings ckanext/toolbelt -p no:rerunfailures
-
+      run: pytest --ckan-ini=test.ini --cov=ckanext.$PLUGIN --disable-warnings ckanext/$PLUGIN -p no:rerunfailures

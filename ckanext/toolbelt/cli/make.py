@@ -1,6 +1,7 @@
 from __future__ import annotations
 import os
 import textwrap
+from string import Template
 from typing import TYPE_CHECKING, Any
 
 import click
@@ -169,11 +170,20 @@ def ruff_config(file: Any = None):
 @click.option("-p", "--plugin", default="")
 def isort_config(plugin: str, file: Any = None):
     """Print basic configuration of isort."""
+    plugin = _ensure_plugin(plugin)
     if not plugin:
         plugin = os.path.basename(os.getcwd())
         if plugin.startswith("ckanext-"):
             plugin = plugin[8:]
     click.echo(TPL_ISORT_CONFIG.format(plugin=plugin), file)
+
+
+def _ensure_plugin(plugin: str):
+    if not plugin:
+        plugin = os.path.basename(os.getcwd())
+        if plugin.startswith("ckanext-"):
+            plugin = plugin[8:]
+    return plugin
 
 
 @make.command()
@@ -254,3 +264,40 @@ def _ckanext_readme(declaration: "Declaration"):
         result += f"{item} = {option.example or value}\n\n"
 
     return result
+
+
+@make.group()
+def gh_action():
+    """Make GitHub actions.
+    """
+    plugin = os.path.basename(os.getcwd())
+    if not plugin.startswith("ckanext-"):
+        click.secho("Can be executed only from the root directory of the extension", fg="red")
+        raise click.Abort()
+
+
+
+@gh_action.command()
+@click.option("-p", "--plugin", default="")
+@click.option("-w", "--write", is_flag=True)
+def test(plugin: str, write: bool):
+    """Test action
+    """
+    content = _render("action_test.yaml", {"PLUGIN": _ensure_plugin(plugin)})
+    file = None
+    if write:
+        file = _action_file("test")
+
+    click.echo(
+        content,
+        file
+    )
+
+def _render(tpl: str, data: dict[str, Any]) -> str:
+    source = os.path.join(os.path.dirname(__file__), "templates", tpl)
+    return Template(open(source).read()).safe_substitute(**data)
+
+def _action_file(name: str) -> Any:
+    path = ".github/workflows"
+    os.makedirs(path, exist_ok=True)
+    return open(os.path.join(path, f"{name}.yml"), "w")
