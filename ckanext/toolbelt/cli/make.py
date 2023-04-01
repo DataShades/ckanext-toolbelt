@@ -1,7 +1,7 @@
 from __future__ import annotations
-
+import os
 import textwrap
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 import click
 
@@ -47,7 +47,7 @@ TPL_ISORT_CONFIG = """\
 [tool.isort]
 known_ckan = "ckan"
 known_ckanext = "ckanext"
-known_self = "ckanext{plugin}"
+known_self = "ckanext.{plugin}"
 sections = "FUTURE,STDLIB,FIRSTPARTY,THIRDPARTY,CKAN,CKANEXT,SELF,LOCALFOLDER"
 """
 TPL_PYTEST_CONFIG = """\
@@ -148,46 +148,55 @@ def deps_makefile():
 
 
 @make.command()
-def pyright_config():
+def pyright_config(file: Any = None):
     """Print basic configuration of pyright."""
-    click.echo(TPL_PYRIGHT_CONFIG)
+    click.echo(TPL_PYRIGHT_CONFIG, file)
 
 
 @make.command()
-def black_config():
+def black_config(file: Any = None):
     """Print basic configuration of black."""
-    click.echo(TPL_BLACK_CONFIG)
+    click.echo(TPL_BLACK_CONFIG, file)
 
 
 @make.command()
-def ruff_config():
+def ruff_config(file: Any = None):
     """Print basic configuration of ruff."""
-    click.echo(TPL_RUFF_CONFIG)
+    click.echo(TPL_RUFF_CONFIG, file)
 
 
 @make.command()
 @click.option("-p", "--plugin", default="")
-def isort_config(plugin: str):
+def isort_config(plugin: str, file: Any = None):
     """Print basic configuration of isort."""
-    click.echo(TPL_ISORT_CONFIG.format(plugin=f".{plugin}"))
+    if not plugin:
+        plugin = os.path.basename(os.getcwd())
+        if plugin.startswith("ckanext-"):
+            plugin = plugin[8:]
+    click.echo(TPL_ISORT_CONFIG.format(plugin=plugin), file)
 
 
 @make.command()
-def pytest_config():
+def pytest_config(file: Any = None):
     """Print basic configuration of pytest."""
-    click.echo(TPL_PYTEST_CONFIG)
+    click.echo(TPL_PYTEST_CONFIG, file)
 
 
 @make.command()
 @click.option("-p", "--plugin", default="")
+@click.option("-w", "--write", is_flag=True)
 @click.pass_context
-def pyproject(ctx: click.Context, plugin: str):
+def pyproject(ctx: click.Context, plugin: str, write: bool):
     """Print simple pyproject example."""
-    ctx.invoke(black_config)
-    ctx.invoke(ruff_config)
-    ctx.forward(isort_config)
-    ctx.invoke(pytest_config)
-    ctx.invoke(pyright_config)
+    file = None
+    if write:
+        file = open("pyproject.toml", "w")
+
+    ctx.invoke(black_config, file=file)
+    ctx.invoke(ruff_config, file=file)
+    ctx.invoke(isort_config, plugin=plugin, file=file)
+    ctx.invoke(pytest_config, file=file)
+    ctx.invoke(pyright_config, file=file)
 
 
 @make.command()
