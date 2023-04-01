@@ -5,11 +5,11 @@ Collection of different tools for daily use.
 
 ## Requirements
 
-| CKAN version    | Compatible? |
-|-----------------|-------------|
-| 2.8 and earlier | no          |
-| 2.9             | yes         |
-| master          | yes         |
+| CKAN version | Compatible? |
+|--------------|-------------|
+| 2.9          | yes         |
+| 2.10         | yes         |
+| master       | yes         |
 
 
 ## Content
@@ -85,6 +85,8 @@ remain unprefixed, you can specify what name to use, when decorating an item
 		return get_validators()
 
 
+[Back to content](#content)
+
 ### `Cache`
 
 Cache for functions.
@@ -137,23 +139,43 @@ constructor(which can be a callable that returns comuted duration).
 	def func(v):
 	    return v + v
 
+[Back to content](#content)
 ---
 
 ## Plugins
 
+### `toolbelt_fdt_sqlalchemy`
+
+Adapter for
+[Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/). Enables
+SQLAlchemy panel on FlaskDebugToolbar. You have to install appropriate version
+of `flask-sqlalchemy` to use this plugin:
+
+| Environment                     | Version | Command                             |
+|---------------------------------|---------|-------------------------------------|
+| Flask 2.0(CKAN <= 2.10)         | 2.5     | `pip install flask-sqlalchemy~=2.5` |
+| Flask 2.2(CKAN >= 2.11, master) | 3.0     | `pip install flask-sqlalchemy~=3.0` |
+
+Note: `flask-sqlalchemy~=2.5` works with the latest CKAN version, so you can
+always use the first line from the table above.
+
+[Back to content](#content)
 ---
 
 ## CLI
 
 As soon as you've installed ckanext-toolbelt, it will register `ckan toolbelt`
 route for CLI. You don't have to add `toolbelt` to the list of enabled
-plugins. But depending on the list of enabled plugins, extra subroutes will be
-added to the `ckan toolbelt` route.
+plugins.
+
+Depending on the active plugins, extra subroutes may be added to the `ckan
+toolbelt` route.
 
 In addition, there is global `ctb` command that allows to use this package
 without CKAN installed or without CKAN config file. But in this way some of
 commands (`search-index` for example) are not available, because they use CKAN
-core.
+core. `ctb` alias exists for setting up the CKAN or extensions and running
+generic services, that do not rely on CKAN instance.
 
 
 Global commands, available via `ctb` and `ckan toolbelt` routes:
@@ -162,12 +184,19 @@ Global commands, available via `ctb` and `ckan toolbelt` routes:
 # Print basic Makefile for ckan-deps-installer
 make deps-makefile
 
-# Print pyproject example with black, isort, pytest and pyright configuration.
-make pyproject -p <plugin_name>
+# Print pyproject example with black, isort, pytest, ruff and pyright configuration.
+# Options:
+# -p: name of the CKAN plugin. This options improves isort fixes. If missing, command will
+#     use the name of current directory(`ckanext-` is removed) as a name of plugin
+# -w: write the output to pyproject.toml instead of <stdout>
+
+make pyproject
 
 # Parse config declarations of the given plugins and print them in the format,
 # suitable for the README.md
 make config-readme <plugin1> <plugin2> <plugin3>
+
+#
 
 # Start mail server that will catch outcomming mails.
 dev mail-server
@@ -181,3 +210,5 @@ route:
 
 	# Clean the DB, optionally keeping data in the given tables.
 	db clean --yes [-k user] [-k group] [-k ...]
+
+[Back to content](#content)

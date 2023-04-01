@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 from typing import Any, Callable, Generic, TypeVar, Union
+from typing_extensions import Self
 
 TFunc = TypeVar("TFunc", bound=Callable[..., Any])
 
@@ -9,7 +10,7 @@ TFunc = TypeVar("TFunc", bound=Callable[..., Any])
 class Collector(Generic[TFunc]):
     collection: dict[str, TFunc]
 
-    def __init__(self, prefix="", separator="_"):
+    def __init__(self, prefix: str = "", separator: str = "_"):
         self.collection = {}
 
         if prefix:
@@ -17,7 +18,7 @@ class Collector(Generic[TFunc]):
         else:
             self.prefix = ""
 
-    def split(self) -> tuple[Collector, Callable[[], dict[str, TFunc]]]:
+    def split(self) -> tuple[Self, Callable[[], dict[str, TFunc]]]:
         return self, self.get_collection
 
     def __call__(self, func_or_name: Union[str, TFunc]):
