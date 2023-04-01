@@ -266,8 +266,11 @@ def _ckanext_readme(declaration: "Declaration"):
     return result
 
 
-@make.group()
-def gh_action():
+@make.command()
+@click.argument("action", type=click.Choice(["test", "pypi-publish"]))
+@click.option("-p", "--plugin", default="")
+@click.option("-w", "--write", is_flag=True)
+def gh_action(action: str, plugin: str, write: bool):
     """Make GitHub actions.
     """
     plugin = os.path.basename(os.getcwd())
@@ -275,23 +278,16 @@ def gh_action():
         click.secho("Can be executed only from the root directory of the extension", fg="red")
         raise click.Abort()
 
-
-
-@gh_action.command()
-@click.option("-p", "--plugin", default="")
-@click.option("-w", "--write", is_flag=True)
-def test(plugin: str, write: bool):
-    """Test action
-    """
-    content = _render("action_test.yaml", {"PLUGIN": _ensure_plugin(plugin)})
+    content = _render(f"action_{action}.yaml", {"PLUGIN": _ensure_plugin(plugin)})
     file = None
     if write:
-        file = _action_file("test")
+        file = _action_file(action)
 
     click.echo(
         content,
         file
     )
+
 
 def _render(tpl: str, data: dict[str, Any]) -> str:
     source = os.path.join(os.path.dirname(__file__), "templates", tpl)
