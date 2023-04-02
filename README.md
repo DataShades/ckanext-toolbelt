@@ -140,6 +140,7 @@ constructor(which can be a callable that returns comuted duration).
 	    return v + v
 
 [Back to content](#content)
+
 ---
 
 ## Plugins
@@ -181,20 +182,22 @@ generic services, that do not rely on CKAN instance.
 Global commands, available via `ctb` and `ckan toolbelt` routes:
 
 ```sh
-# Print basic Makefile for ckan-deps-installer
-make deps-makefile
+# create a generic configuration. Supported types:
+# * deps-makefile  CKAN dependency manager
+# * pre-commit     Pre-commit
+# * pyproject      pyproject.toml
+make config <type>
 
-# Print pyproject example with black, isort, pytest, ruff and pyright configuration.
-# Options:
-# -p: name of the CKAN plugin. This options improves isort fixes. If missing, command will
-#     use the name of current directory(`ckanext-` is removed) as a name of plugin
-# -w: write the output to pyproject.toml instead of <stdout>
+# create a configuration for GitHub Action. Supported types:
+# * pypi-publish    Publish package to PyPI when vX.Y.Z tag added.
+# * release-please  Create a PR that compiles changelog and publishes GitHub release.
+# * test            Test workflow.
+make gh-action <type>
 
-make pyproject
-
-# Parse config declarations of the given plugins and print them in the format,
-# suitable for the README.md
-make config-readme <plugin1> <plugin2> <plugin3>
+# Generate parts of README.md
+# Supported types:
+# * config  Print declared config options for the given plugins.
+make readme <type>
 
 #
 
@@ -204,11 +207,13 @@ dev mail-server
 
 Commands that depends on CKAN core and available only via `ckan toolbelt`
 route:
+```sh
 
-	# Drop packages that are only in search index but not in DB.
-	search-index clear-missing
+# Drop packages that are only in search index but not in DB.
+search-index clear-missing
 
-	# Clean the DB, optionally keeping data in the given tables.
-	db clean --yes [-k user] [-k group] [-k ...]
+# Clean the DB, optionally keeping data in the given tables.
+db clean --yes [-k user] [-k group] [-k ...]
+```
 
 [Back to content](#content)
