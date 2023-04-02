@@ -16,6 +16,7 @@
 ###############################################################################
 
 import logging
+
 import ckan.plugins.toolkit as tk
 
 log = logging.getLogger(__name__)

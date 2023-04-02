@@ -1,0 +1,5 @@
+[tool.isort]
+known_ckan = "ckan"
+known_ckanext = "ckanext"
+known_self = "ckanext.$PLUGIN"
+sections = "FUTURE,STDLIB,FIRSTPARTY,THIRDPARTY,CKAN,CKANEXT,SELF,LOCALFOLDER"

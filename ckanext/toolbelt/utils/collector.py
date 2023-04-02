@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 from typing import Any, Callable, Generic, TypeVar, Union
+
 from typing_extensions import Self
 
 TFunc = TypeVar("TFunc", bound=Callable[..., Any])

@@ -1,15 +1,18 @@
 from __future__ import annotations
 
 import logging
+
 from werkzeug.utils import import_string
+
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
-
 from ckan import model
 
 SQLAlchemy = import_string("flask_sqlalchemy:SQLAlchemy", True)
 
-_EngineDebuggingSignalEvents = import_string("flask_sqlalchemy:_EngineDebuggingSignalEvents", True)
+_EngineDebuggingSignalEvents = import_string(
+    "flask_sqlalchemy:_EngineDebuggingSignalEvents", True
+)
 record_queries = import_string("flask_sqlalchemy.record_queries", True)
 
 
