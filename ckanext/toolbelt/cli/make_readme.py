@@ -24,6 +24,9 @@ def config(
     from ckan.config.declaration import Declaration
     from ckan.config.declaration.serialize import handler
 
+    if not plugins:
+        click.secho("At leas one plugin must be specified", fg="red")
+        raise click.Abort()
     handler.register("ckanext-readme")(_ckanext_readme)
 
     decl = Declaration()
