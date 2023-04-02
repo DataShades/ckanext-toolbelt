@@ -11,9 +11,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* `make gh-action pypi-publish` ([038df5b](https://github.com/DataShades/ckanext-toolbelt/commit/038df5b26bf2a746ba80c15b3383509dfe07930f))
-* `make gh-action` route ([2b8c9a5](https://github.com/DataShades/ckanext-toolbelt/commit/2b8c9a5ccb6eb5de8afaf1da325d63bb5b89a131))
-* `make pyproject` detects plugin name and writes output to pyproject.toml ([7dcfb39](https://github.com/DataShades/ckanext-toolbelt/commit/7dcfb39e127a76dbe1d16b4739eba7a7c8b6a905))
+* `make config pyproject` detects plugin name and writes output to pyproject.toml ([7dcfb39](https://github.com/DataShades/ckanext-toolbelt/commit/7dcfb39e127a76dbe1d16b4739eba7a7c8b6a905))
 * fdt_sqlalchemy supports flask-sqlalchemy 3.0 ([c31923d](https://github.com/DataShades/ckanext-toolbelt/commit/c31923dcdb6fc6cb521dc66575dff73adfa1bfff))
 * pin deps-installer to ckan v2.10 ([7c71766](https://github.com/DataShades/ckanext-toolbelt/commit/7c717669bab85e0d982bf3044e3fc68fab7f27b2))
 * update `make` command ([717556d](https://github.com/DataShades/ckanext-toolbelt/commit/717556dcfabc0a859505b67c31a6e405dd7374bf))
