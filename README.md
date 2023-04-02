@@ -199,8 +199,6 @@ make gh-action <type>
 # * config  Print declared config options for the given plugins.
 make readme <type>
 
-#
-
 # Start mail server that will catch outcomming mails.
 dev mail-server
 ```
