@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.17...v0.3.0) (2023-04-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* update `make` command
+
+### Features
+
+* `make config pyproject` detects plugin name and writes output to pyproject.toml ([7dcfb39](https://github.com/DataShades/ckanext-toolbelt/commit/7dcfb39e127a76dbe1d16b4739eba7a7c8b6a905))
+* fdt_sqlalchemy supports flask-sqlalchemy 3.0 ([c31923d](https://github.com/DataShades/ckanext-toolbelt/commit/c31923dcdb6fc6cb521dc66575dff73adfa1bfff))
+* pin deps-installer to ckan v2.10 ([7c71766](https://github.com/DataShades/ckanext-toolbelt/commit/7c717669bab85e0d982bf3044e3fc68fab7f27b2))
+* update `make` command ([717556d](https://github.com/DataShades/ckanext-toolbelt/commit/717556dcfabc0a859505b67c31a6e405dd7374bf))
+
 ### [0.2.17](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.16...v0.2.17) (2023-03-11)
 
 
