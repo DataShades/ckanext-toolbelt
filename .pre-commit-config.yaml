@@ -21,11 +21,13 @@ repos:
   rev: 23.3.0
   hooks:
   - id: black
+    stages: [pre-commit]
 
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: v0.0.260
   hooks:
   - id: ruff
+    stages: [pre-commit]
 
 # - repo: https://github.com/compilerla/conventional-pre-commit
 #   rev: v2.1.1
