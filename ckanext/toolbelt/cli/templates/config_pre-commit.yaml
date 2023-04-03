@@ -1,5 +1,6 @@
 default_install_hook_types:
   - pre-commit
+  - pre-push
   - commit-msg
 
 repos:
@@ -34,7 +35,8 @@ repos:
 # - repo: https://github.com/FalconSocial/pre-commit-mirrors-pep257
 #   rev: v0.3.3
 #   hooks:
-#     - id: pep257
+#   - id: pep257
+#     stages: [pre-push]
 
 # Add trailing commas to calls and literals
 # - repo: https://github.com/asottile/add-trailing-comma
@@ -42,17 +44,24 @@ repos:
 #   hooks:
 #   - id: add-trailing-comma
 
+## Detect passwords, api-tokens, secrets within a code base
+# - repo: https://github.com/Yelp/detect-secrets
+#   rev: v1.4.0
+#   hooks:
+#   - id: detect-secrets
+#     stages: [pre-push]
+
 ## Conventional commit message(basic)
 # - repo: https://github.com/compilerla/conventional-pre-commit
 #   rev: v2.1.1
 #   hooks:
-#     - id: conventional-pre-commit
-#       stages: [commit-msg]
-#       args: [] # list of Conventional Commits types to allow. default: ["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"]
+#   - id: conventional-pre-commit
+#     stages: [commit-msg]
+#     args: [] # list of Conventional Commits types to allow. default: ["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"]
 
 ## Conventional commit message(commitizen)
 # - repo: https://github.com/commitizen-tools/commitizen
 #   rev: v2.42.1
 #   hooks:
-#     - id: commitizen
-#       stages: [commit-msg]
+#   - id: commitizen
+#     stages: [commit-msg]
