@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.5](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.4...v0.3.5) (2023-04-03)
+
+
+### Features
+
+* **config:** add baseline to detect-secrets hook ([b19547b](https://github.com/DataShades/ckanext-toolbelt/commit/b19547b668c588021d8499bbb9d62a1860898b94))
+
 ### [0.3.4](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.3...v0.3.4) (2023-04-03)
 
 
