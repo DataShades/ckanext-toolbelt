@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.2](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.1...v0.3.2) (2023-04-03)
+
+
+### Features
+
+* **config:** add detect secrets hook ([1170f24](https://github.com/DataShades/ckanext-toolbelt/commit/1170f24f5b38484659bc1e5a8a7220c8ddaccc15))
+* **config:** add new hooks to pre-commit ([8077a9f](https://github.com/DataShades/ckanext-toolbelt/commit/8077a9f89290b00355a092422926d21a6af72b26))
+* **config:** restrict scope of commitizen changes ([3312f13](https://github.com/DataShades/ckanext-toolbelt/commit/3312f1301a6113676a4607dd6d9f8adf4d6683ff))
+
 ### [0.3.1](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.0...v0.3.1) (2023-04-03)
 
 
