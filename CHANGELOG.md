@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.4](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.3...v0.3.4) (2023-04-03)
+
+
+### Features
+
+* **config:** switch isort to black profile ([302d2f3](https://github.com/DataShades/ckanext-toolbelt/commit/302d2f3f94a3b9687c9c38c9e8884266dca6bf90))
+
 ### [0.3.3](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.2...v0.3.3) (2023-04-03)
 
 
