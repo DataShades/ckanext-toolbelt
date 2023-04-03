@@ -38,10 +38,10 @@ repos:
 #     stages: [pre-commit]
 
 # ## PEP257: Python docstring conventions
-# - repo: https://github.com/FalconSocial/pre-commit-mirrors-pep257
-#   rev: v0.3.3
+# - repo: https://github.com/PyCQA/pydocstyle
+#   rev: 6.3.0
 #   hooks:
-#   - id: pep257
+#   - id: pydocstyle
 #     stages: [pre-push]
 
 # # Add trailing commas to calls and literals

@@ -57,3 +57,9 @@ repos:
   hooks:
   - id: commitizen
     stages: [commit-msg]
+
+# ## PEP257: Python docstring conventions
+# - repo: https://github.com/PyCQA/pydocstyle
+#   rev: 6.3.0
+#   hooks:
+#   - id: pydocstyle
