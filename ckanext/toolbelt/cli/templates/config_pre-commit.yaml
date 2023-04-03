@@ -9,50 +9,56 @@ repos:
   hooks:
   # - id: check-yaml
   - id: end-of-file-fixer
+    stages: [pre-commit]
   - id: trailing-whitespace
+    stages: [pre-commit]
   - id: debug-statements
     stages: [pre-push]
 
-## Isort
+# ## Isort
 # - repo: https://github.com/pycqa/isort
 #   rev: 5.12.0
 #   hooks:
 #   - id: isort
 #     name: isort
+#     stages: [pre-commit]
 
-## Black
+# ## Black
 # - repo: https://github.com/psf/black
 #   rev: 23.3.0
 #   hooks:
 #   - id: black
+#     stages: [pre-commit]
 
-## Ruff
+# ## Ruff
 # - repo: https://github.com/charliermarsh/ruff-pre-commit
 #   rev: v0.0.260
 #   hooks:
 #   - id: ruff
+#     stages: [pre-commit]
 
-## PEP257: Python docstring conventions
+# ## PEP257: Python docstring conventions
 # - repo: https://github.com/FalconSocial/pre-commit-mirrors-pep257
 #   rev: v0.3.3
 #   hooks:
 #   - id: pep257
 #     stages: [pre-push]
 
-# Add trailing commas to calls and literals
+# # Add trailing commas to calls and literals
 # - repo: https://github.com/asottile/add-trailing-comma
 #   rev: v2.4.0
 #   hooks:
 #   - id: add-trailing-comma
+#     stages: [pre-commit]
 
-## Detect passwords, api-tokens, secrets within a code base
+# ## Detect passwords, api-tokens, secrets within a code base
 # - repo: https://github.com/Yelp/detect-secrets
 #   rev: v1.4.0
 #   hooks:
 #   - id: detect-secrets
 #     stages: [pre-push]
 
-## Conventional commit message(basic)
+# ## Conventional commit message(basic)
 # - repo: https://github.com/compilerla/conventional-pre-commit
 #   rev: v2.1.1
 #   hooks:
@@ -60,7 +66,7 @@ repos:
 #     stages: [commit-msg]
 #     args: [] # list of Conventional Commits types to allow. default: ["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"]
 
-## Conventional commit message(commitizen)
+# ## Conventional commit message(commitizen)
 # - repo: https://github.com/commitizen-tools/commitizen
 #   rev: v2.42.1
 #   hooks:
