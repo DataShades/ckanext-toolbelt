@@ -57,6 +57,7 @@ repos:
 #   hooks:
 #   - id: detect-secrets
 #     stages: [pre-push]
+#     # args: ['--baseline', '.secrets.baseline']
 
 # ## Conventional commit message(basic)
 # - repo: https://github.com/compilerla/conventional-pre-commit
