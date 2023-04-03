@@ -11,7 +11,8 @@ from ckan import model
 SQLAlchemy = import_string("flask_sqlalchemy:SQLAlchemy", True)
 
 _EngineDebuggingSignalEvents = import_string(
-    "flask_sqlalchemy:_EngineDebuggingSignalEvents", True
+    "flask_sqlalchemy:_EngineDebuggingSignalEvents",
+    True,
 )
 record_queries = import_string("flask_sqlalchemy.record_queries", True)
 
@@ -39,7 +40,7 @@ class FdtSqlalchemyPlugin(p.SingletonPlugin):
 
         return app
 
-    def configure(self, config):
+    def configure(self, _config):
         if _EngineDebuggingSignalEvents:
             _EngineDebuggingSignalEvents(model.meta.engine, "ckan").register()
 

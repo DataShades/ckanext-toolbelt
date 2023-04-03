@@ -1,10 +1,10 @@
 import json
 import logging
-import pickle
+import pickle  # nosec: B403
 from functools import wraps
 from typing import Any, Callable, Generic, Optional, TypeVar, Union, cast
 
-import ckan.lib.redis as redis
+from ckan.lib import redis
 
 from . import constantly
 
@@ -41,7 +41,7 @@ Loader = Callable[[KeyStr], T]
 
 def default_key_strategy(func, *args, **kwargs) -> bytes:
     return bytes(f"{func.__module__}:{func.__name__}", "utf8") + pickle.dumps(
-        (args, kwargs)
+        (args, kwargs),
     )
 
 

@@ -16,6 +16,7 @@ class Collector(Generic[TFunc]):
 
         if prefix:
             self.prefix = prefix + separator
+
         else:
             self.prefix = ""
 

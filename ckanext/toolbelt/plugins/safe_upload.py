@@ -6,9 +6,9 @@ from typing import Optional
 
 import magic
 
-import ckan.lib.uploader as uploader
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
+from ckan.lib import uploader
 
 
 class SafeUploadPlugin(p.SingletonPlugin):
@@ -31,9 +31,7 @@ class SafeUpload(uploader.Upload):
     filename: Optional[str]
 
     def update_data_dict(self, data_dict, url_field, file_field, clear_field):
-        super(SafeUpload, self).update_data_dict(
-            data_dict, url_field, file_field, clear_field
-        )
+        super().update_data_dict(data_dict, url_field, file_field, clear_field)
         if self.filename:
             self.verify_type()
 
@@ -51,7 +49,7 @@ class SafeUpload(uploader.Upload):
         err = {self.file_field: [f"Unsupported upload type: {actual}"]}
 
         mimetypes = tk.aslist(
-            tk.config.get(f"ckan.upload.{self.object_type}.mimetypes")
+            tk.config.get(f"ckan.upload.{self.object_type}.mimetypes"),
         )
         if mimetypes and actual not in mimetypes:
             raise tk.ValidationError(err)

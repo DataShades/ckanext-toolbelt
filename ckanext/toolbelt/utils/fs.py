@@ -25,12 +25,12 @@ class StaticPath:
     def __enter__(self):
         return self.path
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type_, value, traceback):
         pass
 
 
 class RemovablePath(StaticPath):
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type_, value, traceback):
         if self.path:
             os.remove(self.path)
 
@@ -51,7 +51,7 @@ def path_to_resource(res, max_size: int = 0) -> StaticPath:
 
         path = uploader.get_path(res_id)
         if not os.path.exists(path):
-            log.warn('Resource "%s" refers to unexisting path "%s"', res, path)
+            log.warning('Resource "%s" refers to unexisting path "%s"', res, path)
             return StaticPath(None)
 
         return StaticPath(path)
@@ -63,7 +63,7 @@ def path_to_resource(res, max_size: int = 0) -> StaticPath:
     return StaticPath(None)
 
 
-def _download_remote_file(res_id, url, max_size: int):
+def _download_remote_file(res_id: str, url: str, max_size: int) -> Optional[str]:
     """
     Downloads remote resource and save it as temporary file
     Returns path to this file
@@ -77,26 +77,28 @@ def _download_remote_file(res_id, url, max_size: int):
             headers={"user-agent": "python/toolbelt"},
         )
     except Exception as e:
-        log.warn(
-            "Unable to make GET request for resource {} with url <{}>: {}".format(
-                res_id, url, e
-            )
+        log.warning(
+            "Unable to make GET request for resource %s with url <%s>: %s",
+            res_id,
+            url,
+            e,
         )
         return
 
     if not resp.ok:
-        log.warn(
-            "Unsuccessful GET request for resource {} with url <{}>. \
-            Status code: {}".format(
-                res_id, url, resp.status_code
-            ),
+        log.warning(
+            "Unsuccessful GET request for resource %s with url <%s>. \
+            Status code: %s",
+            res_id,
+            url,
+            resp.status_code,
         )
         return
 
     try:
         size = int(resp.headers.get("content-length", 0))
     except ValueError:
-        log.warn("Incorrect Content-length header from url <{}>".format(url))
+        log.warning("Incorrect Content-length header from url <%s>", url)
         return
 
     if not size:
@@ -113,9 +115,7 @@ def _download_remote_file(res_id, url, max_size: int):
             for chunk in resp.iter_content(1024 * 64):
                 dest.write(chunk)
     except requests.exceptions.RequestException as e:
-        log.error(
-            "Cannot index remote resource {} with url <{}>: {}".format(res_id, url, e)
-        )
+        log.error("Cannot index remote resource %s with url <%s>: %s", res_id, url, e)
         os.remove(dest.name)
         return
     return dest.name

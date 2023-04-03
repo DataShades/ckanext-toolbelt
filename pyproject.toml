@@ -11,6 +11,12 @@ known_ckanext = "ckanext"
 known_self = "ckanext.toolbelt"
 sections = "FUTURE,STDLIB,FIRSTPARTY,THIRDPARTY,CKAN,CKANEXT,SELF,LOCALFOLDER"
 
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+        "inconsistent-return-statements",
+]
+
+
 [tool.pytest.ini_options]
 addopts = "--ckan-ini test.ini"
 filterwarnings = [

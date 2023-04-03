@@ -9,6 +9,7 @@ repos:
   # - id: check-yaml
   - id: end-of-file-fixer
   - id: trailing-whitespace
+  - id: debug-statements
 
 ## Isort
 # - repo: https://github.com/pycqa/isort
@@ -28,6 +29,18 @@ repos:
 #   rev: v0.0.260
 #   hooks:
 #   - id: ruff
+
+## PEP257: Python docstring conventions
+# - repo: https://github.com/FalconSocial/pre-commit-mirrors-pep257
+#   rev: v0.3.3
+#   hooks:
+#     - id: pep257
+
+# Add trailing commas to calls and literals
+# - repo: https://github.com/asottile/add-trailing-comma
+#   rev: v2.4.0
+#   hooks:
+#   - id: add-trailing-comma
 
 ## Conventional commit message(basic)
 # - repo: https://github.com/compilerla/conventional-pre-commit
