@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.0...v0.3.1) (2023-04-03)
+
+
+### Features
+
+* add commitizen hook ([b2a59f2](https://github.com/DataShades/ckanext-toolbelt/commit/b2a59f231e610ec755f694bf075341c1a289f5b6))
+* **config:** add commitizen to pyproject ([c6cb9a3](https://github.com/DataShades/ckanext-toolbelt/commit/c6cb9a38af5321ebb469ae49a9047d938a459a42))
+* **config:** include default types of conventional messsages into pre-commit config ([470cae3](https://github.com/DataShades/ckanext-toolbelt/commit/470cae34821a53912ae8a70dd47671a6b67e546f))
+
+
+### Bug Fixes
+
+* mandatory plugins for `make readme config` command ([80dab04](https://github.com/DataShades/ckanext-toolbelt/commit/80dab0470ed18edca042e24dc40e9013dff802ed))
+
 ## [0.3.0](https://github.com/DataShades/ckanext-toolbelt/compare/v0.2.17...v0.3.0) (2023-04-02)
 
 
