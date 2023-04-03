@@ -89,3 +89,17 @@ def pytest(plugin: str, file: Optional[str]):
         {"PLUGIN": _shared.safe_plugin_name(plugin)},
         bool(file),
     )
+
+
+@template.command()
+@_shared.option_plugin
+@option_file
+def commitizen(plugin: str, file: Optional[str]):
+    """Commitizen configuration"""
+    _shared.ensure_root()
+    _shared.produce(
+        _shared.template_source("commitizen"),
+        file or "",
+        {"PLUGIN": _shared.safe_plugin_name(plugin)},
+        bool(file),
+    )

@@ -21,7 +21,7 @@ def pyproject(plugin: str, write: bool):
         f"{part.upper()}_CONFIG": _shared.render(
             _shared.template_source(part), {"PLUGIN": plugin}
         )
-        for part in ["black", "ruff", "isort", "pytest", "pyright"]
+        for part in ["black", "ruff", "isort", "pytest", "pyright", "commitizen"]
     }
     data["PLUGIN"] = plugin
 
