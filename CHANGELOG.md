@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.3](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.2...v0.3.3) (2023-04-03)
+
+
+### Features
+
+* **config:** add stage to all hooks ([7f2850b](https://github.com/DataShades/ckanext-toolbelt/commit/7f2850ba0a4a262441353e00e20de46c47e19fa8))
+
 ### [0.3.2](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.1...v0.3.2) (2023-04-03)
 
 
