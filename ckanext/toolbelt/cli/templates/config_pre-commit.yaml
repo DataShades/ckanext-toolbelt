@@ -44,13 +44,6 @@ repos:
 #   - id: pydocstyle
 #     stages: [pre-push]
 
-# # Add trailing commas to calls and literals
-# - repo: https://github.com/asottile/add-trailing-comma
-#   rev: v2.4.0
-#   hooks:
-#   - id: add-trailing-comma
-#     stages: [pre-commit]
-
 # ## Detect passwords, api-tokens, secrets within a code base
 # - repo: https://github.com/Yelp/detect-secrets
 #   rev: v1.4.0
