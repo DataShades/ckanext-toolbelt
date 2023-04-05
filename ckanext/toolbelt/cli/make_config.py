@@ -54,6 +54,19 @@ def deps_makefile(plugin: str, write: bool):
     )
 
 
+@config.command()
+@_shared.option_plugin
+@_shared.option_write
+def gulp_sass(plugin: str, write: bool):
+    """Gulpfile for SCSS-based assets"""
+    _shared.ensure_root()
+    _shared.produce(
+        *_config_files("gulp-sass"),
+        {"PLUGIN": _shared.safe_plugin_name(plugin)},
+        write,
+    )
+
+
 def _config_files(name: str) -> tuple[str, str]:
     if name == "pyproject":
         return f"config_{name}.toml", "pyproject.toml"
@@ -63,6 +76,9 @@ def _config_files(name: str) -> tuple[str, str]:
 
     if name == "deps-makefile":
         return f"config_{name}.sh", "Makefile"
+
+    if name == "gulp-sass":
+        return f"config_{name}.js", "gulpfile.js"
 
     click.secho(f"Unsupported config: {name}", fg="red")
     raise click.Abort()
