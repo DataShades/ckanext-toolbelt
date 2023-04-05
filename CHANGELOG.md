@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.6](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.5...v0.3.6) (2023-04-05)
+
+
+### Features
+
+* gulp-sass config ([a323afa](https://github.com/DataShades/ckanext-toolbelt/commit/a323afa88d6f87757a420c547f7f243e95a89c1e))
+
+
+### Bug Fixes
+
+* remove trailing-comma hook because it superseeded by black ([c8f50b0](https://github.com/DataShades/ckanext-toolbelt/commit/c8f50b01d2d286dd0299326629a46186f26b55fd))
+
 ### [0.3.5](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.4...v0.3.5) (2023-04-03)
 
 
