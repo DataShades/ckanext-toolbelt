@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.7](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.6...v0.3.7) (2023-04-07)
+
+
+### Bug Fixes
+
+* include toml examples into distribution ([973f035](https://github.com/DataShades/ckanext-toolbelt/commit/973f035472c5347577e8a39d668fcabdb12206c0))
+
 ### [0.3.6](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.5...v0.3.6) (2023-04-05)
 
 
