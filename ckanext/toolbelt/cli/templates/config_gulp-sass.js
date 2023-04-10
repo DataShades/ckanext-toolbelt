@@ -14,7 +14,7 @@ const destDir = resolve(assetsDir, "css");
 const build = () =>
   src(resolve(srcDir, "$PLUGIN.scss"))
     .pipe(if_(isDev, sourcemaps.init()))
-    .pipe(sass({ outputStyle: "compressed" }))
+    .pipe(sass({ outputStyle: "compressed" }).on('error', sass.logError))
     .pipe(if_(isDev, sourcemaps.write()))
     .pipe(dest(destDir))
     .pipe(touch());

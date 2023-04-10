@@ -24,9 +24,6 @@ log = logging.getLogger(__name__)
 
 def conjure_fast_group_activities():
     log.info("ieiunium sicut ventus")
-    if tk.check_ckan_version("2.10"):
-        log.error("This spell works only for CKAN v2.9")
-        return
 
     def ___group_activity_perfomance_patch(group_id, include_hidden_activity=False):
         import ckan.model as model
@@ -53,7 +50,10 @@ def conjure_fast_group_activities():
             member_activity = _filter_activitites_from_users(member_activity)  # noqa
         return _activities_union_all(group_activity, member_activity)  # noqa
 
-    from ckan.model.activity import _group_activity_query
+    if tk.check_ckan_version("2.10"):
+        from ckanext.activity.model.activity import _group_activity_query
+    else:
+        from ckan.model.activity import _group_activity_query
 
     _group_activity_query.__code__ = ___group_activity_perfomance_patch.__code__
 
