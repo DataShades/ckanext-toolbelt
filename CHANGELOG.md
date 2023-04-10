@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.8](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.7...v0.3.8) (2023-04-10)
+
+
+### Bug Fixes
+
+* **config:** gulp-sass config has a default error logger ([0dfa357](https://github.com/DataShades/ckanext-toolbelt/commit/0dfa35728ae0723befea8f2c262f7e211868ab35))
+
 ### [0.3.7](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.6...v0.3.7) (2023-04-07)
 
 
