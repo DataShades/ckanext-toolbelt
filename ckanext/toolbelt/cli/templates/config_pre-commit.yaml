@@ -37,13 +37,6 @@ repos:
 #   - id: ruff
 #     stages: [pre-commit]
 
-# ## PEP257: Python docstring conventions
-# - repo: https://github.com/PyCQA/pydocstyle
-#   rev: 6.3.0
-#   hooks:
-#   - id: pydocstyle
-#     stages: [pre-push]
-
 # ## Detect passwords, api-tokens, secrets within a code base
 # - repo: https://github.com/Yelp/detect-secrets
 #   rev: v1.4.0
@@ -51,14 +44,6 @@ repos:
 #   - id: detect-secrets
 #     stages: [pre-push]
 #     # args: ['--baseline', '.secrets.baseline']
-
-# ## Conventional commit message(basic)
-# - repo: https://github.com/compilerla/conventional-pre-commit
-#   rev: v2.1.1
-#   hooks:
-#   - id: conventional-pre-commit
-#     stages: [commit-msg]
-#     args: [] # list of Conventional Commits types to allow. default: ["build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test"]
 
 # ## Conventional commit message(commitizen)
 # - repo: https://github.com/commitizen-tools/commitizen
