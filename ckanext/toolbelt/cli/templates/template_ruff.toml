@@ -1,3 +1,34 @@
 [tool.ruff]
 target-version = "py38"
-select = ["E", "F"]
+select = ["E", "F"] # default
+# select = [
+#        "B",  # likely bugs and design problems
+#        "BLE",  # do not catch blind exception
+#        "C40",  # better list/set/dict comprehensions
+#        "C90",  # check McCabe complexity
+#        "COM",  # trailing commas
+#        "E",  # pycodestyle
+#        "F",  # pyflakes
+#        "G",  # format strings for logging statements
+#        "N",  # naming conventions
+#        "PL",  # pylint
+#        "PT",  # pytest style
+#        "PIE",  # misc lints
+#        "Q",  # preferred quoting style
+#        "RET",  # improvements for return statements
+#        "RSE",  # improvements for rise statements
+#        "S",  # security testing
+#        "SIM",  # simplify code
+#        "T10",  # debugging statements
+#        "T20",  # print statements
+#        "TID",  # tidier imports
+#        "TRY",  # better exceptions
+#        "UP",  # upgrade syntax for newer versions of the language
+# ]
+ignore = [
+       "PT004", # fixture does not return anything, add leading underscore: violated by clean_db
+       "PLC1901", # simplify comparison to empty string: violated by SQLAlchemy filters
+]
+
+[tool.ruff.per-file-ignores]
+"ckanext/$PLUGIN/tests*" = ["S"]
