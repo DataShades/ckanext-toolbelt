@@ -10,7 +10,7 @@ class DecodingDebugging(Debugging):
     def _print_message_content(self, peer, data: bytes):
         msg = email.message_from_bytes(data)
         print("# Headers:", file=self.stream)
-        for (header, value) in msg.items():
+        for header, value in msg.items():
             print(header, ": ", value, file=self.stream)
         print("# Message:", file=self.stream)
         for part in msg.walk():
@@ -35,6 +35,6 @@ def dev():
 def mail_server(port, host):
     """Start mail server that will catch outcomming mails."""
     loop = asyncio.get_event_loop()
-    ctrl = Controller(DecodingDebugging())
+    ctrl = Controller(DecodingDebugging(), host, port)
     ctrl.start()
     loop.run_forever()
