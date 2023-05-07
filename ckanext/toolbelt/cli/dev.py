@@ -17,8 +17,13 @@ class DecodingDebugging(Debugging):
             print("---------- a part: ----------", file=self.stream)
             maybe_decoded_payload = part.get_payload(decode=True)
             if maybe_decoded_payload is not None:
+                try:
+                    decoded = bytes.decode(maybe_decoded_payload, encoding="utf-8")
+                except UnicodeError as e:
+                    decoded = f"<{e}>"
+
                 print(
-                    bytes.decode(maybe_decoded_payload, encoding="utf-8"),
+                    decoded,
                     file=self.stream,
                 )
 
@@ -32,7 +37,7 @@ def dev():
 @dev.command()
 @click.option("-p", "--port", default=8025, type=int)
 @click.option("-h", "--host", default="localhost")
-def mail_server(port, host):
+def mail_server(port: int, host: str):
     """Start mail server that will catch outcomming mails."""
     loop = asyncio.get_event_loop()
     ctrl = Controller(DecodingDebugging(), host, port)
