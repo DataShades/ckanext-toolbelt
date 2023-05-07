@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 from sqlalchemy.orm.scoping import ScopedSession
 from typing_extensions import TypeAlias, TypedDict
 
@@ -12,5 +10,5 @@ AlchemySession = ScopedSession
 
 
 class SelectOption(TypedDict):
-    text: Optional[str]
+    text: str | None
     value: str

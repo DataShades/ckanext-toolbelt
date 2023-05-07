@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from string import Template
-from typing import Any, Optional
+from typing import Any
 
 import click
 
@@ -32,9 +32,10 @@ def safe_plugin_name(plugin: str) -> str:
     return plugin
 
 
-def render(tpl: str, data: Optional[dict[str, Any]] = None) -> str:
+def render(tpl: str, data: dict[str, Any] | None = None) -> str:
     source = os.path.join(os.path.dirname(__file__), "templates", tpl)
-    return Template(open(source).read()).safe_substitute(**data or {})
+    with open(source) as stream:
+        return Template(stream.read()).safe_substitute(**data or {})
 
 
 def template_source(name: str) -> str:
@@ -45,15 +46,17 @@ def ensure_root():
     ext = os.path.basename(os.getcwd())
     if not ext.startswith("ckanext-"):
         click.secho(
-            "Can be executed only from the root directory of the extension", fg="red"
+            "Can be executed only from the root directory of the extension",
+            fg="red",
         )
-        raise click.Abort()
+        raise click.Abort
 
 
 def produce(src: str, dest: str, data: dict[str, Any], write: bool):
-    file = None
-    if write:
-        file = open(dest, "w")
-
     content = render(src, data).strip()
-    click.echo(content, file)
+
+    if write:
+        with open(dest, "w") as file:
+            click.echo(content, file)
+    else:
+        click.echo(content)

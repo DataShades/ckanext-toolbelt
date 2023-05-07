@@ -11,7 +11,10 @@ PARENT_FIELD = "notes"
 @pytest.mark.ckan_config(h.CONFIG_PARENT_DISTANCE, 5)
 @pytest.mark.ckan_config(h.CONFIG_PARENT_FIELD, PARENT_FIELD)
 @pytest.mark.usefixtures(
-    "with_plugins", "clean_db", "clean_index", "with_request_context"
+    "with_plugins",
+    "clean_db",
+    "clean_index",
+    "with_request_context",
 )
 class TestPackageHierarchy:
     def test_missing_package(self):
@@ -34,7 +37,8 @@ class TestPackageHierarchy:
 
         parent_hierarchy = h.package_hierarchy(parent["id"], {"user": sysadmin["name"]})
         brother_hierarchy = h.package_hierarchy(
-            brother["id"], {"user": sysadmin["name"]}
+            brother["id"],
+            {"user": sysadmin["name"]},
         )
         sister_hierarchy = h.package_hierarchy(sister["id"], {"user": sysadmin["name"]})
 

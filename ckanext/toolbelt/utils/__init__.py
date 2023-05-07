@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import Any, Callable, TypeVar
 
 import ckan.plugins.toolkit as tk
 
@@ -18,9 +18,9 @@ def constantly(v: T) -> Callable[..., T]:
 
 def config_getter(
     name: str,
-    default: Union[T, str, None],
-    convert: Optional[Callable[[Union[T, str, None]], T]] = None,
-) -> Callable[..., Union[T, str, None]]:
+    default: T | str | None,
+    convert: Callable[[T | str | None], T] | None = None,
+) -> Callable[..., T | str | None]:
     def getter(*_args: Any, **_kwargs: Any):
         v = tk.config.get(name, default)
         if convert:

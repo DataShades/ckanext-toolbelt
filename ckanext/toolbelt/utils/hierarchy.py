@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import abc
 import logging
-from typing import Any, Iterable, Optional, Type
+from typing import Any, Iterable
 
 from typing_extensions import TypeAlias
 
@@ -61,14 +61,14 @@ class Strategy(abc.ABC):
 
         if tk.request:
             parent_distance = tk.asint(
-                tk.request.args.get("__relationship_parent_distance", parent_distance)
+                tk.request.args.get("__relationship_parent_distance", parent_distance),
             )
             child_distance = tk.asint(
-                tk.request.args.get("__relationship_child_distance", child_distance)
+                tk.request.args.get("__relationship_child_distance", child_distance),
             )
 
             sibling_limit = tk.asint(
-                tk.request.args.get("__relationship_sibling_limit", sibling_limit)
+                tk.request.args.get("__relationship_sibling_limit", sibling_limit),
             )
 
         self.parent_distance = parent_distance
@@ -77,11 +77,11 @@ class Strategy(abc.ABC):
 
     @abc.abstractmethod
     def root(self, pkg: PackageDict) -> tuple[PackageDict, int]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
     @abc.abstractmethod
     def children(self, pkg: PackageDict) -> Iterable[PackageDict]:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 class ParentReference(Strategy):
@@ -132,8 +132,8 @@ class ParentReference(Strategy):
 
 def package_hierarchy(
     id_: str,
-    context: Optional[dict[str, Any]] = None,
-    strategy_factory: Type[Strategy] = ParentReference,
+    context: dict[str, Any] | None = None,
+    strategy_factory: type[Strategy] = ParentReference,
 ) -> Node[PackageDict]:
     """Return a Node starting from the **reacheable** root of the package's
     hierarchy.
@@ -144,12 +144,13 @@ def package_hierarchy(
     strategy = strategy_factory(ctx)
     root, distance = strategy.root(root)
 
-    hierarchy = _package_as_node(root, distance, strategy)
-    return hierarchy
+    return _package_as_node(root, distance, strategy)
 
 
 def _package_as_node(
-    pkg: PackageDict, buffer: int, strategy: Strategy
+    pkg: PackageDict,
+    buffer: int,
+    strategy: Strategy,
 ) -> Node[PackageDict]:
     """Recursive function that wraps package into Node and attach children to
     it as leaves.
@@ -158,10 +159,7 @@ def _package_as_node(
     children: Iterable[PackageDict]
 
     depth_capacity = buffer + strategy.child_distance
-    if depth_capacity:
-        children = strategy.children(pkg)
-    else:
-        children = []
+    children = strategy.children(pkg) if depth_capacity else []
 
     node = Node(
         pkg,

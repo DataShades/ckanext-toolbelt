@@ -24,7 +24,7 @@ class CompositeMixin:
         t = data_dict.get("type")
         if not t or t not in self._schemas:
             return data_dict, {
-                "type": "Unsupported {thing} type: {t}".format(thing=thing, t=t)
+                "type": f"Unsupported {thing} type: {t}",
             }
 
         scheming_schema = self._expanded_schemas[t]
@@ -41,11 +41,15 @@ class CompositeMixin:
 
         if before:
             schema["__before"] = validation.validators_from_string(
-                before, None, scheming_schema
+                before,
+                None,
+                scheming_schema,
             )
         if after:
             schema["__after"] = validation.validators_from_string(
-                after, None, scheming_schema
+                after,
+                None,
+                scheming_schema,
             )
         fg = ((scheming_schema["fields"], schema, True),)
 
@@ -54,7 +58,9 @@ class CompositeMixin:
             for f in field_list:
                 convert_this = convert_extras and f["field_name"] not in schema
                 destination[f["field_name"]] = get_validators(
-                    f, scheming_schema, convert_this
+                    f,
+                    scheming_schema,
+                    convert_this,
                 )
                 if convert_this and "repeating_subfields" in f:
                     composite_convert_fields.append(f["field_name"])
@@ -65,7 +71,8 @@ class CompositeMixin:
                 if f not in unflat:
                     continue
                 data[(f,)] = json.dumps(
-                    unflat[f], default=lambda x: None if x == tk.missing else x
+                    unflat[f],
+                    default=lambda x: None if x == tk.missing else x,
                 )
                 convert_to_extras((f,), data, errors, context)
                 del data[(f,)]

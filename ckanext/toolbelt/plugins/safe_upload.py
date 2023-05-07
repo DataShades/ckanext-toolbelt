@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import os
 import uuid
-from typing import Optional
 
 import magic
 
@@ -21,6 +20,7 @@ class SafeUploadPlugin(p.SingletonPlugin):
             if isinstance(plugin, type(self)):
                 continue
             return plugin.get_resource_uploader(data_dict)
+        return None
 
     def get_uploader(self, upload_to, old_filename=None):
         return SafeUpload(upload_to, old_filename)
@@ -28,7 +28,7 @@ class SafeUploadPlugin(p.SingletonPlugin):
 
 class SafeUpload(uploader.Upload):
     storage_path: str
-    filename: Optional[str]
+    filename: str | None
 
     def update_data_dict(self, data_dict, url_field, file_field, clear_field):
         super().update_data_dict(data_dict, url_field, file_field, clear_field)

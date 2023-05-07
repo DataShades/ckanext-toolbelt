@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import Any, Callable, Generic, TypeVar, Union
+from typing import Any, Callable, Generic, TypeVar
 
 from typing_extensions import Self
 
@@ -23,7 +23,7 @@ class Collector(Generic[TFunc]):
     def split(self) -> tuple[Self, Callable[[], dict[str, TFunc]]]:
         return self, self.get_collection
 
-    def __call__(self, func_or_name: Union[str, TFunc]):
+    def __call__(self, func_or_name: str | TFunc):
         name: str
 
         def adder(func: TFunc):
@@ -34,7 +34,7 @@ class Collector(Generic[TFunc]):
             name = func_or_name
             return adder
 
-        name = self.prefix + getattr(func_or_name, "__name__")
+        name = self.prefix + func_or_name.__name__
         return adder(func_or_name)
 
     def get_collection(self) -> dict[str, TFunc]:

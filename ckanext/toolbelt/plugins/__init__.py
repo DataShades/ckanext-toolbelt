@@ -1,4 +1,4 @@
-import ckan.plugins as plugins
+from ckan import plugins
 
 
 class ToolbeltPlugin(plugins.SingletonPlugin):

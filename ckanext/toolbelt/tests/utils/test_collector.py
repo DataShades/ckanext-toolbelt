@@ -8,7 +8,7 @@ class TestCollector:
         pass
 
     @pytest.mark.parametrize(
-        "prefix, separator, basic_name, prefixed_name",
+        ("prefix", "separator", "basic_name", "prefixed_name"),
         [
             ("", "_", "xxx", "fun"),
             ("toolbelt", "_", "xxx", "toolbelt_fun"),

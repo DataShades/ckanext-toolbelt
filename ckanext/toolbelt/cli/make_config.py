@@ -19,7 +19,8 @@ def pyproject(plugin: str, write: bool):
     plugin = _shared.safe_plugin_name(plugin)
     data = {
         f"{part.upper()}_CONFIG": _shared.render(
-            _shared.template_source(part), {"PLUGIN": plugin}
+            _shared.template_source(part),
+            {"PLUGIN": plugin},
         )
         for part in ["black", "ruff", "isort", "pytest", "pyright", "commitizen"]
     }
@@ -81,4 +82,4 @@ def _config_files(name: str) -> tuple[str, str]:
         return f"config_{name}.js", "gulpfile.js"
 
     click.secho(f"Unsupported config: {name}", fg="red")
-    raise click.Abort()
+    raise click.Abort

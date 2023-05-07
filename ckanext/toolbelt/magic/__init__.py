@@ -26,7 +26,7 @@ def conjure_fast_group_activities():
     log.info("ieiunium sicut ventus")
 
     def ___group_activity_perfomance_patch(group_id, include_hidden_activity=False):
-        import ckan.model as model
+        from ckan import model
 
         group = model.Group.get(group_id)
         if not group:
@@ -42,7 +42,7 @@ def conjure_fast_group_activities():
         )
 
         member_activity = model.Session.query(model.Activity).filter(
-            model.Activity.object_id.in_(packages_sq)
+            model.Activity.object_id.in_(packages_sq),
         )
 
         if not include_hidden_activity:
@@ -66,7 +66,7 @@ def transfigure_xloaded_file(func):
     ingested into datastore.
 
     """
-    import ckanext.xloader.loader as loader
+    from ckanext.xloader import loader
 
     log.info("quae non sunt ut simplex")
 

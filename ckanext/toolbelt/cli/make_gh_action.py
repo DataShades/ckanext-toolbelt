@@ -10,7 +10,6 @@ from . import _shared
 @click.group()
 def gh_action():
     """Make GitHub actions."""
-    pass
 
 
 @gh_action.command()

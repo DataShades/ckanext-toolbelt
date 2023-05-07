@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import click
 
 from . import _shared
@@ -24,7 +22,7 @@ def template():
 @template.command()
 @_shared.option_plugin
 @option_file
-def black(plugin: str, file: Optional[str]):
+def black(plugin: str, file: str | None):
     """Black configuration"""
     _shared.ensure_root()
     _shared.produce(
@@ -38,7 +36,7 @@ def black(plugin: str, file: Optional[str]):
 @template.command()
 @_shared.option_plugin
 @option_file
-def isort(plugin: str, file: Optional[str]):
+def isort(plugin: str, file: str | None):
     """Isort configuration"""
     _shared.ensure_root()
     _shared.produce(
@@ -52,7 +50,7 @@ def isort(plugin: str, file: Optional[str]):
 @template.command()
 @_shared.option_plugin
 @option_file
-def ruff(plugin: str, file: Optional[str]):
+def ruff(plugin: str, file: str | None):
     """Ruff configuration"""
     _shared.ensure_root()
     _shared.produce(
@@ -66,7 +64,7 @@ def ruff(plugin: str, file: Optional[str]):
 @template.command()
 @_shared.option_plugin
 @option_file
-def pyright(plugin: str, file: Optional[str]):
+def pyright(plugin: str, file: str | None):
     """Pyrigh configuration"""
     _shared.ensure_root()
     _shared.produce(
@@ -80,7 +78,7 @@ def pyright(plugin: str, file: Optional[str]):
 @template.command()
 @_shared.option_plugin
 @option_file
-def pytest(plugin: str, file: Optional[str]):
+def pytest(plugin: str, file: str | None):
     """Pytest configuration"""
     _shared.ensure_root()
     _shared.produce(
@@ -94,7 +92,7 @@ def pytest(plugin: str, file: Optional[str]):
 @template.command()
 @_shared.option_plugin
 @option_file
-def commitizen(plugin: str, file: Optional[str]):
+def commitizen(plugin: str, file: str | None):
     """Commitizen configuration"""
     _shared.ensure_root()
     _shared.produce(

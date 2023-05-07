@@ -3,7 +3,6 @@ from __future__ import annotations
 import logging
 import os
 import tempfile
-from typing import Optional
 
 import requests
 
@@ -16,7 +15,7 @@ DEFAULT_DOWNLOAD_TIMEOUT = 2
 
 
 class StaticPath:
-    def __init__(self, path: Optional[str]):
+    def __init__(self, path: str | None):
         self.path = path
 
     def __bool__(self):
@@ -63,7 +62,7 @@ def path_to_resource(res, max_size: int = 0) -> StaticPath:
     return StaticPath(None)
 
 
-def _download_remote_file(res_id: str, url: str, max_size: int) -> Optional[str]:
+def _download_remote_file(res_id: str, url: str, max_size: int) -> str | None:
     """
     Downloads remote resource and save it as temporary file
     Returns path to this file
@@ -76,14 +75,14 @@ def _download_remote_file(res_id: str, url: str, max_size: int) -> Optional[str]
             stream=True,
             headers={"user-agent": "python/toolbelt"},
         )
-    except Exception as e:
+    except requests.RequestException as e:
         log.warning(
             "Unable to make GET request for resource %s with url <%s>: %s",
             res_id,
             url,
             e,
         )
-        return
+        return None
 
     if not resp.ok:
         log.warning(
@@ -93,29 +92,29 @@ def _download_remote_file(res_id: str, url: str, max_size: int) -> Optional[str]
             url,
             resp.status_code,
         )
-        return
+        return None
 
     try:
         size = int(resp.headers.get("content-length", 0))
     except ValueError:
         log.warning("Incorrect Content-length header from url <%s>", url)
-        return
+        return None
 
     if not size:
         log.debug("Cannot determine size")
-        return
+        return None
 
     if size > max_size:
         log.debug("File exceeds allowed size(%d): %d", max_size, size)
-        return
+        return None
 
     dest = tempfile.NamedTemporaryFile(delete=False)
     try:
         with dest:
             for chunk in resp.iter_content(1024 * 64):
                 dest.write(chunk)
-    except requests.exceptions.RequestException as e:
-        log.error("Cannot index remote resource %s with url <%s>: %s", res_id, url, e)
+    except requests.RequestException:
+        log.exception("Cannot index remote resource %s with url <%s>", res_id, url)
         os.remove(dest.name)
-        return
+        return None
     return dest.name

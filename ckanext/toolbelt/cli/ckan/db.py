@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import click
 
-import ckan.model as model
 import ckan.plugins.toolkit as tk
+from ckan import model
 
 
 @click.group(short_help="Extra tools for managing DB")
@@ -19,7 +19,7 @@ def clean(yes: bool, keep: tuple[str]):
         tk.error_shout("This command will erase data from your portal's DB.")
         tk.error_shout("All the datasets, organizations and users will be removed")
         tk.error_shout("Run it with `--yes` flag if you know what you are doing.")
-        raise click.Abort()
+        raise click.Abort
 
     model.repo.session.remove()
     ## use raw connection for performance

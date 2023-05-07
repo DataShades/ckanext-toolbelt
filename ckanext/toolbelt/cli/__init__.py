@@ -7,7 +7,6 @@ from .make import make
 @click.group(short_help="Variety of useful commands.")
 def toolbelt():
     """Variety of useful commands."""
-    pass
 
 
 toolbelt.add_command(make)

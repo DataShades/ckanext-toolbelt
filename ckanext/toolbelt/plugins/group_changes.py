@@ -6,9 +6,9 @@ from typing import Any
 
 from flask import Blueprint
 
-import ckan.model as model
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
+from ckan import model
 from ckan.views.group import _replace_group_org, set_org
 
 log = logging.getLogger(__name__)
@@ -82,7 +82,7 @@ def _custom_field_change(
                 "new_value": new.get(field),
                 "old_value": old.get(field),
                 "method": "change",
-            }
+            },
         )
     elif not new.get(field):
         change_list.append(
@@ -91,7 +91,7 @@ def _custom_field_change(
                 "pkg_id": new.get("id"),
                 "title": new.get("title"),
                 "method": "remove",
-            }
+            },
         )
     else:
         change_list.append(
@@ -101,7 +101,7 @@ def _custom_field_change(
                 "title": new.get("title"),
                 "new_value": new.get(field),
                 "method": "add",
-            }
+            },
         )
 
 
@@ -121,7 +121,7 @@ def _description_change(change_list, old, new):
                 "new_description": new.get("description"),
                 "old_description": old.get("description"),
                 "method": "change",
-            }
+            },
         )
     elif not new.get("description"):
         change_list.append(
@@ -130,7 +130,7 @@ def _description_change(change_list, old, new):
                 "pkg_id": new.get("id"),
                 "title": new.get("title"),
                 "method": "remove",
-            }
+            },
         )
     else:
         change_list.append(
@@ -140,7 +140,7 @@ def _description_change(change_list, old, new):
                 "title": new.get("title"),
                 "new_description": new.get("description"),
                 "method": "add",
-            }
+            },
         )
 
 
@@ -159,7 +159,7 @@ def _image_url_change(change_list, old, new):
                 "title": new.get("title"),
                 "new_image_url": new.get("image_url"),
                 "old_image_url": old.get("image_url"),
-            }
+            },
         )
     # if the user removed the image URL
     elif not new.get("image_url"):
@@ -170,7 +170,7 @@ def _image_url_change(change_list, old, new):
                 "pkg_id": new.get("id"),
                 "title": new.get("title"),
                 "old_image_url": old.get("image_url"),
-            }
+            },
         )
     # if there wasn't one there before
     else:
@@ -181,7 +181,7 @@ def _image_url_change(change_list, old, new):
                 "pkg_id": new.get("id"),
                 "title": new.get("title"),
                 "new_image_url": new.get("image_url"),
-            }
+            },
         )
 
 
@@ -238,7 +238,7 @@ def changes(id: str) -> str:
             },
         )
     except tk.ObjectNotFound as e:
-        log.info("Activity not found: {} - {}".format(str(e), activity_id))
+        log.info("Activity not found: %s - %s", e, activity_id)
         return tk.abort(404, tk._("Activity not found"))
     except tk.NotAuthorized:
         return tk.abort(403, tk._("Unauthorized to view activity data"))
@@ -249,7 +249,8 @@ def changes(id: str) -> str:
     group_id = activity_diff["activities"][1]["data"]["group"]["id"]
     current_group_dict = tk.get_action(group_type + "_show")(context, {"id": group_id})
     group_activity_list = tk.get_action(group_type + "_activity_list")(
-        context, {"id": group_id, "limit": 100}
+        context,
+        {"id": group_id, "limit": 100},
     )
 
     extra_vars: dict[str, Any] = {
@@ -286,10 +287,12 @@ def changes_multiple() -> str:
     # check to ensure that the old activity is actually older than
     # the new activity
     old_activity = tk.get_action("activity_show")(
-        context, {"id": old_id, "include_data": False}
+        context,
+        {"id": old_id, "include_data": False},
     )
     new_activity = tk.get_action("activity_show")(
-        context, {"id": new_id, "include_data": False}
+        context,
+        {"id": new_id, "include_data": False},
     )
 
     old_timestamp = old_activity["timestamp"]
@@ -322,7 +325,7 @@ def changes_multiple() -> str:
                 },
             )
         except tk.ObjectNotFound as e:
-            log.info("Activity not found: {} - {}".format(str(e), current_id))
+            log.info("Activity not found: %s - %s", e, current_id)
             return tk.abort(404, tk._("Activity not found"))
         except tk.NotAuthorized:
             return tk.abort(403, tk._("Unauthorized to view activity data"))
@@ -337,7 +340,8 @@ def changes_multiple() -> str:
     group_id: str = diff_list[0]["activities"][1]["data"]["group"]["id"]
     current_group_dict = tk.get_action(group_type + "_show")(context, {"id": group_id})
     group_activity_list = tk.get_action(group_type + "_activity_list")(
-        context, {"id": group_id, "limit": 100}
+        context,
+        {"id": group_id, "limit": 100},
     )
 
     extra_vars: dict[str, Any] = {

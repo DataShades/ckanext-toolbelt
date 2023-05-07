@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from collections.abc import Collection
-from typing import Any, Generic, Optional, TypeVar
+from typing import Any, Generic, TypeVar
 
 T = TypeVar("T")
 
@@ -11,7 +11,7 @@ T = TypeVar("T")
 class Node(Generic[T]):
     value: T
     leaves: Collection[Node[T]] = ()
-    parent: Optional[Node] = None
+    parent: Node | None = None
     data: dict[str, Any] = dataclasses.field(default_factory=dict)
 
     def __iter__(self):

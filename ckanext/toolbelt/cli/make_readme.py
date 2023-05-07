@@ -26,7 +26,7 @@ def config(
 
     if not plugins:
         click.secho("At leas one plugin must be specified", fg="red")
-        raise click.Abort()
+        raise click.Abort
     handler.register("ckanext-readme")(_ckanext_readme)
 
     decl = Declaration()

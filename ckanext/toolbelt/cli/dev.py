@@ -31,7 +31,6 @@ class DecodingDebugging(Debugging):
 @click.group()
 def dev():
     """Tools for debugging and development."""
-    pass
 
 
 @dev.command()

@@ -1,7 +1,7 @@
 import click
 
-import ckan.model as model
 import ckan.plugins.toolkit as tk
+from ckan import model
 from ckan.lib.search import clear, query_for
 
 
@@ -38,10 +38,10 @@ def clear_missing(ctx, no_confirm: bool):
 
     if not no_confirm:
         abort = not click.confirm(
-            "Do you want to remove these packages from the search index?"
+            "Do you want to remove these packages from the search index?",
         )
         if abort:
-            raise click.Abort()
+            raise click.Abort
 
     with click.progressbar(ids) as bar:
         for id_ in bar:
