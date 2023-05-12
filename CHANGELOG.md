@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.11](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.10...v0.3.11) (2023-05-12)
+
+
+### Features
+
+* add utils.scheming.get_validation_schema ([462a3e9](https://github.com/DataShades/ckanext-toolbelt/commit/462a3e913404cac0257e80135477ca418a55f458))
+
+
+### Bug Fixes
+
+* `dev mail-server` does not catch emails ([ddcb59a](https://github.com/DataShades/ckanext-toolbelt/commit/ddcb59a710dd06626e7e69b17beb3f5ddea61433))
+* **cli:** mail cather does not break on attachment ([175ed98](https://github.com/DataShades/ckanext-toolbelt/commit/175ed981d3b33fb640aa7fb1c7b6f60b0b51c789))
+
 ### [0.3.10](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.9...v0.3.10) (2023-04-24)
 
 
