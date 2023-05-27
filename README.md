@@ -160,6 +160,16 @@ of `flask-sqlalchemy` to use this plugin:
 Note: `flask-sqlalchemy~=2.5` works with the latest CKAN version, so you can
 always use the first line from the table above.
 
+### `toolbelt_cascade_organization_updates`
+
+Reindex all organization's datasets when organization updated. Requires
+background worker.
+
+### `toolbelt_composite_groups` / `toolbelt_composite_organizations`
+
+Enable repeating subfields(ckanext-scheming) for organization and group schemas
+
+
 [Back to content](#content)
 ---
 

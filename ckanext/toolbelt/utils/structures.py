@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import dataclasses
-from collections.abc import Collection
-from typing import Any, Generic, TypeVar
+from typing import TYPE_CHECKING, Any, Generic, TypeVar
+
+if TYPE_CHECKING:
+    from collections.abc import Collection
+
 
 T = TypeVar("T")
 
@@ -11,7 +14,7 @@ T = TypeVar("T")
 class Node(Generic[T]):
     value: T
     leaves: Collection[Node[T]] = ()
-    parent: Node | None = None
+    parent: Node[T] | None = None
     data: dict[str, Any] = dataclasses.field(default_factory=dict)
 
     def __iter__(self):
@@ -20,8 +23,8 @@ class Node(Generic[T]):
     def __len__(self):
         return len(self.leaves)
 
-    def __eq__(self, other: Any):
+    def __eq__(self, other: Any) -> bool:
         if not isinstance(other, Node):
             return False
 
-        return self.value == other.value and self.leaves == other.leaves
+        return bool(self.value == other.value and self.leaves == other.leaves)

@@ -2,14 +2,15 @@ from __future__ import annotations
 
 import abc
 import logging
-from typing import Any, Iterable
-
-from typing_extensions import TypeAlias
+from typing import TYPE_CHECKING, Any, Iterable
 
 import ckan.plugins.toolkit as tk
 from ckan.lib.search.query import solr_literal
 
 from ckanext.toolbelt.utils.structures import Node
+
+if TYPE_CHECKING:
+    from typing_extensions import TypeAlias
 
 log = logging.getLogger(__name__)
 

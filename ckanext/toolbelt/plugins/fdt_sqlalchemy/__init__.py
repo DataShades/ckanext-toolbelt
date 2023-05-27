@@ -1,12 +1,18 @@
 from __future__ import annotations
 
 import logging
+from typing import TYPE_CHECKING
 
 from werkzeug.utils import import_string
 
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 from ckan import model
+
+if TYPE_CHECKING:
+    from ckan.common import CKANConfig
+    from ckan.config.middleware.flask_app import CKANFlask
+
 
 SQLAlchemy = import_string("flask_sqlalchemy:SQLAlchemy", True)
 
@@ -24,7 +30,7 @@ class FdtSqlalchemyPlugin(p.SingletonPlugin):
     p.implements(p.IConfigurable)
     p.implements(p.IMiddleware, inherit=True)
 
-    def make_middleware(self, app, config):
+    def make_middleware(self, app: CKANFlask, config: CKANConfig):
         if not SQLAlchemy:
             version = "3.0" if tk.check_ckan_version("2.11.0") else "2.5"
             log.error(
@@ -40,7 +46,7 @@ class FdtSqlalchemyPlugin(p.SingletonPlugin):
 
         return app
 
-    def configure(self, _config):
+    def configure(self, _config: CKANConfig):
         if _EngineDebuggingSignalEvents:
             _EngineDebuggingSignalEvents(model.meta.engine, "ckan").register()
 
