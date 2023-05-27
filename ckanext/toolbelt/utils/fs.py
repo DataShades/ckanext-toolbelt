@@ -35,7 +35,18 @@ class RemovablePath(StaticPath):
 
 
 def path_to_resource(res, max_size: int = 0) -> StaticPath:
-    """Returns a filepath for a resource that will be indexed"""
+    """Returns a filepath for a resource.
+
+    If resource is stored locally, return StaticPath. If resource stored
+    remotely, download it to /tmp and return RemovablePath.
+
+    Example:
+
+      with path_to_resource(resource) as path:
+          with open(path) as src:
+              print(src.read())
+
+    """
     res_id = res["id"]
     res_url = res["url"]
 

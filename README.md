@@ -19,6 +19,7 @@ Collection of different tools for daily use.
   * [Cache](#cache)
 * [Plugins](#plugins)
 * [CLI](#cli)
+* [Misc](#misc)
 
 
 ## Decorators (`ckanext.toolbelt.decorators`)
@@ -196,6 +197,7 @@ Global commands, available via `ctb` and `ckan toolbelt` routes:
 # * deps-makefile  CKAN dependency manager
 # * pre-commit     Pre-commit
 # * pyproject      pyproject.toml
+# * gulp-sass      gulpfile.js with SASS configuration
 make config <type>
 
 # create a configuration for GitHub Action. Supported types:
@@ -223,5 +225,65 @@ search-index clear-missing
 # Clean the DB, optionally keeping data in the given tables.
 db clean --yes [-k user] [-k group] [-k ...]
 ```
+
+[Back to content](#content)
+
+---
+
+## Misc
+
+### `ckanext.toolbelt.utils.cache`
+#### `DontCache`
+#### `Cache`
+
+### `ckanext.toolbelt.utils.fs`
+#### StaticPath
+
+No-op wrapper around filepath that can be used as a context manager:
+```python
+with StaticPath("/tmp/x.txt") as path:
+    with open(path) as src:
+        ...
+# nothing is changed
+```
+
+#### RemovablePath
+
+Context manager that removes file on exit:
+```python
+with RemovablePath("/tmp/x.txt") as path:
+    with open(path) as src:
+        ...
+# /tmp/x.txt is removed
+```
+
+#### `path_to_resource(res_dict, max_size=0)`
+
+Returns a filepath for a resource.
+
+If resource is stored locally, return StaticPath. If resource stored remotely,
+download it to /tmp and return RemovablePath. Remote resources with size
+exceeding `max_size` are not downloaded and empty StaticPath returned.
+
+Example:
+```python
+with path_to_resource(resource) as path:
+    with open(path) as src:
+        print(src.read())
+```
+
+
+### `ckanext.toolbelt.utils.scheming`
+#### `get_validation_schema`
+
+### `ckanext.toolbelt.utils.structures`
+#### `Node`
+
+### `ckanext.toolbelt.utils.hierarchy`
+#### `Node`
+#### `Strategy`
+#### `ParentReference`
+#### `package_hierarchy`
+
 
 [Back to content](#content)
