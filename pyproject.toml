@@ -26,6 +26,7 @@ select = [
        "T10",  # debugging statements
        "T20",  # print statements
        "TID",  # tidier imports
+       "TCH",
        "TRY",  # better exceptions
        "UP",  # upgrade syntax for newer versions of the language
 ]

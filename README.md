@@ -25,7 +25,7 @@ Collection of different tools for daily use.
 
 ### `Collector`
 
-Creates a decorator that can collect functions and return them in a
+Creates a decorator that collects functions and returns them in a
 dictionary. Originally designed for actions, auth functions, validators and
 helpers.
 
