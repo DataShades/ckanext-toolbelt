@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.12](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.11...v0.3.12) (2023-05-30)
+
+
+### Bug Fixes
+
+* fix pre-commit config ([9f688ba](https://github.com/DataShades/ckanext-toolbelt/commit/9f688bace07e572b3e35af3f05757b70b73e55df))
+
 ### [0.3.11](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.10...v0.3.11) (2023-05-12)
 
 
