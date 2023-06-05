@@ -159,7 +159,8 @@ of `flask-sqlalchemy` to use this plugin:
 | Flask 2.2(CKAN >= 2.11, master) | 3.0     | `pip install flask-sqlalchemy~=3.0` |
 
 Note: `flask-sqlalchemy~=2.5` works with the latest CKAN version, so you can
-always use the first line from the table above.
+always use the first line from the table above. In addition, `SELECT` and
+`EXPLAIN` work only with v2.5 at the moment.
 
 ### `toolbelt_cascade_organization_updates`
 

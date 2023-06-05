@@ -47,8 +47,10 @@ class FdtSqlalchemyPlugin(p.SingletonPlugin):
         return app
 
     def configure(self, _config: CKANConfig):
+        # v2.5
         if _EngineDebuggingSignalEvents:
             _EngineDebuggingSignalEvents(model.meta.engine, "ckan").register()
 
+        # v3.0 / select and explain are not compatible with flask-debugtoolbar
         if record_queries:
             record_queries._listen(model.meta.engine)
