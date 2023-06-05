@@ -150,17 +150,12 @@ constructor(which can be a callable that returns comuted duration).
 
 Adapter for
 [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/). Enables
-SQLAlchemy panel on FlaskDebugToolbar. You have to install appropriate version
-of `flask-sqlalchemy` to use this plugin:
+SQLAlchemy panel on FlaskDebugToolbar. You have to install `flask-sqlalchemy`
+extra to use this plugin:
 
-| Environment                     | Version | Command                             |
-|---------------------------------|---------|-------------------------------------|
-| Flask 2.0(CKAN <= 2.10)         | 2.5     | `pip install flask-sqlalchemy~=2.5` |
-| Flask 2.2(CKAN >= 2.11, master) | 3.0     | `pip install flask-sqlalchemy~=3.0` |
-
-Note: `flask-sqlalchemy~=2.5` works with the latest CKAN version, so you can
-always use the first line from the table above. In addition, `SELECT` and
-`EXPLAIN` work only with v2.5 at the moment.
+```sh
+pip install 'ckanext-toolbelt[flask-sqlalchemy]'
+```
 
 ### `toolbelt_cascade_organization_updates`
 
