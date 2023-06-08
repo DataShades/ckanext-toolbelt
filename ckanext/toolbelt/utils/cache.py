@@ -1,8 +1,10 @@
 import json
 import logging
 import pickle  # nosec: B403
-from functools import wraps
-from typing import Any, Callable, Generic, Optional, TypeVar, Union, cast
+from functools import update_wrapper
+from typing import Any, Callable, Generic, Optional, Protocol, TypeVar, Union, cast
+
+from typing_extensions import ParamSpec
 
 from ckan.lib import redis
 
@@ -10,6 +12,8 @@ from . import constantly
 
 log = logging.getLogger(__name__)
 T = TypeVar("T")
+TC = TypeVar("TC", covariant=True)
+P = ParamSpec("P")
 
 
 class DontCache(Generic[T]):
@@ -24,10 +28,18 @@ class DontCache(Generic[T]):
 
 
 MaybeNotCached = Union[T, DontCache[T]]
-CacheAwareCallable = Callable[..., MaybeNotCached[T]]
-NaiveCallable = Callable[..., T]
+CacheAwareCallable = Callable[P, MaybeNotCached[T]]
 
-CacheDecorator = Callable[[CacheAwareCallable[T]], NaiveCallable[T]]
+
+class NaiveCallable(Generic[P, TC], Protocol):
+    def reset(self, *args: P.args, **kwargs: P.kwargs) -> int:
+        ...
+
+    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> TC:
+        ...
+
+
+CacheDecorator = Callable[[CacheAwareCallable[P, T]], NaiveCallable[P, T]]
 
 Duration = Optional[int]
 DurationStrategy = Callable[..., Duration]
@@ -39,14 +51,14 @@ Dumper = Callable[[T], KeyStr]
 Loader = Callable[[KeyStr], T]
 
 
-def default_key_strategy(func, *args, **kwargs) -> bytes:
+def default_key_strategy(func: Callable[..., Any], *args: Any, **kwargs: Any) -> bytes:
     return bytes(f"{func.__module__}:{func.__name__}", "utf8") + pickle.dumps(
         (args, kwargs),
     )
 
 
 def decorate_key_strategy(prefix: bytes, after: bool = False) -> KeyStrategy:
-    def strategy(*args, **kwargs):
+    def strategy(*args: Any, **kwargs: Any):
         left = prefix
         right = default_key_strategy(*args, **kwargs)
         if after:
@@ -60,7 +72,7 @@ def decorate_key_strategy(prefix: bytes, after: bool = False) -> KeyStrategy:
 class Cache(Generic[T]):
     duration: DurationStrategy
     key: KeyStrategy
-    conn: redis.Redis
+    conn: "redis.Redis[bytes]"
     dumper: Dumper[T]
     loader: Loader[T]
 
@@ -87,28 +99,32 @@ class Cache(Generic[T]):
     def dont_cache(value: T):
         return DontCache(value)
 
-    def __call__(self, func: CacheAwareCallable[T]) -> NaiveCallable[T]:
-        @wraps(func)
-        def wrapper(*args: Any, **kwargs: Any) -> T:
-            key = self.key(func, *args, **kwargs)
-            old_value = self.conn.get(key)
+    def __call__(self, func: CacheAwareCallable[P, T]) -> NaiveCallable[P, T]:
+        caller = Caller(func, self)
+        return cast(Caller[P, T], update_wrapper(caller, func))
 
-            if old_value:
-                log.debug("Hit cache for key %s", key)
-                return self.loader(old_value)
 
-            value = func(*args, **kwargs)
-            if isinstance(value, DontCache):
-                return cast(T, value.unwrap())
+class Caller(NaiveCallable[P, T]):
+    def __init__(self, func: CacheAwareCallable[P, T], cache: Cache[T]):
+        self.func = func
+        self.cache = cache
 
-            duration = self.duration(func, *args, **kwargs)
-            self.conn.set(key, self.dumper(value), ex=duration or None)
-            return value
+    def reset(self, *args: P.args, **kwargs: P.kwargs) -> int:
+        key = self.cache.key(self.func, *args, **kwargs)
+        return self.cache.conn.delete(key)
 
-        def reset(*args: Any, **kwargs: Any) -> int:
-            key = self.key(func, *args, **kwargs)
-            return self.conn.delete(key)
+    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> T:
+        key = self.cache.key(self.func, *args, **kwargs)
+        old_value = self.cache.conn.get(key)
 
-        wrapper.reset = reset
+        if old_value:
+            log.debug("Hit cache for key %s", key)
+            return self.cache.loader(old_value)
 
-        return wrapper
+        value = self.func(*args, **kwargs)
+        if isinstance(value, DontCache):
+            return cast(T, value.unwrap())
+
+        duration = self.cache.duration(self.func, *args, **kwargs)
+        self.cache.conn.set(key, self.cache.dumper(value), ex=duration or None)
+        return value
