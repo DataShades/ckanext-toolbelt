@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.14](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.13...v0.3.14) (2023-06-08)
+
+
+### Bug Fixes
+
+* better typing of Cache decorator ([c6e80fd](https://github.com/DataShades/ckanext-toolbelt/commit/c6e80fd49207c86ce6cab1315490101c8184e5a2))
+
 ### [0.3.13](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.12...v0.3.13) (2023-06-06)
 
 ### [0.3.12](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.11...v0.3.12) (2023-05-30)
