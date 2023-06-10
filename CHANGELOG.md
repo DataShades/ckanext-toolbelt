@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.14...v0.4.0) (2023-06-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* backport with_plugins, non_clean_db, reset_redis fixtures
+
+### Features
+
+* backport with_plugins, non_clean_db, reset_redis fixtures ([075fe9b](https://github.com/DataShades/ckanext-toolbelt/commit/075fe9bac5f7541f001f99965d0d0036bc67e809))
+
 ### [0.3.14](https://github.com/DataShades/ckanext-toolbelt/compare/v0.3.13...v0.3.14) (2023-06-08)
 
 
