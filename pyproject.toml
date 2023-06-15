@@ -44,6 +44,7 @@ ignore = [
 "src/ckanext/toolbelt/plugins/group_composite.py" = ["C901", "PLR0912", "PLR0915", "SIM105"]
 "src/ckanext/toolbelt/utils/fs.py" = ["PLR0911"]
 "pytest_toolbelt/plugin.py" = ["PT004", "S101", "PT003"]
+"src/ckanext/toolbelt/magic/__init__.py" = ["F821"]
 [tool.isort]
 known_ckan = "ckan"
 known_ckanext = "ckanext"

@@ -25,34 +25,64 @@ log = logging.getLogger(__name__)
 def conjure_fast_group_activities():
     log.info("ieiunium sicut ventus")
 
-    def ___group_activity_perfomance_patch(group_id):
-        from ckan import model
-
-        group = model.Group.get(group_id)
-        if not group:
-            # Return a query with no results.
-            return model.Session.query(model.Activity).filter(text("0=1"))  # noqa
-
-        q = model.Session.query(model.Activity)
-        group_activity = q.filter(model.Activity.object_id == group_id)
-        packages_sq = (
-            model.Session.query(model.Package.id)
-            .filter_by(owner_org=group_id, private=False)
-            .subquery()
-        )
-
-        member_activity = model.Session.query(model.Activity).filter(
-            model.Activity.object_id.in_(packages_sq),
-        )
-
-        group_activity = _filter_activitites_from_users(group_activity)  # noqa
-        member_activity = _filter_activitites_from_users(member_activity)  # noqa
-        return _activities_union_all(group_activity, member_activity)  # noqa
-
     if tk.check_ckan_version("2.10"):
         from ckanext.activity.model.activity import _group_activity_query
+
+        def ___group_activity_perfomance_patch(group_id):
+            from ckan import model
+
+            from ckanext.activity.model import Activity
+
+            group = model.Group.get(group_id)
+            if not group:
+                # Return a query with no results.
+                return model.Session.query(Activity).filter(text("0=1"))  # noqa
+
+            q = model.Session.query(Activity)
+            group_activity = q.filter(Activity.object_id == group_id)
+            packages_sq = (
+                model.Session.query(model.Package.id)
+                .filter_by(owner_org=group_id, private=False)
+                .subquery()
+            )
+
+            member_activity = model.Session.query(Activity).filter(
+                Activity.object_id.in_(packages_sq),
+            )
+
+            group_activity = _filter_activitites_from_users(group_activity)  # noqa
+            member_activity = _filter_activitites_from_users(member_activity)  # noqa
+            return _activities_union_all(group_activity, member_activity)  # noqa
+
     else:
         from ckan.model.activity import _group_activity_query
+
+        def ___group_activity_perfomance_patch(group_id, include_hidden_activity=False):
+            from ckan import model
+
+            group = model.Group.get(group_id)
+            if not group:
+                # Return a query with no results.
+                return model.Session.query(model.Activity).filter(text("0=1"))  # noqa
+
+            q = model.Session.query(model.Activity)
+            group_activity = q.filter(model.Activity.object_id == group_id)
+            packages_sq = (
+                model.Session.query(model.Package.id)
+                .filter_by(owner_org=group_id, private=False)
+                .subquery()
+            )
+
+            member_activity = model.Session.query(model.Activity).filter(
+                model.Activity.object_id.in_(packages_sq),
+            )
+
+            if not include_hidden_activity:
+                group_activity = _filter_activitites_from_users(group_activity)  # noqa
+                member_activity = _filter_activitites_from_users(
+                    member_activity,
+                )  # noqa
+            return _activities_union_all(group_activity, member_activity)  # noqa
 
     _group_activity_query.__code__ = ___group_activity_perfomance_patch.__code__
 
