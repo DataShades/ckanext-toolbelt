@@ -25,7 +25,7 @@ log = logging.getLogger(__name__)
 def conjure_fast_group_activities():
     log.info("ieiunium sicut ventus")
 
-    def ___group_activity_perfomance_patch(group_id, include_hidden_activity=False):
+    def ___group_activity_perfomance_patch(group_id):
         from ckan import model
 
         group = model.Group.get(group_id)
@@ -45,9 +45,8 @@ def conjure_fast_group_activities():
             model.Activity.object_id.in_(packages_sq),
         )
 
-        if not include_hidden_activity:
-            group_activity = _filter_activitites_from_users(group_activity)  # noqa
-            member_activity = _filter_activitites_from_users(member_activity)  # noqa
+        group_activity = _filter_activitites_from_users(group_activity)  # noqa
+        member_activity = _filter_activitites_from_users(member_activity)  # noqa
         return _activities_union_all(group_activity, member_activity)  # noqa
 
     if tk.check_ckan_version("2.10"):
