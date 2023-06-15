@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.1...v0.4.2) (2023-06-15)
+
+
+### Bug Fixes
+
+* magic-group_activities support 2.9 and 2.10 simultaneously ([d616ebe](https://github.com/DataShades/ckanext-toolbelt/commit/d616ebec434ae2b4b87074d366e7f442c7304e5d))
+
 ### [0.4.1](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.0...v0.4.1) (2023-06-15)
 
 
