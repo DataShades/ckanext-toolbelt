@@ -10,6 +10,7 @@ repos:
   # - id: check-yaml
   - id: end-of-file-fixer
     stages: [pre-commit]
+    exclude_types: [css]
   - id: trailing-whitespace
     stages: [pre-commit]
   - id: debug-statements

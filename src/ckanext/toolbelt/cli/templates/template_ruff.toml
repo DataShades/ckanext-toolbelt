@@ -26,8 +26,9 @@ select = [
        # "UP",  # upgrade syntax for newer versions of the language
 ]
 ignore = [
-       # "PT004", # fixture does not return anything, add leading underscore: violated by clean_db
-       # "PLC1901", # simplify comparison to empty string: violated by SQLAlchemy filters
+       "E712", # comparison to bool: violated by SQLAlchemy filters
+       "PT004", # fixture does not return anything, add leading underscore: violated by clean_db
+       "PLC1901", # simplify comparison to empty string: violated by SQLAlchemy filters
 ]
 
 [tool.ruff.per-file-ignores]
