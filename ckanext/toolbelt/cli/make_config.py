@@ -45,6 +45,19 @@ def pre_commit(plugin: str, write: bool):
 @config.command()
 @_shared.option_plugin
 @_shared.option_write
+def ckanext_makefile(plugin: str, write: bool):
+    """Tools for CKAN extension management"""
+    _shared.ensure_root()
+    _shared.produce(
+        *_config_files("ckanext-makefile"),
+        {"PLUGIN": _shared.safe_plugin_name(plugin)},
+        write,
+    )
+
+
+@config.command()
+@_shared.option_plugin
+@_shared.option_write
 def deps_makefile(plugin: str, write: bool):
     """CKAN dependency manager (https://github.com/DataShades/ckan-deps-installer)"""
     _shared.ensure_root()
@@ -76,6 +89,9 @@ def _config_files(name: str) -> tuple[str, str]:
         return f"config_{name}.yaml", ".pre-commit-config.yaml"
 
     if name == "deps-makefile":
+        return f"config_{name}.sh", "Makefile"
+
+    if name == "ckanext-makefile":
         return f"config_{name}.sh", "Makefile"
 
     if name == "gulp-sass":

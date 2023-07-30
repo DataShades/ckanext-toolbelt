@@ -32,7 +32,4 @@ ignore = [
 ]
 
 [tool.ruff.per-file-ignores]
-"ckanext/$PLUGIN/tests*" = [
-                         "S",  # security testing
-                         "PLR2004" # magic value used in comparison
-]
+"ckanext/$PLUGIN/tests*" = ["S", "PL"]
