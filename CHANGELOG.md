@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.6](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.5...v0.4.6) (2023-07-30)
+
+
+### Features
+
+* CLI `make config ckanext-makefile` ([f122d46](https://github.com/DataShades/ckanext-toolbelt/commit/f122d46d90c5d80fafdee69d70232ddb75c76ea1))
+
 ### [0.4.5](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.4...v0.4.5) (2023-07-10)
 
 ### [0.4.4](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.3...v0.4.4) (2023-07-10)
