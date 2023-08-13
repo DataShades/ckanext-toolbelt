@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.7](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.6...v0.4.7) (2023-08-13)
+
+
+### Features
+
+* add postcss-combine-media-query to gulp-sass ([0948a06](https://github.com/DataShades/ckanext-toolbelt/commit/0948a068ed0545baf888753cfeaa48fec594f045))
+
 ### [0.4.6](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.5...v0.4.6) (2023-07-30)
 
 
