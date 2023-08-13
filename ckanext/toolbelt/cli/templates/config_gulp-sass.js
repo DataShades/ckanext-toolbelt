@@ -2,6 +2,7 @@ const { resolve } = require("path");
 const { src, dest, watch } = require("gulp");
 const if_ = require("gulp-if");
 const sourcemaps = require("gulp-sourcemaps");
+const postcss = require("gulp-postcss");
 const sass = require("gulp-sass")(require("sass"));
 const touch = require("gulp-touch-cmd");
 
@@ -15,6 +16,7 @@ const build = () =>
   src(resolve(srcDir, "$PLUGIN.scss"))
     .pipe(if_(isDev, sourcemaps.init()))
     .pipe(sass({ outputStyle: "compressed" }).on('error', sass.logError))
+    .pipe(postcss([require("postcss-combine-media-query")]))
     .pipe(if_(isDev, sourcemaps.write()))
     .pipe(dest(destDir))
     .pipe(touch());
