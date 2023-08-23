@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.8](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.7...v0.4.8) (2023-08-23)
+
+
+### Features
+
+* add app_with_session fixture ([1f03ca4](https://github.com/DataShades/ckanext-toolbelt/commit/1f03ca49ba2f7a6a54ae47a43cac0d076745b3e3))
+
 ### [0.4.7](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.6...v0.4.7) (2023-08-13)
 
 
