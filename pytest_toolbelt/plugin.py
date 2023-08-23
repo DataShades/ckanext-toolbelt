@@ -124,3 +124,14 @@ if not hasattr(fixtures, "reset_redis") and not hasattr(fixtures, "clean_redis")
                 assert redis.keys("*") == [b"xxx"]
         """
         reset_redis()
+
+
+if not hasattr(fixtures, "app_with_session"):
+
+    @pytest.fixture()
+    def app_with_session(make_app):
+        from flask.sessions import SecureCookieSessionInterface
+
+        app = make_app()
+        app.flask_app.session_interface = SecureCookieSessionInterface()
+        return app
