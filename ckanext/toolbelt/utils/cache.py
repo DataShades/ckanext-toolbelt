@@ -1,7 +1,7 @@
 import json
 import logging
 import pickle  # nosec: B403
-from functools import update_wrapper
+from functools import cached_property, update_wrapper
 from typing import Any, Callable, Generic, Optional, Protocol, TypeVar, Union, cast
 
 from typing_extensions import ParamSpec
@@ -72,7 +72,6 @@ def decorate_key_strategy(prefix: bytes, after: bool = False) -> KeyStrategy:
 class Cache(Generic[T]):
     duration: DurationStrategy
     key: KeyStrategy
-    conn: "redis.Redis[bytes]"
     dumper: Dumper[T]
     loader: Loader[T]
 
@@ -93,7 +92,9 @@ class Cache(Generic[T]):
             key = constantly(key)
         self.key = key
 
-        self.conn = redis.connect_to_redis()
+    @cached_property
+    def conn(self):
+        return cast("redis.Redis[bytes]", redis.connect_to_redis())
 
     @staticmethod
     def dont_cache(value: T):
