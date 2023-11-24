@@ -248,7 +248,8 @@ class Tracker:
     def restore(self, snapshot: list[dict[str, Any]]):
         """Restore data from the snapshot."""
         for record in snapshot:
-            self.hit(record["event"], record["score"])
+            self.add_trans(record["event"])
+            self.update_score(self.hash(record["event"]), record["score"])
 
     def most_common(self, num: int) -> Iterable[dict[str, str | float]]:
         """Return `num` most popular events with scores."""
@@ -366,9 +367,12 @@ class DateTracker(Tracker):
     def restore(self, snapshot: list[dict[str, Any]]):
         """Restore data from the snapshot."""
         for item in snapshot:
+            self.add_trans(item["event"])
+            hashed = self.hash(item["event"])
+
             for record in item["records"]:
                 moment = datetime.fromisoformat(record["date"])
-                self.hit(item["event"], record["score"], moment=moment)
+                self.update_score(hashed, record["score"], moment=moment)
 
     def refresh(self):
         """Rebuild most_common table."""

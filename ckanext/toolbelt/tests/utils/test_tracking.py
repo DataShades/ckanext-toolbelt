@@ -234,5 +234,3 @@ class TestDateTracker:
         )
         assert tracker.score(first_event) == first_count
         assert tracker.score(second_event) == second_count
-
-        tk.h.truncate('hello')
