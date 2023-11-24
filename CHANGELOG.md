@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [v0.4.11](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.11) - 2023-11-24
+
+<small>[Compare with v0.4.10](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.10...v0.4.11)</small>
+
+### Features
+
+- add tracking utils ([9a297b0](https://github.com/DataShades/ckanext-toolbelt/commit/9a297b0855353c7270a047e63e4fb7b234e5962e) by Sergey Motornyuk).
+
 ## [v0.4.10](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.10) - 2023-10-25
 
 <small>[Compare with v0.4.9](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.9...v0.4.10)</small>
