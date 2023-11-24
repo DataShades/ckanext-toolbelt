@@ -1,3 +1,51 @@
+"""Event tracking utilities.
+
+This module contains classes that can be used to count page visits, downloads,
+api calls etc. The module itself does not contain hooks for tracking. It just
+provides classes that can be used by existing hooks.
+
+For example, popularity of certain endpoints can be tracked by counting visits
+via middleware:
+
+  >>> class MyPlugin(SingletonPlugin)
+  >>>    implements(IMiddleware)
+  >>>    def make_middleware(app):
+  >>>        app.before_request(track_endpoint)
+  >>>        return app
+  >>>
+  >>> def track_endpoint():
+  >>>     track = Tracker("endpoint_visits")
+  >>>     endpoint = ".".join(tk.get_endpoint())
+  >>>     track.hit(endpoint)
+
+So it's up to developer to initialize tracker and pass data to it. While
+tracker itself is responsible for processing, storing, and obraining the
+scores:
+
+  >>> track = Tracker("endpoint_visits")
+  >>> search_visits = track.score("dataset.search")
+
+Data is stored in redis. It keeps trackers fast, but it also means that data
+can be lost when redis is reloaded. If you are not using data persistence
+features provided by redis, consider using tracker snapshots. Every tracker
+class has `snapshot` method that exports data as a python structure. You can
+save this structure somewhere:
+
+  >>> snapshot = track.snapshot()
+  >>> with open("/path/to/storage.json", "w") as dest:
+  >>>     json.dump(snapshot, dest)
+
+Later use it to restore data in redis via `restore` method. Keep in mind, that
+`restore` **appends** data from the snapshot to existing data. If you want to
+override existing data, call `reset` before using the snapshot.
+
+  >>> ## optionally, remove current data
+  >>> # track.reset()
+  >>> with open("/path/to/storage.json") as src:
+  >>>     snapshot = json.load(dest)
+  >>> track.restore(snapshot)
+
+"""
 from __future__ import annotations
 
 from collections import defaultdict
@@ -137,7 +185,7 @@ class Tracker:
         """Compute name for event's hash inside the score table."""
         return hashed
 
-    def hit(self, event: str, count: int = 1):
+    def hit(self, event: str, count: float = 1, **kwargs: Any):
         """Increase event's score."""
         hashed = self.hash(event)
 
@@ -150,18 +198,28 @@ class Tracker:
         self.throttle(hashed)
 
         self.add_trans(event)
+        self.update_score(hashed, count, **kwargs)
 
+    def update_score(self, hashed: Hash, count: float, **kwargs: Any):
+        """Update score directly, bypassing all checks, like ignorelist or
+        throttling.
+
+        """
         self.redis.zincrby(self.distribution_key(), count, self.member_key(hashed))
 
-    def score(self, event: str) -> float:
+    def get_score(self, hashed: Hash, **kwargs: Any) -> float | None:
+        """Get score from redis, without performing any type-casting or value coercion."""
+        return self.redis.zscore(self.distribution_key(), self.member_key(hashed))
+
+    def score(self, event: str, **kwargs: Any) -> float:
         """Return event's score"""
         hashed = self.hash(event)
 
-        score = self.redis.zscore(self.distribution_key(), self.member_key(hashed))
+        score = self.get_score(hashed, **kwargs)
         if score is None:
             return 0
 
-        return float(score)
+        return score
 
     def drop(self, event: str):
         """Remove event scores"""
@@ -176,16 +234,21 @@ class Tracker:
         if keys := self.redis.keys(f"{self.prefix}:*"):
             self.redis.delete(*keys)
 
-    def export(self):
+    def snapshot(self):
         """Export tracker data."""
         data: dict[bytes, dict[str, Any]] = {
             hash: {"event": event.decode(), "score": 0}
             for hash, event in self.redis.hgetall(self.trans_key()).items()
         }
         for k, v in self.redis.zscan_iter(self.distribution_key()):
-            data[k]["score"] = int(v)
+            data[k]["score"] = float(v)
 
         return list(data.values())
+
+    def restore(self, snapshot: list[dict[str, Any]]):
+        """Restore data from the snapshot."""
+        for record in snapshot:
+            self.hit(record["event"], record["score"])
 
     def most_common(self, num: int) -> Iterable[dict[str, str | float]]:
         """Return `num` most popular events with scores."""
@@ -204,8 +267,7 @@ class Tracker:
 class DateTracker(Tracker):
     """Track events within a timeframe.
 
-    This tracker groups event by the time when event was recorded and return
-    scores only from the latest period.
+    This tracker groups event by the time when event was recorded.
 
     Granularity of tracking is defined by the `date_format` attribute of the
     tracker. By default it groups hits by date, but it's possible to group them
@@ -216,8 +278,19 @@ class DateTracker(Tracker):
 
     """
 
+    # aggregation prefix for events. By default, events are grouped by date. If
+    # you want to put events from the whole month into a single score, use
+    # "%Y-%m" format. If you want to track separately every hour, use "%Y-%m-%d
+    # %H", etc.
     date_format: str = "%Y-%m-%d"
+
+    # number of seconds before hit marked as expired and removed. It relies on
+    # `date_format`, so it has no sense to make `max_age` smaller than
+    # granularity of `date_format`. I.e, if you are using default `date_format`
+    # that combine hits by date, max age should be more than one day.
     max_age: int = 60 * 60 * 24 * 365
+
+    # number of seconds before value of hits will be reduced
     obsoletion_period: int = 60 * 60 * 24 * 365 * 10
 
     def member_key(self, hashed: Hash, moment: datetime | None = None) -> str:
@@ -254,7 +327,24 @@ class DateTracker(Tracker):
 
         return float(score)
 
-    def export(self):
+    def update_score(
+        self, hashed: Hash, count: float, moment: datetime | None = None, **kwargs: Any
+    ):
+        """Update score directly, bypassing all checks, like ignorelist or
+        throttling.
+
+        """
+        mk = self.member_key(hashed, moment)
+        self.redis.zincrby(self.distribution_key(), count, mk)
+
+    def get_score(
+        self, hashed: Hash, moment: datetime | None = None, **kwargs: Any
+    ) -> float | None:
+        """Get score from redis, without performing any type-casting or value coercion."""
+        mk = self.member_key(hashed, moment)
+        return self.redis.zscore(self.distribution_key(), mk)
+
+    def snapshot(self):
         """Export tracker data."""
         data: dict[bytes, dict[str, Any]] = {
             hash: {"event": event.decode(), "records": []}
@@ -267,9 +357,18 @@ class DateTracker(Tracker):
             except ValueError:
                 continue
 
-            data[hashed]["records"].append({"date": date.isoformat(), "count": int(v)})
+            data[hashed]["records"].append(
+                {"date": date.isoformat(), "score": float(v)}
+            )
 
         return list(data.values())
+
+    def restore(self, snapshot: list[dict[str, Any]]):
+        """Restore data from the snapshot."""
+        for item in snapshot:
+            for record in item["records"]:
+                moment = datetime.fromisoformat(record["date"])
+                self.hit(item["event"], record["score"], moment=moment)
 
     def refresh(self):
         """Rebuild most_common table."""
@@ -297,7 +396,7 @@ class DateTracker(Tracker):
                 expired_dist.add(k)
                 continue
 
-            scores[hashed] += int(v) / (age.seconds // self.obsoletion_period + 1)
+            scores[hashed] += float(v) / (age.seconds // self.obsoletion_period + 1)
 
         if expired_dist:
             self.redis.hdel(dk, *expired_dist)

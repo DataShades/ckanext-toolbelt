@@ -1,5 +1,5 @@
 from __future__ import annotations
-
+import ckan.plugins.toolkit as tk
 from datetime import datetime
 from operator import itemgetter
 import pytest
@@ -105,7 +105,7 @@ class TestAllTrackers:
             tracker.hit(faker.word())
         tracker.reset()
 
-        assert not tracker.export()
+        assert not tracker.snapshot()
 
     def test_most_common(self, tracker: Tracker, faker: Faker):
         """Most common items ordered by score"""
@@ -134,21 +134,36 @@ class TestAllTrackers:
 
 @pytest.mark.usefixtures("clean_redis")
 class TestTracker:
-    def test_export(self, tracker: Tracker, faker: Faker):
-        """Tracker data has expected export format."""
+    def test_snapshot(self, tracker: Tracker, faker: Faker):
+        """Tracker data has expected snapshot format."""
         first_event = faker.word()
         second_event = faker.word()
         first_count = faker.pyint()
         second_count = faker.pyint()
         tracker.hit(first_event, first_count)
         tracker.hit(second_event, second_count)
-        assert sorted(tracker.export(), key=itemgetter("event")) == sorted(
+        assert sorted(tracker.snapshot(), key=itemgetter("event")) == sorted(
             [
                 {"event": first_event, "score": first_count},
                 {"event": second_event, "score": second_count},
             ],
             key=itemgetter("event"),
         )
+
+    def test_restore(self, tracker: Tracker, faker: Faker):
+        """Tracker data can be restored from snapshot format."""
+        first_event = faker.word()
+        second_event = faker.word()
+        first_count = faker.pyint()
+        second_count = faker.pyint()
+        tracker.restore(
+            [
+                {"event": first_event, "score": first_count},
+                {"event": second_event, "score": second_count},
+            ]
+        )
+        assert tracker.score(first_event) == first_count
+        assert tracker.score(second_event) == second_count
 
 
 @pytest.mark.usefixtures("clean_redis")
@@ -157,8 +172,19 @@ class TestDateTracker:
     def tracker_factory(self):
         return DateTracker
 
-    def test_export(self, tracker: DateTracker, faker: Faker):
-        """Tracker data has expected export format."""
+    def test_moment_interactions(self, tracker, faker):
+        """Past scores can be updated and shown.
+        """
+        date = faker.date_time_between(end_date='-2d')
+        event = faker.word()
+        tracker.hit(event, moment=date)
+
+        assert tracker.score(event) == 0
+        assert tracker.score(event, moment=date) == 1
+
+
+    def test_snapshot(self, tracker: DateTracker, faker: Faker):
+        """Tracker data has expected snapshot format."""
         first_event = faker.word()
         second_event = faker.word()
         first_count = faker.pyint()
@@ -170,16 +196,43 @@ class TestDateTracker:
             tracker.format_date_stem(tracker.now()), tracker.date_format
         )
 
-        assert sorted(tracker.export(), key=itemgetter("event")) == sorted(
+        assert sorted(tracker.snapshot(), key=itemgetter("event")) == sorted(
             [
                 {
                     "event": first_event,
-                    "records": [{"date": date.isoformat(), "count": first_count}],
+                    "records": [{"date": date.isoformat(), "score": first_count}],
                 },
                 {
                     "event": second_event,
-                    "records": [{"date": date.isoformat(), "count": second_count}],
+                    "records": [{"date": date.isoformat(), "score": second_count}],
                 },
             ],
             key=itemgetter("event"),
         )
+
+    def test_restore(self, tracker: DateTracker, faker: Faker):
+        """Tracker data can be restored from snapshot format."""
+        first_event = faker.word()
+        second_event = faker.word()
+        first_count = faker.pyint()
+        second_count = faker.pyint()
+        date = datetime.strptime(
+            tracker.format_date_stem(tracker.now()), tracker.date_format
+        )
+
+        tracker.restore(
+            [
+                {
+                    "event": first_event,
+                    "records": [{"date": date.isoformat(), "score": first_count}],
+                },
+                {
+                    "event": second_event,
+                    "records": [{"date": date.isoformat(), "score": second_count}],
+                },
+            ]
+        )
+        assert tracker.score(first_event) == first_count
+        assert tracker.score(second_event) == second_count
+
+        tk.h.truncate('hello')
