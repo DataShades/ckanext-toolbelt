@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [v0.4.12](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.12) - 2023-11-24
+
+<small>[Compare with v0.4.11](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.11...v0.4.12)</small>
+
+### Bug Fixes
+
+- tracker is throttling during snapshot restoration ([38a6f5a](https://github.com/DataShades/ckanext-toolbelt/commit/38a6f5af41c2c366e2b46079c1884e89aad074c6) by Sergey Motornyuk).
+
 ## [v0.4.11](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.11) - 2023-11-24
 
 <small>[Compare with v0.4.10](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.10...v0.4.11)</small>
