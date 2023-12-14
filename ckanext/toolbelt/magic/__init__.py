@@ -175,7 +175,9 @@ def reveal_readonly_scheming_fields(defaults):
         # replace core version of `convert_from_extras`
         def wrapper(*args: Any, **kwargs: Any):
             result = func(*args, **kwargs)
-            if result and result[0] is converters.convert_from_extras:
+
+            # repeating_subfields return a dict here
+            if result and isinstance(result, list) and result[0] is converters.convert_from_extras:
                 result[0] = patched_convert_from_extras
 
             return result
