@@ -36,11 +36,39 @@ def black(plugin: str, file: str | None):
 @template.command()
 @_shared.option_plugin
 @option_file
+def git_changelog(plugin: str, file: str | None):
+    """git-changelog configuration"""
+    _shared.ensure_root()
+    _shared.produce(
+        _shared.template_source("git_changelog"),
+        file or "",
+        {},
+        bool(file),
+    )
+
+
+@template.command()
+@_shared.option_plugin
+@option_file
 def isort(plugin: str, file: str | None):
     """Isort configuration"""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("isort"),
+        file or "",
+        {"PLUGIN": _shared.safe_plugin_name(plugin)},
+        bool(file),
+    )
+
+
+@template.command()
+@_shared.option_plugin
+@option_file
+def coverage(plugin: str, file: str | None):
+    """Isort configuration"""
+    _shared.ensure_root()
+    _shared.produce(
+        _shared.template_source("coverage"),
         file or "",
         {"PLUGIN": _shared.safe_plugin_name(plugin)},
         bool(file),

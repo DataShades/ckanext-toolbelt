@@ -1,0 +1,4 @@
+[tool.git-changelog]
+output = "CHANGELOG.md"
+convention = "conventional"
+parse-trailers = true

@@ -173,7 +173,7 @@ class Tracker:
         """Restore event name from its hash"""
         event = self.redis.hget(self.trans_key(), hashed)
         if event is None:
-            return
+            return None
 
         return event.decode()
 
@@ -254,7 +254,7 @@ class Tracker:
     def most_common(self, num: int) -> Iterable[dict[str, str | float]]:
         """Return `num` most popular events with scores."""
         scores: list[tuple[bytes, float]] = self.redis.zrange(
-            self.distribution_key(), 0, num - 1, desc=True, withscores=True
+            self.distribution_key(), 0, num - 1, desc=True, withscores=True,
         )
 
         for k, v in scores:
@@ -321,7 +321,7 @@ class DateTracker(Tracker):
         hashed = self.hash(event)
 
         score = self.redis.zscore(
-            self.distribution_key(), self.member_key(hashed, moment)
+            self.distribution_key(), self.member_key(hashed, moment),
         )
         if score is None:
             return 0
@@ -329,7 +329,7 @@ class DateTracker(Tracker):
         return float(score)
 
     def update_score(
-        self, hashed: Hash, count: float, moment: datetime | None = None, **kwargs: Any
+        self, hashed: Hash, count: float, moment: datetime | None = None, **kwargs: Any,
     ):
         """Update score directly, bypassing all checks, like ignorelist or
         throttling.
@@ -339,7 +339,7 @@ class DateTracker(Tracker):
         self.redis.zincrby(self.distribution_key(), count, mk)
 
     def get_score(
-        self, hashed: Hash, moment: datetime | None = None, **kwargs: Any
+        self, hashed: Hash, moment: datetime | None = None, **kwargs: Any,
     ) -> float | None:
         """Get score from redis, without performing any type-casting or value coercion."""
         mk = self.member_key(hashed, moment)
@@ -359,7 +359,7 @@ class DateTracker(Tracker):
                 continue
 
             data[hashed]["records"].append(
-                {"date": date.isoformat(), "score": float(v)}
+                {"date": date.isoformat(), "score": float(v)},
             )
 
         return list(data.values())
@@ -428,7 +428,7 @@ class DateTracker(Tracker):
     def most_common(self, num: int) -> Iterable[dict[str, str | float]]:
         """Return `num` most popular events with scores."""
         scores: list[tuple[bytes, float]] = self.redis.zrange(
-            self.most_common_key(), 0, num - 1, desc=True, withscores=True
+            self.most_common_key(), 0, num - 1, desc=True, withscores=True,
         )
 
         for k, v in scores:

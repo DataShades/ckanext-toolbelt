@@ -1,5 +1,4 @@
 from __future__ import annotations
-import ckan.plugins.toolkit as tk
 from datetime import datetime
 from operator import itemgetter
 import pytest
@@ -160,7 +159,7 @@ class TestTracker:
             [
                 {"event": first_event, "score": first_count},
                 {"event": second_event, "score": second_count},
-            ]
+            ],
         )
         assert tracker.score(first_event) == first_count
         assert tracker.score(second_event) == second_count
@@ -175,7 +174,7 @@ class TestDateTracker:
     def test_moment_interactions(self, tracker, faker):
         """Past scores can be updated and shown.
         """
-        date = faker.date_time_between(end_date='-2d')
+        date = faker.date_time_between(end_date="-2d")
         event = faker.word()
         tracker.hit(event, moment=date)
 
@@ -193,7 +192,7 @@ class TestDateTracker:
         tracker.hit(second_event, second_count)
 
         date = datetime.strptime(
-            tracker.format_date_stem(tracker.now()), tracker.date_format
+            tracker.format_date_stem(tracker.now()), tracker.date_format,
         )
 
         assert sorted(tracker.snapshot(), key=itemgetter("event")) == sorted(
@@ -217,7 +216,7 @@ class TestDateTracker:
         first_count = faker.pyint()
         second_count = faker.pyint()
         date = datetime.strptime(
-            tracker.format_date_stem(tracker.now()), tracker.date_format
+            tracker.format_date_stem(tracker.now()), tracker.date_format,
         )
 
         tracker.restore(
@@ -230,7 +229,7 @@ class TestDateTracker:
                     "event": second_event,
                     "records": [{"date": date.isoformat(), "score": second_count}],
                 },
-            ]
+            ],
         )
         assert tracker.score(first_event) == first_count
         assert tracker.score(second_event) == second_count
