@@ -6,15 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## Unreleased
+## [v0.4.14](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.14) - 2024-03-06
 
-<small>[Compare with latest](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.13...HEAD)</small>
+<small>[Compare with v0.4.13](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.13...v0.4.14)</small>
 
 ### Features
 
 - add git-changelog and coverage configuration to pyproject ([f59c4a2](https://github.com/DataShades/ckanext-toolbelt/commit/f59c4a262cc419c2e9a9d5322a5413a005936dc0) by Sergey Motornyuk).
 
-<!-- insertion marker -->
 ## [v0.4.13](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.13) - 2023-12-14
 
 <small>[Compare with v0.4.12](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.12...v0.4.13)</small>
