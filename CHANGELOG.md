@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## Unreleased
+
+<small>[Compare with latest](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.13...HEAD)</small>
+
+### Features
+
+- add git-changelog and coverage configuration to pyproject ([f59c4a2](https://github.com/DataShades/ckanext-toolbelt/commit/f59c4a262cc419c2e9a9d5322a5413a005936dc0) by Sergey Motornyuk).
+
+<!-- insertion marker -->
+## [v0.4.13](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.13) - 2023-12-14
+
+<small>[Compare with v0.4.12](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.12...v0.4.13)</small>
+
+### Bug Fixes
+
+- readonly_scheming fields fail with repeating_subfields ([a466685](https://github.com/DataShades/ckanext-toolbelt/commit/a466685652a215d1dc6085a7a7f0aa221dbcfa40) by Sergey Motornyuk).
+
 ## [v0.4.12](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.12) - 2023-11-24
 
 <small>[Compare with v0.4.11](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.11...v0.4.12)</small>
