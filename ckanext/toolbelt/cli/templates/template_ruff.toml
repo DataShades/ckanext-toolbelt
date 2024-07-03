@@ -1,5 +1,7 @@
 [tool.ruff]
 target-version = "py38"
+
+[tool.ruff.lint]
 select = [
        # "B",  # likely bugs and design problems
        # "BLE",  # do not catch blind exception
@@ -31,5 +33,5 @@ ignore = [
        "PLC1901", # simplify comparison to empty string: violated by SQLAlchemy filters
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "ckanext/$PLUGIN/tests*" = ["S", "PL"]
