@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import click
 
-from . import make_config, make_gh_action, make_readme, make_template
+from . import make_config, make_gh_action, make_readme, make_template, make_ckanext
 
 
 @click.group()
@@ -14,3 +14,4 @@ make.add_command(make_readme.readme)
 make.add_command(make_template.template)
 make.add_command(make_gh_action.gh_action)
 make.add_command(make_config.config)
+make.add_command(make_ckanext.ckanext)

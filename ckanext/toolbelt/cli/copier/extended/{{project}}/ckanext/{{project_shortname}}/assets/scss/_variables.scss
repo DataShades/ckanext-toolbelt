@@ -1,0 +1,32 @@
+@use "mixins";
+@use "sass:map";
+
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+);
+
+$pallette: (
+    red: #ff0000,
+    blue: #0000ff,
+    navy: #000080,
+    white: #ffffff,
+    black: #000000,
+    gray: #cccccc,
+)
+
+$colors: (
+    brand: map.get($pallette, "blue"),
+    accent: map.get($pallette, "red"),
+    default: map.get($pallette, "white"),
+    link: map.get($pallette, "navy"),
+    text: map.get($pallette, "black"),
+    outline: map.get($pallette, "gray"),
+);
+
+
+$font-main: "Noto Sans", serif;
+$font-heading: "Bitter", serif;

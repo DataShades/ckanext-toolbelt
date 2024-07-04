@@ -1,0 +1,14 @@
+{{ project_shortname }}-js:
+  filter: rjsmin
+  output: ckanext-{{ project_shortname }}/%(version)s-{{ project_shortname }}.js
+  contents:
+    - scripts/{{ project_shortname }}.js
+  extra:
+    preload:
+      - base/main
+
+{{ project_shortname }}-css:
+  filter: cssrewrite
+  output: ckanext-{{ project_shortname }}/%(version)s-{{ project_shortname }}.css
+  contents:
+    - styles/{{ project_shortname }}.css

@@ -24,18 +24,13 @@ repos:
     name: isort
     stages: [pre-commit]
 
-## Black
-- repo: https://github.com/psf/black
-  rev: 23.3.0
-  hooks:
-  - id: black
-    stages: [pre-commit]
-
 ## Ruff
 - repo: https://github.com/charliermarsh/ruff-pre-commit
   rev: v0.0.260
   hooks:
   - id: ruff
+    stages: [pre-commit]
+  - id: ruff-format
     stages: [pre-commit]
 
 ## Conventional commit message(commitizen)

@@ -1,0 +1,16 @@
+version: 1
+groups:
+    - annotation: {{ project_shortname }} configuration
+      options:
+
+          - key: ckanext.{{ project_shortname }}.option.name
+            default: 10
+            type: int
+            description: |
+                Integer placerat tristique nisl.
+
+          - key: ckanext.{{ project_shortname }}.multivalued.option
+            type: list
+            editable: true
+            description: |
+                Another option that will be parsed as a list of words.
