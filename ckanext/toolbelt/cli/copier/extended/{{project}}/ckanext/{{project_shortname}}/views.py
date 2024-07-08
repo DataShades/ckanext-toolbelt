@@ -80,10 +80,14 @@ class ComplexView(MethodView):
     template = "{{ project_shortname }}/complex.html"
 
     def _prepare(self, word: str) -> dict[str, Any]:
-        tk.check_access("{{ project_shortname }}_get_sum", {}, {
-            "left": word,
-            "right": word,
-        })
+        tk.check_access(
+            "{{ project_shortname }}_get_sum",
+            {},
+            {
+                "left": word,
+                "right": word,
+            },
+        )
 
         username = tk.current_user.name
         if tk.current_user.is_authenticated:

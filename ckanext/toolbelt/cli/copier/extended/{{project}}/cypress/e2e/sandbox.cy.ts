@@ -1,3 +1,4 @@
+
 const ckan = () => cy.window({ log: false }).then((win) => win["ckan"]);
 
 const sandbox = () => ckan().invoke({ log: false }, "sandbox");
@@ -27,8 +28,8 @@ beforeEach(() => {
 describe("Feature", () => {
     it("can do things", () => {
         ckan()
-            .its("things")
-            .should("have.all.keys", "can", "do");
+            .its("pubsub")
+            .should("have.any.keys", "events");
     });
     it("cannot do other things", () => {
 

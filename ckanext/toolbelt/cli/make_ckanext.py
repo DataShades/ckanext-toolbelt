@@ -37,6 +37,11 @@ def extended(output_dir: str, overwrite: bool, project: str, use_defaults: bool)
     if not project.startswith(PROJECT_PREFIX):
         project = f"{PROJECT_PREFIX}{project}"
 
+
+    if use_defaults and project == PROJECT_PREFIX:
+        tk.error_shout("Project must be specified")
+        raise click.Abort
+
     defaults = {"author": "", "author_email": "", "project": project}
     git_config = git.GitConfigParser()
 
@@ -51,7 +56,7 @@ def extended(output_dir: str, overwrite: bool, project: str, use_defaults: bool)
         output_dir,
         user_defaults=defaults,
         defaults=use_defaults,
-        overwrite=use_defaults,
+        overwrite=overwrite,
         answers_file=".copier-answers.ctb-extended.yml",
         unsafe=True,
     )

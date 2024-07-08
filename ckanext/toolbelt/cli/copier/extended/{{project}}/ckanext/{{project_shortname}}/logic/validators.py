@@ -15,10 +15,10 @@ def {{ project_shortname }}_required(value: Any):
 
 
 def {{ project_shortname }}_complex_validator(
-        key: types.FlattenKey,
-        data: types.FlattenDataDict,
-        errors: types.FlattenErrorDict,
-        context: types.Context,
+    key: types.FlattenKey,
+    data: types.FlattenDataDict,
+    errors: types.FlattenErrorDict,
+    context: types.Context,
 ):
     """Verify that value is not empty."""
     if not data[key]:

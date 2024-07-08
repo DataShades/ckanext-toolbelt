@@ -4,6 +4,8 @@ import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 from ckan.common import CKANConfig
 
+from . import implementations
+
 
 @tk.blanket.actions
 @tk.blanket.auth_functions
@@ -12,7 +14,10 @@ from ckan.common import CKANConfig
 @tk.blanket.config_declarations
 @tk.blanket.helpers
 @tk.blanket.validators
-class {{ plugin_class_name }}(p.SingletonPlugin):
+class {{ plugin_class_name }}(
+    implementations.PackageController,
+    p.SingletonPlugin,
+):
     p.implements(p.IConfigurer)
 
     # IConfigurer

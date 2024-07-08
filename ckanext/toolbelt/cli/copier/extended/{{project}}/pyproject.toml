@@ -67,7 +67,7 @@ ckanext = ["ckanext"]
 self = ["ckanext.{{ project_shortname }}"]
 
 [tool.pytest.ini_options]
-addopts = "--ckan-ini test.ini"
+addopts = "--ckan-ini test.ini -m 'not benchmark'"
 filterwarnings = [
                "ignore::sqlalchemy.exc.SADeprecationWarning",
                "ignore::sqlalchemy.exc.SAWarning",
@@ -83,7 +83,7 @@ parse-trailers = true
 pythonVersion = "3.8"
 include = ["ckanext"]
 exclude = [
-    # "**/test*",
+    "**/test*",
     "**/migration",
 ]
 strict = []

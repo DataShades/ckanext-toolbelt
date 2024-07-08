@@ -1,4 +1,3 @@
-@use "mixins";
 @use "sass:map";
 
 $breakpoints: (
@@ -16,7 +15,7 @@ $pallette: (
     white: #ffffff,
     black: #000000,
     gray: #cccccc,
-)
+);
 
 $colors: (
     brand: map.get($pallette, "blue"),

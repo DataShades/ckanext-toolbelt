@@ -8,6 +8,7 @@
         "gulp-sass": "^5.1.0",
         "gulp-sourcemaps": "^3.0.0",
         "gulp-touch-cmd": "^0.0.1",
+        "gulp-touch-fd": "^2.0.0",
         "postcss-combine-media-query": "^1.0.1",
         "pyright": "^1.1.370",
         "sass": "^1.77.6",

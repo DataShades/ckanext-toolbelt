@@ -1,13 +1,13 @@
 @use "fonts";
 
-@import "global";
+@use "global";
 
 // Elements ///////////////////////////////////////////////////////////////////
-@import "elements/breadcrumb";
-@import "elements/buttons";
-@import "elements/forms";
-@import "elements/pagination";
-@import "elements/tables";
+@use "elements/breadcrumb";
+@use "elements/buttons";
+@use "elements/forms";
+@use "elements/pagination";
+@use "elements/tables";
 
 // Global components //////////////////////////////////////////////////////////
 @use "header";

@@ -3,6 +3,7 @@ _exclude:
   - __pycache__
   - extensions
   - copier.yaml
+  - .ruff_cache
 
 project:
   help: Project's name (must begin with 'ckanext-')
