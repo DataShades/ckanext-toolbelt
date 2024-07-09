@@ -14,3 +14,19 @@ def get_sum(
         "left": [not_empty, convert_int],
         "right": [not_empty, convert_int],
     }
+
+
+@validator_args
+def something_create(
+    not_empty: types.Validator,
+    unicode_safe: types.Validator,
+    ignore_empty: types.Validator,
+    convert_to_json_if_string: types.Validator,
+    dict_only: types.Validator,
+) -> types.Schema:
+    """Schema for {{ project_shortname }}_something_create action."""
+    return {
+        "hello": [not_empty, unicode_safe],
+        "world": [not_empty, unicode_safe],
+        "plugin_data": [ignore_empty, convert_to_json_if_string, dict_only],
+    }

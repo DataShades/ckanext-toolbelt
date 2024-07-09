@@ -1,4 +1,4 @@
-"""Create something table
+"""Create something table.
 
 Revision ID: cc1a832108c5
 Revises:

@@ -19,6 +19,7 @@ sdist/
 *.egg-info/
 .installed.cfg
 *.egg
+{{_copier_conf.answers_file}}
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

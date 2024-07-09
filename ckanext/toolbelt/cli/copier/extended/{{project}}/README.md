@@ -823,8 +823,36 @@ pytest --cov=ckanext.{{ project_shortname }} --cov-report html
 
 #### Run tests
 
+Run all tests
+
 ```sh
 pytest
+```
+
+Run tests from `ckanext/{{ project_shortname }}/tests/test_plugin.py`
+
+```sh
+pytest ckanext/{{ project_shortname }}/tests/test_plugin.py
+```
+
+Run only tests that failed during previous test session
+
+```sh
+pytest --lf
+```
+
+Stop execution after first failed test
+
+```sh
+pytest -x
+```
+
+Run only tests that contain `hello` and `world` in their full path. Full path
+contains filepath, class and test name: `ckanext/{{ project_shortname
+}}/tests/test_smth.py:TestSmth:test_smth`
+
+```sh
+pytest -k "hello and world"
 ```
 
 #### Produce coverage report

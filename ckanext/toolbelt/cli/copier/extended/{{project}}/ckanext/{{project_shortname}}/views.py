@@ -1,3 +1,18 @@
+"""Views of the {{ project_shortname }} plugin.
+
+All blueprints added to `__all__` are registered as blueprints inside Flask
+app. If you have multiple blueprints, create them inside submodules of
+`ckanext.{{ project_shortname }}.views` and re-export via `__all__`.
+
+Example:
+    ```python
+    from .custom import custom_bp
+    from .data import data_bp
+
+    __all__ = ["custom_bp", "data_bp"]
+    ```
+"""
+
 from __future__ import annotations
 
 from typing import Any, cast
@@ -14,9 +29,11 @@ __all__ = ["bp"]
 bp = Blueprint("{{project_shortname}}", __name__)
 
 
+# instead of catching exceptions inside every view, it's usually more
+# convenient to register handlers for the exception class.
 @bp.errorhandler(tk.ObjectNotFound)
 def not_found_handler(error: tk.ObjectNotFound) -> tuple[str, int]:
-    """Generic handler for ObjectNotFound exception"""
+    """Generic handler for ObjectNotFound exception."""
     return (
         tk.render(
             "error_document_template.html",
@@ -30,9 +47,12 @@ def not_found_handler(error: tk.ObjectNotFound) -> tuple[str, int]:
     )
 
 
+# error handler renders standard error page. If you want to render
+# view-specific page with a flash message instead, it's better it try/catch
+# inside the view.
 @bp.errorhandler(tk.NotAuthorized)
 def not_authorized_handler(error: tk.NotAuthorized) -> tuple[str, int]:
-    """Generic handler for NotAuthorized exception"""
+    """Generic handler for NotAuthorized exception."""
     return (
         tk.render(
             "error_document_template.html",
@@ -46,6 +66,8 @@ def not_authorized_handler(error: tk.NotAuthorized) -> tuple[str, int]:
     )
 
 
+# use `Blueprint.route` decorators to register function-based views. This
+# approach is more readable than using `Blueprint.add_url_rule`.
 @bp.route("/{{project_shortname}}/page")
 def page():
     """Basic page."""
@@ -58,6 +80,7 @@ def page_redirect():
     return tk.redirect_to("{{ project_shortname }}.page")
 
 
+# Class-based views cannot be registered via decorator
 class ComplexView(MethodView):
     """Complex view.
 
@@ -116,8 +139,19 @@ class ComplexView(MethodView):
                 params,
             )
         except tk.ValidationError as err:
-            data["errors"] = err.error_summary
+            data["errors"] = err.error_dict
+            for field, msg in err.error_summary.items():
+                tk.h.flash_error(f"{field}: {msg}")
+
             return tk.render(self.template, data)
 
         tk.h.flash_success("Yay! {}".format(result["sum"]))
         return tk.redirect_to("{{ project_shortname }}.page")
+
+
+# we don't have to specify `methods` parameter, because `MethodView` already
+# contains this information
+bp.add_url_rule(
+    "/{{project_shortname}}/complex/<word>",
+    view_func=ComplexView.as_view("complex"),
+)

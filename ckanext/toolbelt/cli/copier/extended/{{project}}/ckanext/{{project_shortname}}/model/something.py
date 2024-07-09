@@ -16,6 +16,8 @@ from .base import Base
 class Something(Base):  # type: ignore
     """Model with details or something."""
 
+    # define columns as a `__table__` attribute. It simplifies typing and you
+    # can copy this definition almost unchanged into alembic migration.
     __table__ = sa.Table(
         "{{ project_shortname }}_something",
         Base.metadata,
@@ -25,6 +27,7 @@ class Something(Base):  # type: ignore
         sa.Column("plugin_data", JSONB, default=dict, server_default="{}"),
     )
 
+    # typed models. You'll use it - you'll love it.
     id: Mapped[str]
 
     hello: Mapped[str]
