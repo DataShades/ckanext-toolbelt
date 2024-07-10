@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## Unreleased
+
+<small>[Compare with latest](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.14...HEAD)</small>
+
+### Features
+
+- "make ckanext extended" command ([674cc7e](https://github.com/DataShades/ckanext-toolbelt/commit/674cc7e15ee8ccd1d1787abbef66db33edb4989e) by Sergey Motornyuk).
+- ruff config contains ruff.lint section ([3ba83d3](https://github.com/DataShades/ckanext-toolbelt/commit/3ba83d368cc1bb27065586d834ab2c589185f0b4) by Sergey Motornyuk).
+
+### Bug Fixes
+
+- add missing vendor libraries to template ([6629b69](https://github.com/DataShades/ckanext-toolbelt/commit/6629b696db1acae307a90f0e7f007df8db2b9358) by Sergey Motornyuk).
+
+<!-- insertion marker -->
 ## [v0.4.14](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.14) - 2024-03-06
 
 <small>[Compare with v0.4.13](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.13...v0.4.14)</small>
