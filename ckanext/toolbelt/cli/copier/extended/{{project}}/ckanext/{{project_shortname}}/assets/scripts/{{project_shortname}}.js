@@ -30,4 +30,14 @@ jQuery(function () {
       },
     },
   });
+
+  // initialize CKAN modules inside fragments loaded by HTMX
+  if (typeof htmx !== "undefined") {
+    htmx.on("htmx:afterSettle", function (event) {
+      var elements = event.target.querySelectorAll("[data-module]");
+      for (let node of elements) {
+        ckan.module.initializeElement(node);
+      }
+    });
+  }
 });

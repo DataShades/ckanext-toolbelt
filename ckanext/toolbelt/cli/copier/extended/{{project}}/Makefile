@@ -123,18 +123,27 @@ _version = master
 prepare:  ## download CDM rules
 	curl -O https://raw.githubusercontent.com/DataShades/ckan-deps-installer/$(_version)/deps.mk
 
+vendor-dir = ckanext/{{ project_shortname }}/assets/vendor
+
 vendor:  ## Copy vendor libraries from node_modules/ to assets directory
-	cp node_modules/tom-select/dist/js/tom-select.{base,complete}.js ckanext/{{ project_shortname }}/assets/vendor
-	cp node_modules/tom-select/dist/css/tom-select{,.bootstrap5}.css ckanext/{{ project_shortname }}/assets/vendor
-	cp node_modules/sweetalert2/dist/sweetalert2.all.js ckanext/{{ project_shortname }}/assets/vendor
-	cp node_modules/sortablejs/Sortable.js ckanext/{{ project_shortname }}/assets/vendor
-	# cp node_modules/daterangepicker/daterangepicker.{js,css} ckanext/{{ project }}/assets/vendor
-	# cp node_modules/daterangepicker/moment.min.js ckanext/{{ project }}/assets/vendor
-	# cp node_modules/slick-carousel/slick/slick.min.js ckanext/{{ project }}/assets/vendor
-	# cp node_modules/htmx.org/dist/htmx.js ckanext/{{ project }}/assets/vendor
-	# cp node_modules/hyperscript.org/dist/_hyperscript.js ckanext/{{ project }}/assets/vendor/hyperscript.js
-	# cp node_modules/overlayscrollbars/styles/overlayscrollbars.css ckanext/{{ project }}/assets/vendor
-	# cp node_modules/overlayscrollbars/browser/overlayscrollbars.browser.es6.js ckanext/{{ project }}/assets/vendor/overlayscrollbars.js
+	cp node_modules/tom-select/dist/js/tom-select.{base,complete}.min.js $(vendor-dir)
+	cp node_modules/tom-select/dist/css/tom-select{,.bootstrap5}.css $(vendor-dir)
+	cp node_modules/sweetalert2/dist/sweetalert2.all.min.js $(vendor-dir)/sweetalert2.all.js
+	cp node_modules/sortablejs/Sortable.min.js $(vendor-dir)/Sortable.js
+	cp node_modules/htmx.org/dist/htmx.min.js $(vendor-dir)/htmx.js
+	cp node_modules/hyperscript.org/dist/_hyperscript.min.js $(vendor-dir)/hyperscript.js
+	cp node_modules/izimodal/css/iziModal.css $(vendor-dir)
+	cp node_modules/izimodal/js/iziModal.js $(vendor-dir)
+	cp node_modules/izitoast/dist/css/iziToast.css $(vendor-dir)
+	cp node_modules/izitoast/dist/js/iziToast.js $(vendor-dir)
+	cp node_modules/slick-carousel/slick/slick.{js,css} $(vendor-dir)
+	cp node_modules/slick-carousel/slick/slick-theme.css $(vendor-dir)
+	cp node_modules/slick-carousel/slick/ajax-loader.gif ckanext/{{ project_shortname }}/public
+	cp node_modules/slick-carousel/slick/fonts ckanext/{{ project_shortname }}/public/slick-fonts -r
+	cp node_modules/daterangepicker/daterangepicker.{js,css} ckanext/{{ project_shortname }}/assets/vendor
+	cp node_modules/daterangepicker/moment.min.js ckanext/{{ project_shortname }}/assets/vendor
+	cp node_modules/overlayscrollbars/styles/overlayscrollbars.css ckanext/{{ project_shortname }}/assets/vendor
+	cp node_modules/overlayscrollbars/browser/overlayscrollbars.browser.es6.js ckanext/{{ project_shortname }}/assets/vendor/overlayscrollbars.js
 
 typecheck:  ## Run typechecker
 	npx pyright --pythonpath="$$(which python)"
@@ -144,7 +153,10 @@ changelog:  ## compile changelog
 	git changelog -c conventional -o CHANGELOG.md $(if $(bump),-B $(bump))
 
 test-server:  ## start server for frontend testing
+ifeq ($(dirty-server),)
 	yes | ckan -c test.ini db clean
 	ckan -c test.ini db upgrade
 	yes | ckan -ctest.ini sysadmin add admin password=password123 email=admin@test.net
+else
 	ckan -c test.ini run -t
+endif

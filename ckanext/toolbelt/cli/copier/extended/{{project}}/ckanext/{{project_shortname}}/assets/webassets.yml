@@ -2,26 +2,30 @@
   filter: rjsmin
   output: ckanext-{{ project_shortname }}/%(version)s-{{ project_shortname }}.js
   contents:
-    ## slim version of tom-select
-    # - vendor/tom-select.base.js
-    ## tom-select with popular plugins
-    - vendor/tom-select.complete.js
+    # - vendor/tom-select.base.js # slim version of tom-select
+    - vendor/tom-select.complete.js # tom-select with popular plugins
 
-    ## SweetAlert2
-    - vendor/sweetalert2.all.js
-
-    ## SortableJS
     - vendor/Sortable.js
+    - vendor/sweetalert2.all.js
+    - vendor/hyperscript.js
+    - vendor/htmx.js
+    - vendor/iziModal.js
+    - vendor/iziToast.js
+    - vendor/slick.js
+    - vendor/daterangepicker.js
+    - vendor/moment.min.js
+    - vendor/overlayscrollbars.js
 
-    # global plugin scripts
-    - scripts/{{ project_shortname }}.js
+    - scripts/{{ project_shortname }}.js # global plugin scripts
 
-    # tom-select adapter
-    - scripts/{{ project_shortname }}-tom-select.js
-    # sweetalert adapter
-    - scripts/{{ project_shortname }}-swal.js
-    # sortablejs adapter
-    - scripts/{{ project_shortname }}-sortable.js
+    - scripts/{{ project_shortname }}-tom-select.js # tom-select adapter
+    - scripts/{{ project_shortname }}-swal.js # sweetalert adapter
+    - scripts/{{ project_shortname }}-sortable.js # sortablejs adapter
+    - scripts/{{ project_shortname }}-izi-modal.js # iziModal adapter
+    - scripts/{{ project_shortname }}-izi-toast.js # iziToast adapter
+    - scripts/{{ project_shortname }}-datepicker.js # daterangepicker adapter
+    - scripts/{{ project_shortname }}-scrollbar.js # overlay scrollbars adapter
+
   extra:
     preload:
       - base/main
@@ -37,6 +41,11 @@
     ## bootstrap styles cannot be included into SCSS, so you can use the static
     ## version below.
     # - vendor/tom-select.bootstrap5.css
+
+    - vendor/iziModal.css
+    - vendor/iziToast.css
+    - vendor/daterangepicker.css
+    - vendor/overlayscrollbars.css
 
     # the main plugin theme
     - styles/{{ project_shortname }}.css

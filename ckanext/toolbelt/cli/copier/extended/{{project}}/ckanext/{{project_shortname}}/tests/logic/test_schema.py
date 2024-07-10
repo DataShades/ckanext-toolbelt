@@ -42,7 +42,6 @@ def test_get_sum(input: dict[str, Any], expected: dict[str, Any], failed: set[st
     assert set(errors) == failed
 
 
-
 @pytest.mark.parametrize(
     ("input", "expected", "failed"),
     [

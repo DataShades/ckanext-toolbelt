@@ -36,25 +36,27 @@
 //   }
 // }
 
+/**
+ * Login into CKAN as `user`.
+ */
 Cypress.Commands.add("login", (user: string = "admin") => {
+    // `Cypress.session.clearAllSavedSessions()` will remove all stored
+    // sessions. Usefull if you accidentally cached wrong response from the application
     cy.session(
         user,
         () => {
-            cy.visit("/user/login");
-            cy.get("input[name=login]").type(user);
-            cy.get("input[name=password]")
-                .type(users[user].password)
-                .type("{enter}");
-            cy.get(".account .username").should("contain", user);
+            cy.fixture("users").then((users) => {
+                cy.visit("/user/login");
+                cy.get("input[name=login]").type(user);
+                cy.get("input[name=password]")
+                    .type(users[user].password)
+                    .type("{enter}");
+                cy.get(".account .username").should("contain", user);
+            });
         },
-        { cacheAcrossSpecs: true }
+        { cacheAcrossSpecs: true },
     );
 });
-
-const users = {
-    admin: { password: "password123", sysadmin: true, email: "admin@test.net" },
-};
-
 
 declare namespace Cypress {
     interface Chainable {
@@ -67,6 +69,5 @@ declare namespace Cypress {
          *    cy.login("normal_user")
          */
         login(user?: string): Chainable<void>;
-
     }
 }
