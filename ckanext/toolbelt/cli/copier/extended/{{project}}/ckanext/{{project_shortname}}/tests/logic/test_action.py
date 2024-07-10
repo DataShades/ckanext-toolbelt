@@ -1,12 +1,41 @@
-"""Tests for action.py."""
+"""Tests for ckanext.{{ project_shortname }}.logic.action."""
 
 import pytest
+from faker import Faker
 
-import ckan.tests.helpers as test_helpers
+from ckan import model
+from ckan.tests.helpers import call_action
+
+from ckanext.{{ project_shortname }}.model import Something
 
 
 @pytest.mark.ckan_config("ckan.plugins", "{{project_shortname}}")
 @pytest.mark.usefixtures("with_plugins")
-def test_{{project_shortname}}_get_sum():
-    result = test_helpers.call_action("{{project_shortname}}_get_sum", left=10, right=30)
+def test_get_sum():
+    """Sum is correct."""
+    result = call_action("{{project_shortname}}_get_sum", left=10, right=30)
     assert result["sum"] == 40
+
+
+@pytest.mark.ckan_config("ckan.plugins", "{{project_shortname}}")
+@pytest.mark.usefixtures("with_plugins")
+def test_something_create(faker: Faker):
+    """Something is created."""
+    hello = faker.word()
+    world = faker.word()
+
+    # action tests use `call_action` to skip authorization check. All auth
+    # functions are checked separately.
+    result = call_action(
+        "{{project_shortname}}_something_create",
+        hello=hello,
+        world=world,
+    )
+
+    # if validation covered by schema, do not test in inside action
+    # test. Basically, test the code, not the process.
+    assert result["hello"] == hello
+    assert result["world"] == world
+
+    smth = model.Session.get(Something, result["id"])
+    assert smth.hello == hello

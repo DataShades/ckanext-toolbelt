@@ -12,6 +12,9 @@
         "postcss-sort-media-queries": "^5.2.0",
         "pyright": "^1.1.370",
         "sass": "^1.77.6",
+        "sortablejs": "^1.15.2",
+        "sweetalert2": "^11.12.2",
+        "tom-select": "^2.3.1",
         "typescript": "^5.5.3"
     },
     "devDependencies": {

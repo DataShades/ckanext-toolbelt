@@ -1,18 +1,48 @@
-"""Tests for auth.py."""
+"""Tests for ckanext.{{ project_shortname }}.logic.action."""
+
+from __future__ import annotations
+
+from typing import Any
 
 import pytest
 
 import ckan.model as model
-import ckan.tests.factories as factories
-import ckan.tests.helpers as test_helpers
+import ckan.plugins.toolkit as tk
+from ckan.tests.helpers import call_auth
+
+
+@pytest.mark.ckan_config("ckan.plugins", "{{project_shortname}}")
+@pytest.mark.usefixtures("with_plugins")
+class TestGetSum:
+    def test_anon_access(self):
+        """Anonymous user can get sum."""
+        assert call_auth(
+            "{{project_shortname}}_get_sum",
+            context={"model": model, "user": ""},
+        )
+
+    def test_authenticated_access(self, user: dict[str, Any]):
+        """Anonymous user can get sum."""
+        assert call_auth(
+            "{{project_shortname}}_get_sum",
+            context={"model": model, "user": user["name"]},
+        )
 
 
 @pytest.mark.ckan_config("ckan.plugins", "{{project_shortname}}")
 @pytest.mark.usefixtures("with_plugins", "clean_db")
-def test_{{project_shortname}}_get_sum():
-    user = factories.User()
-    context = {
-        "user": user["name"],
-        "model": model,
-    }
-    assert test_helpers.call_auth("{{project_shortname}}_get_sum", context=context)
+class TestCreateSomething:
+    def test_anon_access(self):
+        """Anonymous user cannot create something."""
+        with pytest.raises(tk.NotAuthorized):
+            call_auth(
+                "{{project_shortname}}_something_create",
+                context={"model": model, "user": ""},
+            )
+
+    def test_authenticated_access(self, user: dict[str, Any]):
+        """Authenticated user can create something."""
+        assert call_auth(
+            "{{project_shortname}}_something_create",
+            context={"model": model, "user": user["name"]},
+        )

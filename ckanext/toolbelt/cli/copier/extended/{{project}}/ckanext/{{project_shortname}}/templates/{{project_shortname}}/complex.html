@@ -8,5 +8,27 @@
         enim ut tellus elementum sagittis vitae et leo duis ut diam quam
         nulla. Urna neque viverra justo, nec?
     </p>
+    <div class="my-2">
+        {% snippet "heh/snippets/tom_select.html", options=[[1, "hello"], [2, "world"]], sort_direction="desc" %}
+    </div>
+
+{% endraw %}
+<div class="my-2">
+    <button type="button" class="btn btn-default"
+        data-module="{{ project_shortname }}-swal"
+        data-module-text="Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+        data-module-icon="info"
+    >Alert <3</button>
+</div>
+<div class="my-2">
+    <ul data-module="{{ project_shortname }}-sortable" style="cursor: grab;">
+        <li>Iaculis nunc sed augue lacus.</li>
+        <li>Commodo elit, at imperdiet dui.</li>
+        <li>Integer eget aliquet nibh praesent?</li>
+        <li>Tellus in metus vulputate eu.</li>
+        <li>Duis convallis convallis tellus, id!</li>
+    </ul>
+</div>
+{% raw %}
 {% endblock %}
 {% endraw %}

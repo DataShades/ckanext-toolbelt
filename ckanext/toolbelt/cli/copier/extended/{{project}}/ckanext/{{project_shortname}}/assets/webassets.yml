@@ -2,7 +2,26 @@
   filter: rjsmin
   output: ckanext-{{ project_shortname }}/%(version)s-{{ project_shortname }}.js
   contents:
+    ## slim version of tom-select
+    # - vendor/tom-select.base.js
+    ## tom-select with popular plugins
+    - vendor/tom-select.complete.js
+
+    ## SweetAlert2
+    - vendor/sweetalert2.all.js
+
+    ## SortableJS
+    - vendor/Sortable.js
+
+    # global plugin scripts
     - scripts/{{ project_shortname }}.js
+
+    # tom-select adapter
+    - scripts/{{ project_shortname }}-tom-select.js
+    # sweetalert adapter
+    - scripts/{{ project_shortname }}-swal.js
+    # sortablejs adapter
+    - scripts/{{ project_shortname }}-sortable.js
   extra:
     preload:
       - base/main
@@ -11,4 +30,13 @@
   filter: cssrewrite
   output: ckanext-{{ project_shortname }}/%(version)s-{{ project_shortname }}.css
   contents:
+
+    ## source for these styles are included into _vendor.scss
+    # - vendor/tom-select.css
+
+    ## bootstrap styles cannot be included into SCSS, so you can use the static
+    ## version below.
+    # - vendor/tom-select.bootstrap5.css
+
+    # the main plugin theme
     - styles/{{ project_shortname }}.css

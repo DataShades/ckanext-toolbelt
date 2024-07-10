@@ -32,8 +32,9 @@ const build = () =>
     // keep details about original SASS code
     .pipe(if_(isDev, sourcemaps.init()))
 
-    // compile SASS into CSS
-    .pipe(sass().on("error", sass.logError))
+    // compile SASS into CSS. includePaths directive enables import from
+    // node_modules packages
+    .pipe(sass({ includePaths: ["node_modules"] }).on("error", sass.logError))
 
     // group identical @media queries into single block and sort them using
     // mobile-first order
