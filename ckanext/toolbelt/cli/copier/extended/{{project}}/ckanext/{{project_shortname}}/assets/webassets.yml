@@ -2,8 +2,8 @@
   filter: rjsmin
   output: ckanext-{{ project_shortname }}/%(version)s-{{ project_shortname }}.js
   contents:
-    # - vendor/tom-select.base.js # slim version of tom-select
-    - vendor/tom-select.complete.js # tom-select with popular plugins
+    # - vendor/tom-select.base.min.js # slim version of tom-select
+    - vendor/tom-select.complete.min.js # tom-select with popular plugins
 
     - vendor/Sortable.js
     - vendor/sweetalert2.all.js
