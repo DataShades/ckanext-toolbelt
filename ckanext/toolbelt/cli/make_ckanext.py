@@ -2,9 +2,9 @@ from __future__ import annotations
 from configparser import NoSectionError
 import contextlib
 import os
+import subprocess
 import git
 import click
-import copier
 
 
 TPL_DIR = os.path.join(os.path.dirname(__file__), "copier")
@@ -33,6 +33,29 @@ def ckanext():
 @click.option("-d", "--use-defaults", is_flag=True)
 def extended(output_dir: str, overwrite: bool, project: str, use_defaults: bool):
     """Generate empty extension files to expand CKAN."""
+    try:
+        import copier
+    except ImportError:
+        subprocess.Popen(["pip", "install", "pipx"]).wait()
+        subprocess.Popen(
+            [
+                "python",
+                "-m",
+                "pipx",
+                "run",
+                "ckanext-toolbelt[ckanext]",
+                "make",
+                "ckanext",
+                "extended",
+                project,
+                "-o",
+                output_dir,
+            ]
+            + (["-f"] if overwrite else [])
+            + (["-d"] if use_defaults else [])
+        ).wait()
+        return
+
     template_loc = os.path.join(TPL_DIR, "extended")
     if not project.startswith(PROJECT_PREFIX):
         project = f"{PROJECT_PREFIX}{project}"
