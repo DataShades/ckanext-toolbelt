@@ -5,7 +5,7 @@ import os
 import git
 import click
 import copier
-import ckan.plugins.toolkit as tk
+
 
 TPL_DIR = os.path.join(os.path.dirname(__file__), "copier")
 PROJECT_PREFIX = "ckanext-"
@@ -37,9 +37,8 @@ def extended(output_dir: str, overwrite: bool, project: str, use_defaults: bool)
     if not project.startswith(PROJECT_PREFIX):
         project = f"{PROJECT_PREFIX}{project}"
 
-
     if use_defaults and project == PROJECT_PREFIX:
-        tk.error_shout("Project must be specified")
+        click.secho("Project must be specified", fg="red")
         raise click.Abort
 
     defaults = {"author": "", "author_email": "", "project": project}
