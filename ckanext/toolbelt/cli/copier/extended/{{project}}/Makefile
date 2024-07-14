@@ -117,7 +117,7 @@ package_extras-remote-resource-indexer = pdf
 # undesirable udates
 _version = master
 
-# import all files defined in `deps.mk`. This file will be pulled by `make prepare`
+# import all rules defined in `deps.mk`. This file will be pulled by `make prepare`
 -include deps.mk
 
 prepare:  ## download CDM rules
