@@ -32,8 +32,9 @@ def test_something_create(faker: Faker):
         world=world,
     )
 
-    # if validation covered by schema, do not test in inside action
-    # test. Basically, test the code, not the process.
+    # if validation covered by schema, do not verify it inside action
+    # test. Basically, test the result of action, not it's internal
+    # implementation details.
     assert result["hello"] == hello
     assert result["world"] == world
 

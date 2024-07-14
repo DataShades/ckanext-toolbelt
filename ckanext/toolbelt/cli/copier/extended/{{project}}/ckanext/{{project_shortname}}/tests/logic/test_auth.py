@@ -22,7 +22,7 @@ class TestGetSum:
         )
 
     def test_authenticated_access(self, user: dict[str, Any]):
-        """Anonymous user can get sum."""
+        """Authenticated user can get sum."""
         assert call_auth(
             "{{project_shortname}}_get_sum",
             context={"model": model, "user": user["name"]},

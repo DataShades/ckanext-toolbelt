@@ -21,7 +21,7 @@ If you see this, most likely extension is already created. But if you want to
 create another extension, here's the example:
 
 1. Install `ckanext-toolbelt`
-   [v0.4.15](https://pypi.org/project/ckanext-toolbelt/) or newer.
+   [v0.4.21](https://pypi.org/project/ckanext-toolbelt/) or newer.
    ```sh
    pip install -U ckanext-toolbelt
    ```

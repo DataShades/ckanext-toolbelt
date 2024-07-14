@@ -45,8 +45,7 @@ class Something(Base):  # type: ignore
         return result
 
     @classmethod
-    def by_hello(cls, hello: str, world: str | None = None):
-        # type: (str, str | None) -> sa.sql.Select
+    def by_hello(cls, hello: str, world: str | None = None) -> sa.sql.Select:
         stmt = sa.select(cls).where(
             cls.hello == hello,
         )
