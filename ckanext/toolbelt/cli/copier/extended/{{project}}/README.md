@@ -589,7 +589,7 @@ Add `or_facet` to the list of plugins.
 
 PDF view for resources.
 
-Add `pdf_view` to the list of plugins.
+Enabled by default as `pdf_view`.
 
 ### ckanext-pygments
 
@@ -790,6 +790,16 @@ as `{"id": HOOK_ID}` inside `hooks` attribute of the configuration.
   hooks:
     - id: markdownlint
 ```
+
+#### Security
+
+`pre-commit` configuration contains configuration for
+[gitleaks](https://github.com/gitleaks/gitleaks) and
+[talisman](https://github.com/thoughtworks/talisman).
+
+These hooks can be pretty slow so they are disabled by default. But it's
+recommended to enable at least one of them to prevent accidental commits with
+credentials.
 
 
 ### Asset builder: [gulp](https://gulpjs.com/)
