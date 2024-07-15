@@ -52,7 +52,7 @@ ext_list = \
 	officedocs or-facet \
 	pdfview pygments \
 	resource-indexer \
-	scheming search-tweaks spatial saml \
+	scheming search-tweaks spatial saml syndicate \
 	toolbelt \
 	unfold \
 	vip-portal \
@@ -96,6 +96,7 @@ remote-saml = https://github.com/DataShades/ckanext-saml.git tag v0.3.3
 remote-scheming = https://github.com/ckan/ckanext-scheming tag release-3.0.0
 remote-search-tweaks = https://github.com/dataShades/ckanext-search-tweaks tag v0.6.1
 remote-spatial = https://github.com/ckan/ckanext-spatial tag v2.1.1
+remote-syndicate = https://github.com/DataShades/ckanext-syndicate tag v2.2.2
 remote-toolbelt = https://github.com/DataShades/ckanext-toolbelt.git tag v0.4.14
 remote-unfold = https://github.com/mutantsan/ckanext-unfold.git tag v1.0.2
 remote-vip-portal = https://github.com/DataShades/ckanext-vip-portal.git tag v0.2.5a1

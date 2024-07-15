@@ -61,6 +61,33 @@ create another extension, here's the example:
    pre-commit install
    ```
 
+1. Optional. If you don't have CKAN and want to install it alongside with
+   popular extensions, run:
+   ```sh
+   make prepare
+   make full-upgrade develop=1
+   ```
+   Create config files for 1st and 3rd lavel(details explained in Configuration
+   section):
+   ```sh
+   ckan generate config default.ini
+   ckan generate config ckan.ini
+   ```
+   Link 2nd level of configuration:
+   ```sh
+   ln -snf ckanext-my-ext/config/* ./
+   ```
+   Create solr core using schema from
+   `ckanext-my-ext/config/solr/schema.xml`. Create DB.
+   Remove content of `[app:main]` from `ckan.ini`. Add `use =
+   config:project.ini` line instead and copy/adapt `Environment settings:
+   start/end` block from `project.ini`.
+   Apply DB migrations:
+   ```sh
+   ckan db upgrade
+   ckan db pending-migrations --apply
+   ```
+
 
 ## Usage
 
@@ -421,6 +448,250 @@ modification before the modified line.
 
 All additional files required by Solr, like specific version of Solr libraries
 can be also added here.
+
+## Included extensions
+
+This exntension includes configuration for a number of popular CKAN
+extensions. These extensions are installed when you run `make full-upgrade`.
+
+Usually, you only need to add extension name to `ckan.plugins` config
+option. If extension requires additional configuration, it will be mentioned in
+the corresponding section below.
+
+### ckanext-admin-panel
+
+Admin UI improvements. Adds panel with links to admin pages at the top of the
+page.
+
+Does not require additional configuration. Enabled by default as `admin_panel`
+plugin.
+
+### ckanext-cloudstorage
+
+Upload resource files to S3 bucket.
+
+Add `cloudstorage` to the list of enabled plugins.
+
+Add driver configuration
+```ini
+
+## ckanext-cloudstorage
+ckanext.cloudstorage.container_name = <BUCKET>
+ckanext.cloudstorage.driver = S3
+ckanext.cloudstorage.driver_options = {"key": "<KEY>", "secret": "<SECRET>",  "host": "s3.ap-southeast-2.amazonaws.com"}
+```
+
+### ckanext-collection
+
+Utilities for building reusable interfaces for data series.
+
+Does not require additional configuration. Enabled by default as `collection`
+plugin.
+
+### ckanext-comments
+
+Comment threads that can be attached to anything(dataset, group, user,
+resource).
+
+Enable `comments` plugin and apply DB migrations `ckan db upgrade -p comments`
+to activate comments API. Thread widget must be added manually to pages. For
+example, the following block can be used to add thread to `package/read.html`
+
+{% raw %}
+```jinja
+{% block primary_content_inner %}
+    {{ super() }}
+    {% snippet 'comments/snippets/thread.html', subject_id=pkg.id, subject_type='package' %}
+{% endblock primary_content_inner %}
+```
+{% endraw %}
+
+### ckanext-dcat
+
+DCAT translator for CKAN.
+
+Does not require additional configuration. Enabled by default as `dcat`
+plugin.
+
+### ckanext-editable-config
+
+API for managing CKAN configuration in runtime.
+
+Does not require additional configuration. Enabled by default as `editable_config`
+plugin.
+
+### ckanext-files
+
+File management API.
+
+Enabled by default as `files` plugin.
+
+Requires additional configuration:
+```ini
+## ckanext-files
+ckanext.files.storage.default.type = files:fs
+ckanext.files.storage.default.path = %(here)s/storage
+ckanext.files.storage.default.create_path = true
+```
+
+### ckanext-flakes
+
+API for storing arbitrary data in DB.
+
+Add `flakes` to the list of plugins and apply DB migrations: `ckan db upgrade -p flakes`
+
+### ckanext-geoview
+
+Map views for spatial data.
+
+Configure specific view type accoriding to [official
+documentation](https://github.com/ckan/ckanext-geoview?tab=readme-ov-file#available-plugins)
+
+### ckanext-googleanalytics
+
+Track user activity using GA.
+
+Add `googleanalytics` plugin and specify `googleanalytics.id` key.
+
+### ckanext-harvest
+
+Transform data from external services into CKAN datasets.
+
+Add `harvest` to the list of plugins.
+
+### ckanext-hierarchy
+
+Group/organization hierarchy.
+
+Enable `hierarchy_display hierarchy_form hierarchy_group_form` plugins. If you
+are using scheming, you may also need to update metadata schemas.
+
+### ckanext-let-me-in
+
+One-time login links generator.
+
+Does not require additional configuration. Enabled by default as `let_me_in`
+plugin.
+
+### ckanext-officedocs
+
+Views for MS Office documents.
+
+Add `officedocs_view` to the list of plugins and default views.
+
+### ckanext-or-facet
+
+Switch search facets to union logic instead of intersection.
+
+Add `or_facet` to the list of plugins.
+
+### ckanext-pdfview
+
+PDF view for resources.
+
+Add `pdf_view` to the list of plugins.
+
+### ckanext-pygments
+
+Text views with syntax highlighter.
+
+Add `pygments_view` to the list of plugins and default views.
+
+### ckanext-resource-indexer
+
+Add content of resources to search index.
+
+Add `resource_indexer plain_resource_indexer` to the list of plugins.
+
+### ckanext-saml
+
+SAML2 authentication.
+
+Add `saml` to the list of plugins. Apply DB migrations: `ckan db upgrade -p
+saml`. Adapt `ckanext.saml.*` options. If it's not enough, modify
+`config/saml/settings.json`.
+
+When everything is configured, pull metadata from IdP: `ckanapi action saml_idp_refresh`.
+
+### ckanext-scheming
+
+JSON/YAML definitions of metadata schemas.
+
+Add `scheming_datasets scheming_groups scheming_organizations` to the list of
+plugins.
+
+### ckanext-syndicate
+
+Push local datasets to extenal CKAN portal
+
+Add `syndicate` to the list of plugins. Configure details of remote
+portal(syndication profile) specified by `ckanext.syndicate.profile*` options.
+
+### ckanext-search-tweaks
+
+Additional features for CKAN search.
+
+Enable [plugins defined by the
+extension](https://github.com/DataShades/ckanext-search-tweaks?tab=readme-ov-file#usage)
+and add corresponding configuration
+
+### ckanext-spatial
+
+Features related to spatial search.
+
+Add `spatial_metadata spatial_query` to the list of plugins. Initialize PostGIS extension for CKAN DB
+
+If you are using Docker PostGIS image, you need to do something similar to the example below:
+
+```sh
+PG_VERSION=16
+POSTGIS_VERSION=3.4
+DB=ckan_db_name
+
+psql -U postgres -f /usr/share/postgresql/$PG_VERSION/contrib/postgis-$POSTGIS_VERSION/postgis.sql -d $DB -v ON_ERROR_ROLLBACK=1;
+psql -U postgres -f /usr/share/postgresql/$PG_VERSION/contrib/postgis-$POSTGIS_VERSION/spatial_ref_sys.sql -d $DB -v ON_ERROR_ROLLBACK=1
+```
+
+Use `config/solr/schema.xml` for solr. If you are going to use `solr-bbox`
+search backend, remove the definition of field after `solr-spatial-field`
+comment. If you are going to use `solr-spatial-field` backend, use schema as
+is. You'll also need to [add JTS
+library](https://solr.apache.org/guide/8_11/spatial-search.html#jts-and-polygons-flat)
+to `server/solr-webapp/webapp/WEB-INF/lib/` folder of your Solr service.
+
+[Extra details about search
+backend](https://docs.ckan.org/projects/ckanext-spatial/en/latest/spatial-search.html#choosing-a-backend-for-the-spatial-search).
+
+
+### ckanext-toolbelt
+
+Different helpers that are often used but are too small for individual
+extensions.
+
+Functionality of toolbelt usually does not require enabling plugins. Just
+import and use it.
+
+### ckanext-unfold
+
+Views for archives
+
+Depending on the format of archive, requirements and configuration can be
+different. Check [official
+documentaion](https://github.com/mutantsan/ckanext-unfold).
+
+### ckanext-vip-portal
+
+Restrict access to specific pages globally(for anonymous user) or individually.
+
+Add `vip_portal` to the list of enabled plugins.
+
+### ckanext-xloader
+
+Load files into DataStore tables.
+
+Add `xloader` to the list of plugins. Configure `ckanext.xloader.api_token`
+option.
+
 
 ## Additional tools
 

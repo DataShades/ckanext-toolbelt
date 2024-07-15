@@ -6,9 +6,45 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
-## Unreleased
+## [v0.4.22](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.22) - 2024-07-14
 
-<small>[Compare with latest](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.14...HEAD)</small>
+<small>[Compare with v0.4.21](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.21...v0.4.22)</small>
+
+### Bug Fixes
+
+- add missing style to ckanext template ([7572841](https://github.com/DataShades/ckanext-toolbelt/commit/757284133dee5ad65d907ba34e026581320d107b) by Sergey Motornyuk).
+
+## [v0.4.21](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.21) - 2024-07-11
+
+<small>[Compare with v0.4.20](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.20...v0.4.21)</small>
+
+## [v0.4.20](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.20) - 2024-07-11
+
+<small>[Compare with v0.4.19](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.19...v0.4.20)</small>
+
+## [v0.4.19](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.19) - 2024-07-11
+
+<small>[Compare with v0.4.18](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.18...v0.4.19)</small>
+
+## [v0.4.18](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.18) - 2024-07-11
+
+<small>[Compare with v0.4.17](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.17...v0.4.18)</small>
+
+### Bug Fixes
+
+- do not use toolkit in make-ckanext command ([8f04abc](https://github.com/DataShades/ckanext-toolbelt/commit/8f04abc20ab7f43a084ab3e573081baa7b461c11) by Sergey Motornyuk).
+
+## [v0.4.17](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.17) - 2024-07-10
+
+<small>[Compare with v0.4.16](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.16...v0.4.17)</small>
+
+### Bug Fixes
+
+- fix name of tom-select asset ([cb8432d](https://github.com/DataShades/ckanext-toolbelt/commit/cb8432d42f54c2e359db3b4e4d4663cc934fa402) by Sergey Motornyuk).
+
+## [v0.4.16](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.16) - 2024-07-10
+
+<small>[Compare with v0.4.14](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.14...v0.4.16)</small>
 
 ### Features
 
@@ -19,7 +55,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - add missing vendor libraries to template ([6629b69](https://github.com/DataShades/ckanext-toolbelt/commit/6629b696db1acae307a90f0e7f007df8db2b9358) by Sergey Motornyuk).
 
-<!-- insertion marker -->
 ## [v0.4.14](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.14) - 2024-03-06
 
 <small>[Compare with v0.4.13](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.13...v0.4.14)</small>
