@@ -6,6 +6,8 @@ import subprocess
 import git
 import click
 
+from ckanext.toolbelt import __version__
+
 
 TPL_DIR = os.path.join(os.path.dirname(__file__), "copier")
 PROJECT_PREFIX = "ckanext-"
@@ -37,6 +39,9 @@ def extended(output_dir: str, overwrite: bool, project: str, use_defaults: bool)
         import copier
     except ImportError:
         subprocess.Popen(["pip", "install", "pipx"]).wait()
+        subprocess.Popen(
+            ["pipx", "install", f"ckanext-toolbelt=={__version__}", "--force"]
+        ).wait()
         subprocess.Popen(
             [
                 "python",
