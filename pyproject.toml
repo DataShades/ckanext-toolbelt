@@ -1,3 +1,68 @@
+[build-system]
+requires = [ "setuptools",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ckanext-toolbelt"
+description = ""
+classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Programming Language :: Python :: 3.13", "Programming Language :: Python :: 3.14",]
+keywords = [ "CKAN",]
+requires-python = ">= 3.7"
+dependencies = [ "click", "aiosmtpd", "typing_extensions", "gitpython",]
+dynamic = [ "version",]
+authors = [
+    {name = "DataShades", email = "datashades@linkdigital.com.au"},
+    {name = "Sergey Motornyuk", email = "sergey.motornyuk@linkdigital.com.au"},
+]
+maintainers = [
+    {name = "DataShades", email = "datashades@linkdigital.com.au"},
+]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.license]
+text = "AGPL"
+
+[project.urls]
+Homepage = "https://github.com/DataShades/ckanext-toolbelt"
+
+[project.optional-dependencies]
+flask-sqlalchemy = [ "flask-sqlalchemy~=2.5",]
+ckanext = [ "copier", "copier-templates-extensions",]
+test = [ "pytest-ckan", "pytest-mock",]
+
+[project.scripts]
+ctb = "ckanext.toolbelt.cli:toolbelt"
+
+[project.entry-points."ckan.plugins"]
+toolbelt = "ckanext.toolbelt.plugins:ToolbeltPlugin"
+toolbelt_safe_upload = "ckanext.toolbelt.plugins.safe_upload:SafeUploadPlugin"
+toolbelt_group_changes = "ckanext.toolbelt.plugins.group_changes:GroupChangesPlugin"
+toolbelt_composite_groups = "ckanext.toolbelt.plugins.group_composite:CompositeGroupsPlugin"
+toolbelt_composite_organizations = "ckanext.toolbelt.plugins.group_composite:CompositeOrganizationsPlugin"
+toolbelt_cascade_organization_updates = "ckanext.toolbelt.plugins.cascade_organization_updates:CascadeOrganizationUpdatesPlugin"
+toolbelt_fdt_sqlalchemy = "ckanext.toolbelt.plugins.fdt_sqlalchemy:FdtSqlalchemyPlugin"
+
+[project.entry-points."ckan.system_plugins"]
+toolbelt_fdt_scroll = "ckanext.toolbelt.plugins.fdt_scroll.plugin:FdtScrollPlugin"
+
+[project.entry-points."ckan.click_command"]
+toolbelt = "ckanext.toolbelt.cli.ckan:toolbelt"
+
+[project.entry-points.pytest11]
+toolbelt = "pytest_toolbelt.plugin"
+
+[project.entry-points."babel.extractors"]
+ckan = "ckan.lib.extract:extract_ckan"
+
+[tool.setuptools.packages]
+find = {}
+
+[tool.setuptools.dynamic.version]
+attr = "ckanext.toolbelt.__version__"
+
 [tool.black]
 # line-length = 88
 # preview = true
@@ -56,10 +121,9 @@ profile = "black"
 [tool.pytest.ini_options]
 addopts = "--ckan-ini test.ini"
 filterwarnings = [
-               "ignore::sqlalchemy.exc.SADeprecationWarning",
-               "ignore::sqlalchemy.exc.SAWarning",
-               "ignore::DeprecationWarning",
+               # "ignore::DeprecationWarning",
 ]
+testpaths = "ckanext/toolbelt/tests"
 
 [tool.pyright]
 pythonVersion = "3.8"
