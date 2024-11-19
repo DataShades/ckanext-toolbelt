@@ -1,0 +1,51 @@
+{{ cookiecutter.project_shortname }}-js:
+  filter: rjsmin
+  output: ckanext-{{ cookiecutter.project_shortname }}/%(version)s-{{ cookiecutter.project_shortname }}.js
+  contents:
+    # - vendor/tom-select.base.min.js # slim version of tom-select
+    - vendor/tom-select.complete.min.js # tom-select with popular plugins
+
+    - vendor/Sortable.js
+    - vendor/sweetalert2.all.js
+    - vendor/hyperscript.js
+    - vendor/htmx.js
+    - vendor/iziModal.js
+    - vendor/iziToast.js
+    - vendor/slick.js
+    - vendor/daterangepicker.js
+    - vendor/moment.min.js
+    - vendor/overlayscrollbars.js
+
+    - scripts/{{ cookiecutter.project_shortname }}.js # global plugin scripts
+
+    - scripts/{{ cookiecutter.project_shortname }}-tom-select.js # tom-select adapter
+    - scripts/{{ cookiecutter.project_shortname }}-swal.js # sweetalert adapter
+    - scripts/{{ cookiecutter.project_shortname }}-sortable.js # sortablejs adapter
+    - scripts/{{ cookiecutter.project_shortname }}-izi-modal.js # iziModal adapter
+    - scripts/{{ cookiecutter.project_shortname }}-izi-toast.js # iziToast adapter
+    - scripts/{{ cookiecutter.project_shortname }}-datepicker.js # daterangepicker adapter
+    - scripts/{{ cookiecutter.project_shortname }}-scrollbar.js # overlay scrollbars adapter
+
+  extra:
+    preload:
+      - base/main
+
+{{ cookiecutter.project_shortname }}-css:
+  filter: cssrewrite
+  output: ckanext-{{ cookiecutter.project_shortname }}/%(version)s-{{ cookiecutter.project_shortname }}.css
+  contents:
+
+    ## source for these styles are included into _vendor.scss
+    # - vendor/tom-select.css
+
+    ## bootstrap styles cannot be included into SCSS, so you can use the static
+    ## version below.
+    # - vendor/tom-select.bootstrap5.css
+
+    - vendor/iziModal.css
+    - vendor/iziToast.css
+    - vendor/daterangepicker.css
+    - vendor/overlayscrollbars.css
+
+    # the main plugin theme
+    - styles/{{ cookiecutter.project_shortname }}.css

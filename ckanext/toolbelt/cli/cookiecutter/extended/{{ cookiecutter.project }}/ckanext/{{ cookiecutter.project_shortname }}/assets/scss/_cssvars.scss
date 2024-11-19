@@ -1,0 +1,20 @@
+@use "sass:map";
+@use "variables" as v;
+
+// if you never use variable inside SASS expression, consider using
+// CSS-variables instead. CSS-variables are great for dynamic theme changes and
+// do not visibly affect rendering performance in majority of scenarios.
+:root {
+    --{{ cookiecutter.project_shortname }}-mobile-font-size: 14px;
+    --{{ cookiecutter.project_shortname }}-desktop-font-size: 16px;
+
+    --{{ cookiecutter.project_shortname }}-font-main: "Noto Sans", serif;
+    --{{ cookiecutter.project_shortname }}-font-heading: "Bitter", serif;
+
+    --{{ cookiecutter.project_shortname }}-color-brand: #{map.get(v.$pallette, "blue")};
+    --{{ cookiecutter.project_shortname }}-color-accent: #{map.get(v.$pallette, "red")};
+    --{{ cookiecutter.project_shortname }}-color-default: #{map.get(v.$pallette, "white")};
+    --{{ cookiecutter.project_shortname }}-color-link: #{map.get(v.$pallette, "navy")};
+    --{{ cookiecutter.project_shortname }}-color-text: #{map.get(v.$pallette, "black")};
+    --{{ cookiecutter.project_shortname }}-color-outline: #{map.get(v.$pallette, "gray")};
+}

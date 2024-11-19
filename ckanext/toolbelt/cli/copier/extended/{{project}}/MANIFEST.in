@@ -1,5 +1,0 @@
-include README.md
-include LICENSE
-include requirements.txt
-recursive-include ckanext/{{ project_shortname }} *.html *.json *.js *.less *.css *.mo *.yml *.yaml
-recursive-include ckanext/{{ project_shortname }}/migration *.ini *.py *.mako

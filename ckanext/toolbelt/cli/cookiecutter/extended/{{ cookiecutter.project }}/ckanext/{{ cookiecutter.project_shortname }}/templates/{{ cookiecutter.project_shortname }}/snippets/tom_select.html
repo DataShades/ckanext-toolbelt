@@ -1,0 +1,24 @@
+{% raw %}
+{#
+    Example of widget with tom-select.
+
+    options (list[tuple[str, str]]): pairs of (value, label)
+    sort_field (str, default: text): attribute for sorting
+    sort_direction (str, default: asc): sort direction
+
+#}
+{% endraw %}
+<select
+    data-module="{{ cookiecutter.project_shortname }}-tom-select"
+    {% raw %}
+    data-module-create="true"
+    data-module-sort-field_field="{{ sort_field|default('text') }}"
+    data-module-sort-field_direction="{{ sort_direction|default('asc') }}"
+    {% endraw %}
+>
+    {% raw %}
+    {% for value, label in options %}
+        <option value="{{ value }}">{{ label }}</option>
+    {% endfor %}
+    {% endraw %}
+</select>

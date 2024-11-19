@@ -1,0 +1,5 @@
+include README.md
+include LICENSE
+include requirements.txt
+recursive-include ckanext/{{ cookiecutter.project_shortname }} *.html *.json *.js *.less *.css *.mo *.yml *.yaml *.cfg *.toml
+recursive-include ckanext/{{ cookiecutter.project_shortname }}/migration *.ini *.py *.mako

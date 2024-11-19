@@ -1,0 +1,9 @@
+{
+    "project": "Project's name",
+    "description": "",
+    "author": "",
+    "author_email": "",
+    "github_user_name": "",
+    "project_shortname": "{{ cookiecutter.project[8:].lower().replace('-','_') }}",
+    "plugin_class_name": "{{ cookiecutter.project_shortname.title().replace('_','') }}Plugin"
+}

@@ -1,0 +1,20 @@
+@use "sass:map";
+@use "mixins" as m;
+@use "variables" as v;
+
+html {
+    font-size: var(--{{ cookiecutter.project_shortname }}-mobile-font-size);
+
+    @include m.breakpoint(md) {
+        font-size: var(--{{ cookiecutter.project_shortname }}-desktop-font-size);
+    }
+}
+
+body {
+    font-family: var(--{{ cookiecutter.project_shortname }}-font-main);
+}
+
+:focus,
+:focus-visible {
+    outline: var(--{{ cookiecutter.project_shortname }}-color-outline) auto 1px;
+}

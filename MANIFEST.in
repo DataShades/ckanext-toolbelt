@@ -3,5 +3,5 @@ include LICENSE
 include requirements.txt
 recursive-include ckanext/toolbelt *.html *.json *.js *.less *.css *.mo *.yml *.yaml *.toml *.sh *.ini
 recursive-include ckanext/toolbelt/migration *.ini *.py *.mako
-recursive-include ckanext/toolbelt/cli/copier *
+recursive-include ckanext/toolbelt/cli/cookiecutter *
 recursive-exclude * *.pyc

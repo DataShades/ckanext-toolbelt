@@ -1,0 +1,13 @@
+{% raw %}
+{% ckan_extends %}
+
+{% block styles %}
+    {{ super() }}
+    {% asset "{% endraw %}{{ cookiecutter.project_shortname }}/{{ cookiecutter.project_shortname }}{% raw %}-css" %}
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {% asset "{% endraw %}{{ cookiecutter.project_shortname }}/{{ cookiecutter.project_shortname }}{% raw %}-js" %}
+{% endblock %}
+{% endraw %}
