@@ -1,3 +1,58 @@
+[build-system]
+requires = [ "setuptools",]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "{{ project }}"
+version = "0.0.1"
+description = "{{ description }}"
+classifiers = [
+            "Development Status :: 4 - Beta",
+            "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+            "Programming Language :: Python :: 3.9",
+            "Programming Language :: Python :: 3.10",
+            "Programming Language :: Python :: 3.11",
+            "Programming Language :: Python :: 3.12",
+            "Programming Language :: Python :: 3.13",
+            "Programming Language :: Python :: 3.14",
+]
+keywords = [ "CKAN" ]
+requires-python = ">= 3.9"
+dependencies = [ "typing_extensions", "pyyaml",]
+authors = [
+    {name = "{{ author }}", email = "{{ author_email }}"},
+]
+maintainers = [
+    {name = "DataShades", email = "datashades@linkdigital.com.au"},
+]
+
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown"
+
+[project.license]
+text = "AGPL"
+
+[project.urls]
+Homepage = "https://github.com/{{ github_user_name }}/{{ project }}"
+
+[project.optional-dependencies]
+[options.extras_require]
+test = ["pytest-ckan", "pytest-benchmark", "pytest-pretty"]
+docs = ["mkdocs", "mkdocs-material", "pymdown-extensions", "mkdocstrings[python]"]
+dev = ["pytest-ckan", "pytest-benchmark", "pytest-pretty", "mkdocs", "mkdocs-material", "pymdown-extensions", "mkdocstrings[python]", "pre-commit"]
+
+[project.entry-points."ckan.plugins"]
+{{ project_shortname }} = "ckanext.{{ project_shortname }}.plugin:{{ plugin_class_name }}"
+
+[project.entry-points."babel.extractors"]
+ckan = "ckan.lib.extract:extract_ckan"
+
+[tool.setuptools.packages]
+find = {}
+
+
 [tool.ruff]
 target-version = "py38"
 
