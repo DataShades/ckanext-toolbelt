@@ -9,7 +9,6 @@ from flask import Blueprint
 import ckan.plugins as p
 import ckan.plugins.toolkit as tk
 from ckan import model
-from ckan.views.group import _replace_group_org, set_org
 
 log = logging.getLogger(__name__)
 
@@ -219,7 +218,6 @@ def changes(id: str) -> str:
     item.
     """
     group_type = "group"
-    set_org(False)
     extra_vars = {}
     activity_id = id
     context = {
@@ -260,7 +258,7 @@ def changes(id: str) -> str:
         "group_type": current_group_dict["type"],
     }
 
-    return tk.render(_replace_group_org("group/changes.html"), extra_vars)
+    return tk.render("group/changes.html", extra_vars)
 
 
 @toolbelt.route("/group_type/changes_multiple", endpoint="changes_multiple")
@@ -272,7 +270,6 @@ def changes_multiple() -> str:
     re-renders changes.html with the list.
     """
     group_type = "group"
-    set_org(False)
     extra_vars = {}
     new_id = tk.h.get_request_param("new_id")
     old_id = tk.h.get_request_param("old_id")
@@ -351,4 +348,4 @@ def changes_multiple() -> str:
         "group_type": current_group_dict["type"],
     }
 
-    return tk.render(_replace_group_org("group/changes.html"), extra_vars)
+    return tk.render("group/changes.html", extra_vars)

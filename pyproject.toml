@@ -7,7 +7,7 @@ name = "ckanext-toolbelt"
 description = ""
 classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Programming Language :: Python :: 3.13", "Programming Language :: Python :: 3.14",]
 keywords = [ "CKAN",]
-requires-python = ">= 3.7"
+requires-python = ">= 3.8"
 dependencies = [ "click", "aiosmtpd", "typing_extensions", "gitpython", "cookiecutter"]
 dynamic = [ "version",]
 authors = [
