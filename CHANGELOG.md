@@ -6,6 +6,52 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [v0.5.1](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.5.1) - 2025-01-14
+
+<small>[Compare with v0.5.0](https://github.com/DataShades/ckanext-toolbelt/compare/v0.5.0...v0.5.1)</small>
+
+### Bug Fixes
+
+- DateTracker fails when refreshing expired scores ([0c73585](https://github.com/DataShades/ckanext-toolbelt/commit/0c73585cf592bc555589d3991362f21cc7e1f7c9) by Sergey Motornyuk).
+
+## [v0.5.0](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.5.0) - 2025-01-08
+
+<small>[Compare with v0.4.26](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.26...v0.5.0)</small>
+
+### Features
+
+- group_changes plugin is adapted to CKAN v2.11 ([0895a62](https://github.com/DataShades/ckanext-toolbelt/commit/0895a6201f51dd944992291e2f6719843216929a) by Sergey Motornyuk).
+- switch from copier to cookiecutter ([0da6d0f](https://github.com/DataShades/ckanext-toolbelt/commit/0da6d0fd4525c20759abf006dbc27e22b24988ec) by Sergey Motornyuk).
+
+## [v0.4.26](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.26) - 2024-11-19
+
+<small>[Compare with v0.4.25](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.25...v0.4.26)</small>
+
+### Features
+
+- move extension template to pyproject ([98b28d7](https://github.com/DataShades/ckanext-toolbelt/commit/98b28d7ad77cc281d73834d62812279b3c4d97d1) by Sergey Motornyuk).
+
+## [v0.4.25](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.25) - 2024-08-14
+
+<small>[Compare with v0.4.24](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.24...v0.4.25)</small>
+
+### Features
+
+- replace black and isort with ruff ([619522b](https://github.com/DataShades/ckanext-toolbelt/commit/619522b3541f63d7145fe94548ce733ec7ad9d2c) by Sergey Motornyuk).
+
+### Bug Fixes
+
+- extension generator update toolbelt ([1245d7a](https://github.com/DataShades/ckanext-toolbelt/commit/1245d7a16625adf388a73aeb5afd3a004cddb4ca) by Sergey Motornyuk).
+- gulpfile from template watches nested SCSS files ([234367f](https://github.com/DataShades/ckanext-toolbelt/commit/234367fe32da85dc9ba32cc549c07f8127faa379) by Sergey Motornyuk).
+
+## [v0.4.24](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.24) - 2024-07-15
+
+<small>[Compare with v0.4.23](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.23...v0.4.24)</small>
+
+## [v0.4.23](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.23) - 2024-07-15
+
+<small>[Compare with v0.4.22](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.22...v0.4.23)</small>
+
 ## [v0.4.22](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.4.22) - 2024-07-14
 
 <small>[Compare with v0.4.21](https://github.com/DataShades/ckanext-toolbelt/compare/v0.4.21...v0.4.22)</small>
