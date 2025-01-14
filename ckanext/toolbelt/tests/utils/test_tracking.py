@@ -1,9 +1,10 @@
 from __future__ import annotations
-from datetime import datetime
+from datetime import datetime, timedelta
 from operator import itemgetter
 import pytest
 from faker import Faker
 from ckanext.toolbelt.utils.tracking import Tracker, DateTracker
+from freezegun.api import FrozenDateTimeFactory
 
 
 @pytest.fixture()
@@ -130,6 +131,50 @@ class TestAllTrackers:
             {"event": second_event, "score": 50},
         ]
 
+    def test_obsoletion_period(
+        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory
+    ):
+        """Most common items ordered by score"""
+        if not isinstance(tracker, DateTracker):
+            return
+
+        first_event = faker.word()
+        second_event = faker.word()
+
+        tracker.hit(first_event, 100)
+        freezer.move_to(timedelta(seconds=tracker.max_age // 2))
+        tracker.hit(second_event, 50)
+
+        tracker.refresh()
+        assert list(tracker.most_common(2)) == [
+            {"event": first_event, "score": 100},
+            {"event": second_event, "score": 50},
+        ]
+
+        freezer.move_to(timedelta(seconds=tracker.max_age // 2))
+        tracker.refresh()
+        assert list(tracker.most_common(2)) == [{"event": second_event, "score": 50}]
+
+        freezer.move_to(timedelta(seconds=tracker.max_age // 2))
+        tracker.refresh()
+        assert list(tracker.most_common(2)) == []
+
+
+    def test_score(
+        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory
+    ):
+        """Most common items ordered by score"""
+        event = faker.word()
+
+        tracker.hit(event, 100)
+        if isinstance(tracker, DateTracker):
+            freezer.move_to(timedelta(seconds=tracker.obsoletion_period * 3))
+        tracker.hit(event, 100)
+
+        if isinstance(tracker, DateTracker):
+            assert tracker.score(event) == 125
+        else:
+            assert tracker.score(event) == 200
 
 @pytest.mark.usefixtures("clean_redis")
 class TestTracker:
@@ -172,15 +217,13 @@ class TestDateTracker:
         return DateTracker
 
     def test_moment_interactions(self, tracker, faker):
-        """Past scores can be updated and shown.
-        """
+        """Past scores can be updated and shown."""
         date = faker.date_time_between(end_date="-2d")
         event = faker.word()
         tracker.hit(event, moment=date)
 
-        assert tracker.score(event) == 0
-        assert tracker.score(event, moment=date) == 1
-
+        assert tracker.moment_score(event) == 0
+        assert tracker.moment_score(event, moment=date) == 1
 
     def test_snapshot(self, tracker: DateTracker, faker: Faker):
         """Tracker data has expected snapshot format."""
@@ -192,7 +235,8 @@ class TestDateTracker:
         tracker.hit(second_event, second_count)
 
         date = datetime.strptime(
-            tracker.format_date_stem(tracker.now()), tracker.date_format,
+            tracker.format_date_stem(tracker.now()),
+            tracker.date_format,
         )
 
         assert sorted(tracker.snapshot(), key=itemgetter("event")) == sorted(
@@ -216,7 +260,8 @@ class TestDateTracker:
         first_count = faker.pyint()
         second_count = faker.pyint()
         date = datetime.strptime(
-            tracker.format_date_stem(tracker.now()), tracker.date_format,
+            tracker.format_date_stem(tracker.now()),
+            tracker.date_format,
         )
 
         tracker.restore(

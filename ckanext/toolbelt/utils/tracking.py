@@ -77,6 +77,14 @@ class Tracker:
     >>> track.hit("hello")
     >>> assert track.score("hello") == 2
 
+    Default increase of score for every hit is 1. But it can be set to an
+    arbitrary value via second argument of the `hit` method:
+
+    >>> track = Tracker()
+    >>> track.hit("hello", 3)
+    >>> track.hit("hello", 7)
+    >>> assert track.score("hello") == 10
+
     Trackers are created in global namespace. Pass a name to the tracker in
     order to count events separately:
 
@@ -107,7 +115,7 @@ class Tracker:
     throttling_time: int = 0
     personalized: bool = False
 
-    redis: Redis[bytes] = dataclasses.field(default_factory=connect_to_redis)
+    redis: Redis = dataclasses.field(default_factory=connect_to_redis)
 
     def __post_init__(self, name: str):
         if not self.prefix:
@@ -121,14 +129,14 @@ class Tracker:
     def throttle_key(self, hashed: Hash):
         """Compute key for throttling flag of the event hash."""
         if self.personalized:
-            user = tk.current_user.name
+            user = cast(str, tk.current_user.name)
             return f"{self.prefix}:throttle:{user}:{hashed}"
 
         return f"{self.prefix}:throttle:{hashed}"
 
     def is_throttling(self, hashed: Hash):
         """Check if event hash is throttling."""
-        return self.redis.exists(self.throttle_key(hashed))
+        return bool(self.redis.exists(self.throttle_key(hashed)))
 
     def throttle(self, hashed: Hash):
         """Start throttling the hash of event"""
@@ -171,7 +179,7 @@ class Tracker:
 
     def translate(self, hashed: Hash) -> str | None:
         """Restore event name from its hash"""
-        event = self.redis.hget(self.trans_key(), hashed)
+        event: bytes | None = self.redis.hget(self.trans_key(), hashed)
         if event is None:
             return None
 
@@ -254,7 +262,11 @@ class Tracker:
     def most_common(self, num: int) -> Iterable[dict[str, str | float]]:
         """Return `num` most popular events with scores."""
         scores: list[tuple[bytes, float]] = self.redis.zrange(
-            self.distribution_key(), 0, num - 1, desc=True, withscores=True,
+            self.distribution_key(),
+            0,
+            num - 1,
+            desc=True,
+            withscores=True,
         )
 
         for k, v in scores:
@@ -308,7 +320,7 @@ class DateTracker(Tracker):
         hashed = self.hash(event)
         dk = self.distribution_key()
 
-        series = self.redis.zscan_iter(dk, f"*/{hashed}")
+        series: Iterable[tuple[bytes, float]] = self.redis.zscan_iter(dk, f"*/{hashed}")
 
         if keys := [s[0] for s in series]:
             self.redis.zrem(dk, *keys)
@@ -316,12 +328,13 @@ class DateTracker(Tracker):
         self.remove_trans(hashed)
         self.redis.zrem(self.most_common_key(), hashed)
 
-    def moment_score(self, event: str, moment: datetime) -> float:
+    def moment_score(self, event: str, moment: datetime | None = None) -> float:
         """Return event's score for specific period"""
         hashed = self.hash(event)
 
-        score = self.redis.zscore(
-            self.distribution_key(), self.member_key(hashed, moment),
+        score: float | None = self.redis.zscore(
+            self.distribution_key(),
+            self.member_key(hashed, moment),
         )
         if score is None:
             return 0
@@ -329,7 +342,11 @@ class DateTracker(Tracker):
         return float(score)
 
     def update_score(
-        self, hashed: Hash, count: float, moment: datetime | None = None, **kwargs: Any,
+        self,
+        hashed: Hash,
+        count: float,
+        moment: datetime | None = None,
+        **kwargs: Any,
     ):
         """Update score directly, bypassing all checks, like ignorelist or
         throttling.
@@ -339,11 +356,25 @@ class DateTracker(Tracker):
         self.redis.zincrby(self.distribution_key(), count, mk)
 
     def get_score(
-        self, hashed: Hash, moment: datetime | None = None, **kwargs: Any,
+        self,
+        hashed: Hash,
+        moment: datetime | None = None,
+        **kwargs: Any,
     ) -> float | None:
-        """Get score from redis, without performing any type-casting or value coercion."""
-        mk = self.member_key(hashed, moment)
-        return self.redis.zscore(self.distribution_key(), mk)
+        """Get score from redis, accumulating event scores from all dates."""
+        dk = self.distribution_key()
+        series: Iterable[tuple[bytes, float]] = self.redis.zscan_iter(dk, f"*/{hashed}")
+        value = 0
+
+        for k, v in series:
+            date_str = k.split(b"/", 1)[0]
+            try:
+                date = datetime.strptime(date_str.decode(), self.date_format)
+            except ValueError:
+                continue
+            age = self.now() - date
+            value += self._scale_score(v, age.total_seconds())
+        return value
 
     def snapshot(self):
         """Export tracker data."""
@@ -351,7 +382,10 @@ class DateTracker(Tracker):
             hash: {"event": event.decode(), "records": []}
             for hash, event in self.redis.hgetall(self.trans_key()).items()
         }
-        for k, v in self.redis.zscan_iter(self.distribution_key()):
+        dist: Iterable[tuple[bytes, float]] = self.redis.zscan_iter(
+            self.distribution_key()
+        )
+        for k, v in dist:
             date_str, hashed = k.split(b"/", 1)
             try:
                 date = datetime.strptime(date_str.decode(), self.date_format)
@@ -374,6 +408,10 @@ class DateTracker(Tracker):
                 moment = datetime.fromisoformat(record["date"])
                 self.update_score(hashed, record["score"], moment=moment)
 
+    def _scale_score(self, score: float, age: float):
+        """Compute reduced value of score according to its age."""
+        return float(score) / (age // self.obsoletion_period + 1)
+
     def refresh(self):
         """Rebuild most_common table."""
         max_age = timedelta(seconds=self.max_age)
@@ -381,7 +419,7 @@ class DateTracker(Tracker):
         sk = self.most_common_key()
 
         expired_dist: set[bytes] = set()
-        distribution = self.redis.zscan_iter(dk)
+        distribution: Iterable[tuple[bytes, float]] = self.redis.zscan_iter(dk)
 
         scores: dict[bytes, float] = defaultdict(float)
 
@@ -400,16 +438,18 @@ class DateTracker(Tracker):
                 expired_dist.add(k)
                 continue
 
-            scores[hashed] += float(v) / (age.seconds // self.obsoletion_period + 1)
+            scores[hashed] += self._scale_score(v, age.total_seconds())
 
         if expired_dist:
-            self.redis.hdel(dk, *expired_dist)
+            self.redis.zrem(dk, *expired_dist)
 
         expired_scores: set[bytes] = set()
-        for k, v in self.redis.zscan_iter(sk):
+        common_distribution: Iterable[tuple[bytes, float]] = self.redis.zscan_iter(sk)
+        for k, v in common_distribution:
             if k not in scores:
                 expired_scores.add(k)
                 continue
+
         if scores:
             self.redis.zadd(sk, cast(Any, scores))
 
@@ -419,7 +459,7 @@ class DateTracker(Tracker):
 
     def now(self):
         """Return current time."""
-        return datetime.utcnow()
+        return datetime.now()
 
     def most_common_key(self):
         """Compute key for the most_common table."""
@@ -428,7 +468,11 @@ class DateTracker(Tracker):
     def most_common(self, num: int) -> Iterable[dict[str, str | float]]:
         """Return `num` most popular events with scores."""
         scores: list[tuple[bytes, float]] = self.redis.zrange(
-            self.most_common_key(), 0, num - 1, desc=True, withscores=True,
+            self.most_common_key(),
+            0,
+            num - 1,
+            desc=True,
+            withscores=True,
         )
 
         for k, v in scores:
