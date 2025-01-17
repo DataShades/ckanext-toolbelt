@@ -1,10 +1,11 @@
 from __future__ import annotations
-from configparser import NoSectionError
+
 import contextlib
 import os
-import git
-import click
+from configparser import NoSectionError
 
+import click
+import git
 
 TPL_DIR = os.path.join(os.path.dirname(__file__), "cookiecutter")
 PROJECT_PREFIX = "ckanext-"
@@ -12,7 +13,7 @@ PROJECT_PREFIX = "ckanext-"
 
 @click.group()
 def ckanext():
-    """Generate CKAN extension"""
+    """Generate CKAN extension."""
 
 
 @ckanext.command()
@@ -24,7 +25,10 @@ def ckanext():
 )
 @click.argument("project", default=PROJECT_PREFIX)
 @click.option("-d", "--use-defaults", is_flag=True)
-def extended(output_dir: str, project: str, use_defaults: bool):
+@click.option("--overwrite-existing", is_flag=True)
+def extended(
+    output_dir: str, project: str, use_defaults: bool, overwrite_existing: bool,
+):
     """Generate empty extension files to expand CKAN."""
     from cookiecutter.main import cookiecutter
 
@@ -64,18 +68,25 @@ def extended(output_dir: str, project: str, use_defaults: bool):
             default=defaults["author_email"],
         )
         defaults["github_user_name"] = click.prompt(
-            "Your Github user or organization name", default=""
+            "Your Github user or organization name", default="",
         )
         defaults["description"] = click.prompt(
             "Brief description of the project",
             default="",
         )
 
-    cookiecutter(
+    result = cookiecutter(
         template_loc,
         no_input=True,
         extra_context=defaults,
         output_dir=output_dir,
+        overwrite_if_exists=overwrite_existing,
     )
 
-    click.echo(f"Written: {output_dir}")
+    link_path = os.path.join(result, "test_config", "project.ini")
+    if os.path.exists(link_path):
+        os.unlink(link_path)
+
+    os.symlink("../config/project.ini", link_path)
+
+    click.echo(f"Written: {result}")

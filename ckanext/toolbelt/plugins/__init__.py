@@ -1,5 +1,5 @@
-from ckan import plugins
+from ckan import plugins as p
 
 
-class ToolbeltPlugin(plugins.SingletonPlugin):
+class ToolbeltPlugin(p.SingletonPlugin):
     pass

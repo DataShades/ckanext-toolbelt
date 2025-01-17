@@ -48,16 +48,20 @@ override existing data, call `reset` before using the snapshot.
 """
 from __future__ import annotations
 
-from collections import defaultdict
-from datetime import datetime, timedelta
 import dataclasses
 import logging
+from collections import defaultdict
+from datetime import datetime, timedelta
 from hashlib import md5
-from typing import Any, Iterable, cast
+from typing import TYPE_CHECKING, Any, Iterable, cast
+
 from typing_extensions import NewType
-from ckan.lib.redis import connect_to_redis
+
 import ckan.plugins.toolkit as tk
-from redis import Redis
+from ckan.lib.redis import connect_to_redis
+
+if TYPE_CHECKING:
+    from redis import Redis
 
 log = logging.getLogger(__name__)
 connect_to_redis: Any
@@ -139,16 +143,16 @@ class Tracker:
         return bool(self.redis.exists(self.throttle_key(hashed)))
 
     def throttle(self, hashed: Hash):
-        """Start throttling the hash of event"""
+        """Start throttling the hash of event."""
         if self.throttling_time:
             self.redis.set(self.throttle_key(hashed), 1, ex=self.throttling_time)
 
     def unthrottle(self, hashed: Hash):
-        """Stop throttling the hash of event"""
+        """Stop throttling the hash of event."""
         self.redis.delete(self.throttle_key(hashed))
 
     def ignore_key(self):
-        """Compute key of ignorelist"""
+        """Compute key of ignorelist."""
         return f"{self.prefix}:ignore"
 
     def is_ignored(self, hashed: Hash):
@@ -178,7 +182,7 @@ class Tracker:
         self.redis.hdel(self.trans_key(), hashed)
 
     def translate(self, hashed: Hash) -> str | None:
-        """Restore event name from its hash"""
+        """Restore event name from its hash."""
         event: bytes | None = self.redis.hget(self.trans_key(), hashed)
         if event is None:
             return None
@@ -220,7 +224,7 @@ class Tracker:
         return self.redis.zscore(self.distribution_key(), self.member_key(hashed))
 
     def score(self, event: str, **kwargs: Any) -> float:
-        """Return event's score"""
+        """Return event's score."""
         hashed = self.hash(event)
 
         score = self.get_score(hashed, **kwargs)
@@ -230,7 +234,7 @@ class Tracker:
         return score
 
     def drop(self, event: str):
-        """Remove event scores"""
+        """Remove event scores."""
         hashed = self.hash(event)
         dk = self.distribution_key()
 
@@ -316,7 +320,7 @@ class DateTracker(Tracker):
         return date.strftime(self.date_format)
 
     def drop(self, event: str):
-        """Remove event scores"""
+        """Remove event scores."""
         hashed = self.hash(event)
         dk = self.distribution_key()
 
@@ -329,7 +333,7 @@ class DateTracker(Tracker):
         self.redis.zrem(self.most_common_key(), hashed)
 
     def moment_score(self, event: str, moment: datetime | None = None) -> float:
-        """Return event's score for specific period"""
+        """Return event's score for specific period."""
         hashed = self.hash(event)
 
         score: float | None = self.redis.zscore(
@@ -383,7 +387,7 @@ class DateTracker(Tracker):
             for hash, event in self.redis.hgetall(self.trans_key()).items()
         }
         dist: Iterable[tuple[bytes, float]] = self.redis.zscan_iter(
-            self.distribution_key()
+            self.distribution_key(),
         )
         for k, v in dist:
             date_str, hashed = k.split(b"/", 1)
@@ -428,7 +432,7 @@ class DateTracker(Tracker):
             try:
                 date = datetime.strptime(date_str.decode(), self.date_format)
             except ValueError:
-                log.error("Remove invalid key %s", k)
+                log.exception("Remove invalid key %s", k)
                 expired_dist.add(k)
                 continue
 

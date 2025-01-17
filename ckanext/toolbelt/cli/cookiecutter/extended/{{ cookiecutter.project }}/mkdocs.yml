@@ -4,6 +4,7 @@ site_url: https://{{ cookiecutter.github_user_name }}.github.io/{{ cookiecutter.
 repo_url:  https://github.com/{{ cookiecutter.github_user_name }}/{{ cookiecutter.project }}
 
 markdown_extensions:
+  - admonition
   - pymdownx.snippets
   - pymdownx.highlight
   - pymdownx.inlinehilite
@@ -26,7 +27,7 @@ plugins:
         python:
           options:
             show_root_full_path: false
-            show_root_toc_entry: false
+            show_root_heading: true
             show_symbol_type_heading: true
             show_source: false
             docstring_section_style: spacy
@@ -35,6 +36,7 @@ plugins:
 
 watch:
   - README.md
+  - ckanext/{{ cookiecutter.project_shortname }}
 
 theme:
   name: material

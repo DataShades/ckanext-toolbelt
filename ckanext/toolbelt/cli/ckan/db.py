@@ -37,6 +37,6 @@ def clean(yes: bool, keep: tuple[str]):
         if "alembic_version" in table.name:
             continue
 
-        connection.execute('truncate "%s" cascade' % table.name)
+        connection.execute(f'truncate "{table.name}" cascade')
     model.repo.session.commit()
     click.secho("Database table data deleted", fg="green")

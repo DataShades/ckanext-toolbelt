@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import click
 
-from . import make_config, make_gh_action, make_readme, make_template, make_ckanext
+from . import make_ckanext, make_config, make_gh_action, make_readme, make_template
 
 
 @click.group()

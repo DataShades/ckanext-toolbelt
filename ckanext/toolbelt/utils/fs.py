@@ -41,7 +41,6 @@ def path_to_resource(res, max_size: int = 0) -> StaticPath:
     remotely, download it to /tmp and return RemovablePath.
 
     Example:
-
       with path_to_resource(resource) as path:
           with open(path) as src:
               print(src.read())
@@ -74,11 +73,9 @@ def path_to_resource(res, max_size: int = 0) -> StaticPath:
 
 
 def _download_remote_file(res_id: str, url: str, max_size: int) -> str | None:
+    """Downloads remote resource and save it as temporary file
+    Returns path to this file.
     """
-    Downloads remote resource and save it as temporary file
-    Returns path to this file
-    """
-
     try:
         resp = requests.get(
             url,

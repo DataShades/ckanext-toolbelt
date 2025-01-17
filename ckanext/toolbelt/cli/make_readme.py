@@ -20,7 +20,6 @@ def config(
     plugins: tuple[str, ...],
 ):
     """Print declared config options for the given plugins."""
-
     from ckan.config.declaration import Declaration
     from ckan.config.declaration.serialize import handler
 

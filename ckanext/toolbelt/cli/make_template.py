@@ -23,7 +23,7 @@ def template():
 @_shared.option_plugin
 @option_file
 def black(plugin: str, file: str | None):
-    """Black configuration"""
+    """Black configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("black"),
@@ -37,7 +37,7 @@ def black(plugin: str, file: str | None):
 @_shared.option_plugin
 @option_file
 def git_changelog(plugin: str, file: str | None):
-    """git-changelog configuration"""
+    """git-changelog configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("git_changelog"),
@@ -51,7 +51,7 @@ def git_changelog(plugin: str, file: str | None):
 @_shared.option_plugin
 @option_file
 def isort(plugin: str, file: str | None):
-    """Isort configuration"""
+    """Isort configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("isort"),
@@ -65,7 +65,7 @@ def isort(plugin: str, file: str | None):
 @_shared.option_plugin
 @option_file
 def coverage(plugin: str, file: str | None):
-    """Isort configuration"""
+    """Isort configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("coverage"),
@@ -79,7 +79,7 @@ def coverage(plugin: str, file: str | None):
 @_shared.option_plugin
 @option_file
 def ruff(plugin: str, file: str | None):
-    """Ruff configuration"""
+    """Ruff configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("ruff"),
@@ -93,7 +93,7 @@ def ruff(plugin: str, file: str | None):
 @_shared.option_plugin
 @option_file
 def pyright(plugin: str, file: str | None):
-    """Pyrigh configuration"""
+    """Pyrigh configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("pyright"),
@@ -107,7 +107,7 @@ def pyright(plugin: str, file: str | None):
 @_shared.option_plugin
 @option_file
 def pytest(plugin: str, file: str | None):
-    """Pytest configuration"""
+    """Pytest configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("pytest"),
@@ -121,7 +121,7 @@ def pytest(plugin: str, file: str | None):
 @_shared.option_plugin
 @option_file
 def commitizen(plugin: str, file: str | None):
-    """Commitizen configuration"""
+    """Commitizen configuration."""
     _shared.ensure_root()
     _shared.produce(
         _shared.template_source("commitizen"),

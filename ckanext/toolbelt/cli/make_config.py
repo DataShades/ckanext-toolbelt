@@ -14,7 +14,7 @@ def config():
 @_shared.option_plugin
 @_shared.option_write
 def pyproject(plugin: str, write: bool):
-    """pyproject.toml"""
+    """pyproject.toml."""
     _shared.ensure_root()
     plugin = _shared.safe_plugin_name(plugin)
     data = {
@@ -33,7 +33,7 @@ def pyproject(plugin: str, write: bool):
 @_shared.option_plugin
 @_shared.option_write
 def pre_commit(plugin: str, write: bool):
-    """Pre-commit (https://pre-commit.com/)"""
+    """Pre-commit (https://pre-commit.com/)."""
     _shared.ensure_root()
     _shared.produce(
         *_config_files("pre-commit"),
@@ -46,7 +46,7 @@ def pre_commit(plugin: str, write: bool):
 @_shared.option_plugin
 @_shared.option_write
 def ckanext_makefile(plugin: str, write: bool):
-    """Tools for CKAN extension management"""
+    """Tools for CKAN extension management."""
     _shared.ensure_root()
     _shared.produce(
         *_config_files("ckanext-makefile"),
@@ -59,7 +59,7 @@ def ckanext_makefile(plugin: str, write: bool):
 @_shared.option_plugin
 @_shared.option_write
 def deps_makefile(plugin: str, write: bool):
-    """CKAN dependency manager (https://github.com/DataShades/ckan-deps-installer)"""
+    """CKAN dependency manager (https://github.com/DataShades/ckan-deps-installer)."""
     _shared.ensure_root()
     _shared.produce(
         *_config_files("deps-makefile"),
@@ -72,7 +72,7 @@ def deps_makefile(plugin: str, write: bool):
 @_shared.option_plugin
 @_shared.option_write
 def gulp_sass(plugin: str, write: bool):
-    """Gulpfile for SCSS-based assets"""
+    """Gulpfile for SCSS-based assets."""
     _shared.ensure_root()
     _shared.produce(
         *_config_files("gulp-sass"),

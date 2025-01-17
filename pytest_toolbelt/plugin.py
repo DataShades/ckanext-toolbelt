@@ -30,7 +30,6 @@ if fixtures.migrate_db_for._pytestfixturefunction.scope == "function":
     @pytest.fixture(scope="session")
     def migrate_db_for():
         """Override CKAN `migrate_db_for` using `session` scope for fixture."""
-
         from ckan.cli.db import _run_migrations
 
         def runner(plugin, version="head", forward=True):
@@ -90,7 +89,7 @@ if not hasattr(fixtures, "reset_redis") and not hasattr(fixtures, "clean_redis")
                 reset_redis("AAA-*")
                 assert not redis.get("AAA-1")
                 assert not redis.get("AAA-2")
-                assert redis.get("BBB-3") is not None
+                assert redis.get("BBB-3") is not None.
         """
 
         def cleaner(pattern: str = "*") -> int:
@@ -121,7 +120,7 @@ if not hasattr(fixtures, "reset_redis") and not hasattr(fixtures, "clean_redis")
                 "fixture_that_adds_xxx_key_to_redis"
             )
             def test_redis_has_one_record():
-                assert redis.keys("*") == [b"xxx"]
+                assert redis.keys("*") == [b"xxx"].
         """
         reset_redis()
 

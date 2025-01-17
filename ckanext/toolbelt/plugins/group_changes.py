@@ -36,8 +36,7 @@ class GroupChangesPlugin(p.SingletonPlugin):
 
 
 def check_metadata_org_changes(change_list, old, new):
-    """
-    Compares two versions of a organization and records the changes between
+    """Compares two versions of a organization and records the changes between
     them in change_list.
     """
     from ckan.lib.changes import _title_change
@@ -66,11 +65,9 @@ def _custom_field_change(
     new: dict[str, Any],
     field: str,
 ):
-    """
-    Appends a summary of a change to a organization's description between two
+    """Appends a summary of a change to a organization's description between two
     versions (old and new) to change_list.
     """
-
     # if the old organization had a description
     if old.get(field) and new.get(field):
         change_list.append(
@@ -105,11 +102,9 @@ def _custom_field_change(
 
 
 def _description_change(change_list, old, new):
-    """
-    Appends a summary of a change to a organization's description between two
+    """Appends a summary of a change to a organization's description between two
     versions (old and new) to change_list.
     """
-
     # if the old organization had a description
     if old.get("description") and new.get("description"):
         change_list.append(
@@ -144,8 +139,7 @@ def _description_change(change_list, old, new):
 
 
 def _image_url_change(change_list, old, new):
-    """
-    Appends a summary of a change to a organization's image URL between two
+    """Appends a summary of a change to a organization's image URL between two
     versions (old and new) to change_list.
     """
     # if both old and new versions have image  URLs
@@ -185,8 +179,7 @@ def _image_url_change(change_list, old, new):
 
 
 def compare_group_dicts(old: dict[str, Any], new: dict[str, Any], old_activity_id: str):
-    """
-    Takes two package dictionaries that represent consecutive versions of
+    """Takes two package dictionaries that represent consecutive versions of
     the same organization and returns a list of detailed & formatted summaries
     of the changes between the two versions. old and new are the two package
     dictionaries. The function assumes that both dictionaries will have
@@ -213,8 +206,7 @@ def compare_group_dicts(old: dict[str, Any], new: dict[str, Any], old_activity_i
 
 @toolbelt.route("/group/changes/<id>", endpoint="changes")
 def changes(id: str) -> str:
-    """
-    Shows the changes to an organization in one particular activity stream
+    """Shows the changes to an organization in one particular activity stream
     item.
     """
     group_type = "group"
@@ -263,8 +255,7 @@ def changes(id: str) -> str:
 
 @toolbelt.route("/group_type/changes_multiple", endpoint="changes_multiple")
 def changes_multiple() -> str:
-    """
-    Called when a user specifies a range of versions they want to look at
+    """Called when a user specifies a range of versions they want to look at
     changes between. Verifies that the range is valid and finds the set of
     activity diffs for the changes in the given version range, then
     re-renders changes.html with the list.

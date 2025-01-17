@@ -41,7 +41,7 @@ Homepage = "https://github.com/{{ cookiecutter.github_user_name }}/{{ cookiecutt
 [options.extras_require]
 test = ["pytest-ckan", "pytest-benchmark", "pytest-pretty"]
 docs = ["mkdocs", "mkdocs-material", "pymdown-extensions", "mkdocstrings[python]"]
-dev = ["pytest-ckan", "pytest-benchmark", "pytest-pretty", "mkdocs", "mkdocs-material", "pymdown-extensions", "mkdocstrings[python]", "pre-commit"]
+dev = ["pytest-ckan", "pytest-benchmark", "pytest-pretty", "mkdocs", "mkdocs-material", "pymdown-extensions", "mkdocstrings[python]", "pre-commit", "pytest-playwright"]
 
 [project.entry-points."ckan.plugins"]
 {{ cookiecutter.project_shortname }} = "ckanext.{{ cookiecutter.project_shortname }}.plugin:{{ cookiecutter.plugin_class_name }}"
@@ -131,7 +131,7 @@ ckanext = ["ckanext"]
 self = ["ckanext.{{ cookiecutter.project_shortname }}"]
 
 [tool.pytest.ini_options]
-addopts = "--ckan-ini test.ini -m 'not benchmark'"
+addopts = "--ckan-ini test_config/test.ini -m 'not benchmark and not playwright'"
 filterwarnings = [
                "ignore::sqlalchemy.exc.SADeprecationWarning",
                "ignore::sqlalchemy.exc.SAWarning",

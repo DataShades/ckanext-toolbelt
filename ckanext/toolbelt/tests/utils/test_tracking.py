@@ -1,10 +1,16 @@
 from __future__ import annotations
+
 from datetime import datetime, timedelta
 from operator import itemgetter
+from typing import TYPE_CHECKING
+
 import pytest
-from faker import Faker
-from ckanext.toolbelt.utils.tracking import Tracker, DateTracker
-from freezegun.api import FrozenDateTimeFactory
+
+from ckanext.toolbelt.utils.tracking import DateTracker, Tracker
+
+if TYPE_CHECKING:
+    from faker import Faker
+    from freezegun.api import FrozenDateTimeFactory
 
 
 @pytest.fixture()
@@ -85,7 +91,7 @@ class TestAllTrackers:
         assert track.score(event) == 2
 
     def test_translations(self, tracker: Tracker, faker: Faker):
-        """Tracker can restore event name from it's hash"""
+        """Tracker can restore event name from it's hash."""
         event = faker.word()
         tracker.hit(event)
         hash = tracker.hash(event)
@@ -93,14 +99,14 @@ class TestAllTrackers:
         assert tracker.translate(hash) == event
 
     def test_drop(self, tracker: Tracker, faker: Faker):
-        """Event scores can be removed"""
+        """Event scores can be removed."""
         event = faker.word()
         tracker.hit(event)
         tracker.drop(event)
         assert tracker.score(event) == 0
 
     def test_reset(self, tracker: Tracker, faker: Faker):
-        """Tracker data can be removed"""
+        """Tracker data can be removed."""
         for _ in range(10):
             tracker.hit(faker.word())
         tracker.reset()
@@ -108,7 +114,7 @@ class TestAllTrackers:
         assert not tracker.snapshot()
 
     def test_most_common(self, tracker: Tracker, faker: Faker):
-        """Most common items ordered by score"""
+        """Most common items ordered by score."""
         first_event = faker.word()
         second_event = faker.word()
         third_event = faker.word()
@@ -132,9 +138,9 @@ class TestAllTrackers:
         ]
 
     def test_obsoletion_period(
-        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory
+        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory,
     ):
-        """Most common items ordered by score"""
+        """Most common items ordered by score."""
         if not isinstance(tracker, DateTracker):
             return
 
@@ -161,9 +167,9 @@ class TestAllTrackers:
 
 
     def test_score(
-        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory
+        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory,
     ):
-        """Most common items ordered by score"""
+        """Most common items ordered by score."""
         event = faker.word()
 
         tracker.hit(event, 100)

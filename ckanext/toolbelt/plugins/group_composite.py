@@ -16,8 +16,7 @@ from ckanext.scheming.plugins import (
 
 class CompositeMixin:
     def validate(self, context, data_dict, schema, action):
-        """
-        Validate and convert for package_create, package_update and
+        """Validate and convert for package_create, package_update and
         package_show actions.
         """
         thing, action_type = action.split("_")

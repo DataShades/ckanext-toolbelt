@@ -161,3 +161,6 @@ ifeq ($(dirty-server),)
 else
 	ckan -c test.ini run -t
 endif
+
+test-frontend:  ## run e2e tests
+	pytest -m playwright
