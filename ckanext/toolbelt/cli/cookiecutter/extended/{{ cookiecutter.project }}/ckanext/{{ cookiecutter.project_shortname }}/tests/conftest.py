@@ -11,7 +11,7 @@ from ckan.tests.factories import CKANFactory
 from ckanext.{{ cookiecutter.project_shortname }}.model import Something
 
 
-@pytest.fixture()
+@pytest.fixture
 def clean_db(reset_db: Any, migrate_db_for: Any):
     """Apply plugin migrations whenever CKAN DB is cleaned."""
     reset_db()

@@ -23,14 +23,14 @@ import pytest
 from ckan.plugins import plugin_loaded
 
 
-@pytest.mark.benchmark()
+@pytest.mark.benchmark
 @pytest.mark.usefixtures("with_plugins")
 def test_plugin(benchmark: Any):
     """First version of code."""
     benchmark(plugin_loaded, "{{ cookiecutter.project_shortname }}")
 
 
-@pytest.mark.benchmark()
+@pytest.mark.benchmark
 @pytest.mark.usefixtures("with_plugins")
 def test_plugin_with_spaces(benchmark: Any):
     """Second version of code."""
