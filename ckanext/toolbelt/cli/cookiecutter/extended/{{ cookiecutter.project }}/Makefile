@@ -33,7 +33,7 @@
 # CKAN core supports this short syntax. But internally it's unfolds into
 ## remote-ckan = https://github.com/ckan/ckan tag ckan-2.10.4
 # if you want to use CKAN fork or specific commit, use this full specification
-ckan_tag = ckan-2.11.0
+ckan_tag = ckan-2.11.1
 
 # items from this list are installed by `make full-upgrade` and `make sync
 # install`. If you specify remote, but did not added extension to this list, it
@@ -42,7 +42,7 @@ ckan_tag = ckan-2.11.0
 # branch master`
 ext_list = \
 	admin-panel \
-	collection cloudstorage comments \
+	charts collection cloudstorage comments \
     dcat \
 	editable-config \
 	files flakes \
@@ -53,6 +53,7 @@ ext_list = \
 	pdfview pygments \
 	resource-indexer \
 	scheming search-tweaks spatial saml syndicate \
+	security \
 	toolbelt \
 	unfold \
 	vip-portal \
@@ -76,6 +77,7 @@ remote-admin-panel = https://github.com/DataShades/ckanext-admin-panel commit 99
 dev-admin-panel = https://github.com/DataShades/ckanext-admin-panel branch master
 
 remote-cloudstorage = https://github.com/DataShades/ckanext-cloudstorage.git tag v0.3.2
+remote-charts = https://github.com/DataShades/ckanext-charts.git tag v1.6.0
 remote-collection = https://github.com/DataShades/ckanext-collection.git tag v0.2.0a0
 remote-comments = https://github.com/DataShades/ckanext-comments.git tag v0.3.2a0
 remote-dcat = https://github.com/ckan/ckanext-dcat.git tag v1.7.0
@@ -95,6 +97,8 @@ remote-resource-indexer = https://github.com/DataShades/ckanext-resource_indexer
 remote-saml = https://github.com/DataShades/ckanext-saml.git tag v0.3.3
 remote-scheming = https://github.com/ckan/ckanext-scheming tag release-3.0.0
 remote-search-tweaks = https://github.com/dataShades/ckanext-search-tweaks tag v0.6.1
+remote-security = https://github.com/data-govt-nz/ckanext-security tag 4.1.1
+
 remote-spatial = https://github.com/ckan/ckanext-spatial tag v2.1.1
 remote-syndicate = https://github.com/DataShades/ckanext-syndicate tag v2.2.2
 remote-toolbelt = https://github.com/DataShades/ckanext-toolbelt.git tag v0.4.24
