@@ -46,6 +46,7 @@ ext_list = \
     dcat \
 	editable-config \
 	files flakes \
+	ingest \
 	geoview googleanalytics \
     hierarchy harvest \
 	let-me-in \
@@ -80,14 +81,15 @@ remote-cloudstorage = https://github.com/DataShades/ckanext-cloudstorage.git tag
 remote-charts = https://github.com/DataShades/ckanext-charts.git tag v1.6.0
 remote-collection = https://github.com/DataShades/ckanext-collection.git tag v0.2.0a0
 remote-comments = https://github.com/DataShades/ckanext-comments.git tag v0.3.2a0
-remote-dcat = https://github.com/ckan/ckanext-dcat.git tag v1.7.0
+remote-dcat = https://github.com/ckan/ckanext-dcat.git tag v2.2.0
 remote-editable-config = https://github.com/ckan/ckanext-editable-config tag v0.0.6
-remote-files = https://github.com/DataShades/ckanext-files.git tag v1.0.0a0
+remote-files = https://github.com/DataShades/ckanext-files.git tag v1.0.0a3
 remote-flakes = https://github.com/DataShades/ckanext-flakes.git tag v0.4.5
 remote-geoview = https://github.com/ckan/ckanext-geoview.git tag v0.1.0
 remote-googleanalytics = https://github.com/ckan/ckanext-googleanalytics.git tag v2.4.0
 remote-harvest = https://github.com/ckan/ckanext-harvest.git tag v1.5.6
 remote-hierarchy = https://github.com/ckan/ckanext-hierarchy.git tag v1.2.1
+remote-ingest = https://github.com/DataShades/ckanext-ingest.git tag v1.4.2
 remote-let-me-in = https://github.com/DataShades/ckanext-let-me-in tag v1.0.1
 remote-officedocs = https://github.com/jqnatividad/ckanext-officedocs tag v1.1.0
 remote-or-facet = https://github.com/DataShades/ckanext-or_facet tag v0.1.1
@@ -104,7 +106,7 @@ remote-syndicate = https://github.com/DataShades/ckanext-syndicate tag v2.2.2
 remote-toolbelt = https://github.com/DataShades/ckanext-toolbelt.git tag v0.4.24
 remote-unfold = https://github.com/DataShades/ckanext-unfold.git tag v1.0.2
 remote-vip-portal = https://github.com/DataShades/ckanext-vip-portal.git tag v0.2.5a1
-remote-xloader = https://github.com/ckan/ckanext-xloader.git tag 1.0.1
+remote-xloader = https://github.com/ckan/ckanext-xloader.git tag 2.0.0
 
 # extras installed with the extension. Produce `pip install
 # 'ckanext-googleanalytics[requirements]'`-like instructions.
