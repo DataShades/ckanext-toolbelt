@@ -253,7 +253,7 @@ to declare the type and default value for the config option as well.
 You can always dump all the options of the plugin using CKAN CLI:
 
 ```sh
-ckan config declaration heh -d
+ckan config declaration {{ cookiecutter.project_shortname }} -d
 ```
 
 `-d`/`--include-docs` flag adds description of the option to the output. Omit
@@ -377,9 +377,11 @@ Metadata schemas for ckanext-scheming.
 Extension contains `config/` folder at root level. All files related to portal
 configurations are stored here. Apart from `project.ini` with the project level
 configuration, you can also keep `licenses.json`, `resource_formats.json`,
-`who.ini`, SAML2 credentials, GoogleCloud credentials, etc. You can even store
-metadata schemas here, but historically they are kept together with the code,
-so we suggest leaving them inside `ckanext/{{ cookiecutter.project_shortname }}/schemas`.
+`who.ini`, SAML2 configuration, GoogleCloud configuration, and anything else
+except for some sort of passwords and secret keys. You can even store metadata
+schemas here, but historically they are kept together with the code, so we
+suggest leaving them inside `ckanext/{{ cookiecutter.project_shortname
+}}/schemas`.
 
 ### `project.ini`
 
