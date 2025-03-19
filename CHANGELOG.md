@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 <!-- insertion marker -->
+## [v0.6.1](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.6.1) - 2025-03-19
+
+<small>[Compare with v0.6.0](https://github.com/DataShades/ckanext-toolbelt/compare/v0.6.0...v0.6.1)</small>
+
+### Bug Fixes
+
+- faster group activities work with CKAN v2.11 ([91f65ba](https://github.com/DataShades/ckanext-toolbelt/commit/91f65ba428020d564eb2d8a46167741878eae546) by Sergey Motornyuk).
+
+## [v0.6.0](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.6.0) - 2025-03-11
+
+<small>[Compare with v0.5.2](https://github.com/DataShades/ckanext-toolbelt/compare/v0.5.2...v0.6.0)</small>
+
+### Bug Fixes
+
+- namespaced package cannot be discovered ([3a393f5](https://github.com/DataShades/ckanext-toolbelt/commit/3a393f5272662033333047423c975c326d788c55) by Sergey Motornyuk).
+
+## [v0.5.2](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.5.2) - 2025-02-01
+
+<small>[Compare with v0.5.1](https://github.com/DataShades/ckanext-toolbelt/compare/v0.5.1...v0.5.2)</small>
+
 ## [v0.5.1](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.5.1) - 2025-01-14
 
 <small>[Compare with v0.5.0](https://github.com/DataShades/ckanext-toolbelt/compare/v0.5.0...v0.5.1)</small>
