@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ckanext-toolbelt"
+version = "0.6.1"
+
 description = ""
-classifiers = [ "Development Status :: 4 - Beta", "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)", "Programming Language :: Python :: 3.7", "Programming Language :: Python :: 3.8", "Programming Language :: Python :: 3.9", "Programming Language :: Python :: 3.10", "Programming Language :: Python :: 3.11", "Programming Language :: Python :: 3.12", "Programming Language :: Python :: 3.13", "Programming Language :: Python :: 3.14",]
+classifiers = [ ]
 keywords = [ "CKAN",]
 requires-python = ">= 3.8"
 dependencies = [ "click", "aiosmtpd", "typing_extensions", "gitpython", "cookiecutter"]
-dynamic = [ "version",]
 authors = [
     {name = "DataShades", email = "datashades@linkdigital.com.au"},
     {name = "Sergey Motornyuk", email = "sergey.motornyuk@linkdigital.com.au"},
@@ -17,13 +18,11 @@ authors = [
 maintainers = [
     {name = "DataShades", email = "datashades@linkdigital.com.au"},
 ]
+license = "MIT AND (Apache-2.0 OR BSD-2-Clause)"
 
 [project.readme]
 file = "README.md"
 content-type = "text/markdown"
-
-[project.license]
-text = "AGPL"
 
 [project.urls]
 Homepage = "https://github.com/DataShades/ckanext-toolbelt"
