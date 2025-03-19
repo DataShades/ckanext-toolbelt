@@ -38,16 +38,17 @@ def conjure_fast_group_activities():
 
             from ckanext.activity.model import Activity
 
-            group = model.Group.get(group_id)
-            if not group:
-                # Return a query with no results.
-                return model.Session.query(Activity).filter(text("0=1"))  # noqa
+            if not isinstance(group_id, (list, tuple)):
+                group_id = [group_id]
 
             q = model.Session.query(Activity)
-            group_activity = q.filter(Activity.object_id == group_id)
+            group_activity = q.filter(Activity.object_id.in_(group_id))
             packages_sq = (
                 model.Session.query(model.Package.id)
-                .filter_by(owner_org=group_id, private=False)
+                .filter(
+                    model.Package.owner_org.in_(group_id),
+                    model.Package.private == False,
+                )
                 .subquery()
             )
 
@@ -177,7 +178,11 @@ def reveal_readonly_scheming_fields(defaults):
             result = func(*args, **kwargs)
 
             # repeating_subfields return a dict here
-            if result and isinstance(result, list) and result[0] is converters.convert_from_extras:
+            if (
+                result
+                and isinstance(result, list)
+                and result[0] is converters.convert_from_extras
+            ):
                 result[0] = patched_convert_from_extras
 
             return result
