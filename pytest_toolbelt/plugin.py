@@ -16,7 +16,8 @@ if not hasattr(pcore, "unload_non_system_plugins"):
         pcore.load_all()
         yield
 
-        system_plugins = pcore.find_system_plugins()
+        find_system_plugins = getattr(pcore, "find_system_plugins", lambda: [])
+        system_plugins = find_system_plugins()
         plugins_to_unload = [
             p
             for p in reversed(pcore._PLUGINS)  # type: ignore
