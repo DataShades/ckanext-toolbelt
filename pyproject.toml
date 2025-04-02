@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ckanext-toolbelt"
-version = "0.6.3"
+version = "0.6.4"
 
 description = ""
 classifiers = [ ]
@@ -18,7 +18,9 @@ authors = [
 maintainers = [
     {name = "DataShades", email = "datashades@linkdigital.com.au"},
 ]
-license = "MIT AND (Apache-2.0 OR BSD-2-Clause)"
+[project.license]
+text = "AGPL"
+
 
 [project.readme]
 file = "README.md"
