@@ -7,3 +7,18 @@ help:
 
 changelog:  ## compile changelog
 	git changelog -c conventional -o CHANGELOG.md $(if $(bump),-B $(bump))
+
+test-server:  ## start server for frontend testing
+ifeq ($(dirty-server),)
+	yes | ckan -c test.ini db clean
+	ckan -c test.ini db upgrade
+	yes | ckan -ctest.ini sysadmin add admin password=password123 email=admin@test.net
+else
+	ckan -c test.ini run -t
+endif
+
+test-frontend:  ## run e2e tests
+	pytest -m playwright
+
+typecheck:  ## Run typechecker
+	npx pyright --pythonpath="$$(which python)"

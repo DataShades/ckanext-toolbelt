@@ -1,5 +1,5 @@
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = [
@@ -8,7 +8,7 @@ select = [
        # "BLE",  # do not catch blind exception
        # "C4",  # better list/set/dict comprehensions
        # "C90",  # check McCabe complexity
-       # "DTZ", # enforce timezone in date objects
+       ## "DTZ", # enforce timezone in date objects
        "E",  # pycodestyle error
        # "W",  # pycodestyle warning
        "F",  # pyflakes
@@ -17,12 +17,13 @@ select = [
        # "N",  # naming conventions
        "I",  # isort
        # "ICN", # import conventions
-       # "D1",  # require doc
+       ## "D1",  # require doc
        # "D2",  # doc formatting
        # "D4",  # doc convention
        # "PL",  # pylint
        # "PERF", # performance anti-patterns
        # "PT",  # pytest style
+       ## "PTH", # replace os.path with pathlib
        # "PIE",  # misc lints
        # "RET",  # improvements for return statements
        # "RSE",  # improvements for rise statements
@@ -35,14 +36,14 @@ select = [
        # "UP",  # upgrade syntax for newer versions of the language
 ]
 ignore = [
-       "RET503", # don't enforce return-None
        "E712", # comparison to bool: violated by SQLAlchemy filters
-       "PT004", # fixture does not return anything, add leading underscore: violated by clean_db
        "PLC1901", # simplify comparison to empty string: violated by SQLAlchemy filters
+       "PT004", # fixture does not return anything, add leading underscore: violated by clean_db
+       "RET503", # don't enforce return-None
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"ckanext/$PLUGIN/tests*" = ["S", "PL", "ANN"]
+"ckanext/$PLUGIN/tests*" = ["S", "PL", "ANN", "D"]
 "ckanext/$PLUGIN/logic/*" = [
             "D417", # actions don't describe context and data_dict
 ]
@@ -68,7 +69,6 @@ section-order = [
 ]
 
 [tool.ruff.lint.isort.sections]
-# Group all Django imports into a separate section.
 ckan = ["ckan"]
 ckanext = ["ckanext"]
 self = ["ckanext.$PLUGIN"]
