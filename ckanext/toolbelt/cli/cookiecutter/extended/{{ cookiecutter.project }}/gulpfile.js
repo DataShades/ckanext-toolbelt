@@ -17,7 +17,10 @@ const cleanCSS = require("gulp-clean-css");
 const isDev = () => !!process.env.DEBUG;
 
 // root dir that contains all source assets and gulp output
-const assetsDir = resolve(__dirname, "ckanext/{{ cookiecutter.project_shortname }}/assets");
+const assetsDir = resolve(
+  __dirname,
+  "ckanext/{{ cookiecutter.project_shortname }}/assets",
+);
 
 // path to base directory of SASS theme
 const srcDir = resolve(assetsDir, "scss");
@@ -34,17 +37,33 @@ const build = () =>
 
     // compile SASS into CSS. includePaths directive enables import from
     // node_modules packages
-      .pipe(sass({
+    .pipe(
+      sass({
         includePaths: ["node_modules"],
         // silenceDeprecations: ["import", "legacy-js-api"],
-      }).on("error", sass.logError))
+      }).on("error", sass.logError),
+    )
 
     // group identical @media queries into single block and sort them using
     // mobile-first order
     .pipe(postcss([combineQueries]))
 
     // add source maps if DEBUG enabled. Minify and optimize CSS otherwise
-    .pipe(if_(isDev, sourcemaps.write(), cleanCSS({ level: 2 })))
+    .pipe(
+      if_(
+        isDev,
+        sourcemaps.write(),
+        cleanCSS({
+          level: 2,
+          format: {
+            breaks: {
+              afterProperty: true,
+              afterRuleBegins: true,
+            },
+          },
+        }),
+      ),
+    )
 
     // write output to destination folder
     .pipe(dest(destDir))
