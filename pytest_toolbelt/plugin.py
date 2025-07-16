@@ -4,8 +4,9 @@ import pytest
 
 import ckan.plugins.core as pcore
 from ckan.tests.pytest_ckan import fixtures
+import ckan.plugins.toolkit as tk
 
-if not hasattr(pcore, "unload_non_system_plugins"):
+if not hasattr(pcore, "unload_non_system_plugins") and not tk.check_ckan_version("2.11"):
 
     @pytest.fixture()
     def with_plugins(ckan_config):
