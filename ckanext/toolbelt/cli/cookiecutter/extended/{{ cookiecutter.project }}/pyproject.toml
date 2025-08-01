@@ -9,7 +9,6 @@ description = "{{ cookiecutter.description }}"
 classifiers = [
             "Development Status :: 4 - Beta",
             "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
-            "Programming Language :: Python :: 3.9",
             "Programming Language :: Python :: 3.10",
             "Programming Language :: Python :: 3.11",
             "Programming Language :: Python :: 3.12",
@@ -17,8 +16,8 @@ classifiers = [
             "Programming Language :: Python :: 3.14",
 ]
 keywords = [ "CKAN" ]
-requires-python = ">= 3.9"
-dependencies = [ "typing_extensions", "pyyaml",]
+requires-python = ">= 3.10"
+dependencies = [ ]
 authors = [
     {name = "{{ cookiecutter.author }}", email = "{{ cookiecutter.author_email }}"},
 ]
@@ -54,7 +53,7 @@ find = {}
 
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [
@@ -63,7 +62,7 @@ select = [
        "BLE",  # do not catch blind exception
        "C4",  # better list/set/dict comprehensions
        "C90",  # check McCabe complexity
-       # "DTZ", # enforce timezone in date objects
+       "DTZ", # enforce timezone in date objects
        "E",  # pycodestyle error
        "W",  # pycodestyle warning
        "F",  # pyflakes
@@ -72,7 +71,7 @@ select = [
        "N",  # naming conventions
        "I",  # isort
        "ICN", # import conventions
-       # "D1",  # require doc
+       "D1",  # require doc
        "D2",  # doc formatting
        "D4",  # doc convention
        "PL",  # pylint
@@ -94,7 +93,6 @@ select = [
 ignore = [
        "E712", # comparison to bool: violated by SQLAlchemy filters
        "PLC1901", # simplify comparison to empty string: violated by SQLAlchemy filters
-       "PT004", # fixture does not return anything, add leading underscore: violated by clean_db
        "RET503", # don't enforce return-None
 ]
 
@@ -143,7 +141,7 @@ convention = "conventional"
 parse-trailers = true
 
 [tool.pyright]
-pythonVersion = "3.8"
+pythonVersion = "3.10"
 include = ["ckanext"]
 exclude = [
     "**/test*",

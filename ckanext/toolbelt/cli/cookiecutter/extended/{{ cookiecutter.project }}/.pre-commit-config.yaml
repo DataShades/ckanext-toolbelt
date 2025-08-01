@@ -17,23 +17,10 @@ repos:
 
   ## Ruff
   - repo: https://github.com/charliermarsh/ruff-pre-commit
-    rev: v0.9.4
+    rev: v0.12.7
     hooks:
       - id: ruff
         args: [--fix]
         stages: [pre-commit]
       - id: ruff-format
         stages: [pre-commit]
-
-  # - repo: https://github.com/thoughtworks/talisman
-  #   rev: 'v1.28.0'  # Update me!
-  #   hooks:
-  #     # both pre-commit and pre-push supported
-  #     # -   id: talisman-push
-  #     - id: talisman-commit
-  #       entry: cmd --githook pre-commit
-
-  # - repo: https://github.com/gitleaks/gitleaks
-  #   rev: v8.18.4
-  #   hooks:
-  #     - id: gitleaks
