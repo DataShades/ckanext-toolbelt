@@ -4,7 +4,6 @@ site_url: https://{{ cookiecutter.github_user_name }}.github.io/{{ cookiecutter.
 repo_url:  https://github.com/{{ cookiecutter.github_user_name }}/{{ cookiecutter.project }}
 
 markdown_extensions:
-  - admonition
   - pymdownx.snippets
   - pymdownx.highlight
   - pymdownx.inlinehilite
@@ -33,6 +32,7 @@ plugins:
             docstring_section_style: spacy
   - search:
       separator: '[\s\-\.\_]+'
+  # - macros                      # pip install mkdocs-macros-plugin
 
 watch:
   - README.md
