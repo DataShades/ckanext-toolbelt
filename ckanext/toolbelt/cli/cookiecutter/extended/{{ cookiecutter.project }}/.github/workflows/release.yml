@@ -1,3 +1,4 @@
+{% raw %}
 name: Create GitHub release
 
 # Create a GitHub release when a tag is pushed
@@ -26,3 +27,4 @@ jobs:
         TAG_NAME=${{ github.ref_name }}
         NOTES=$(git cliff --latest)
         gh release create "$TAG_NAME" --verify-tag --title "$TAG_NAME" --notes "$NOTES"
+{% endraw %}

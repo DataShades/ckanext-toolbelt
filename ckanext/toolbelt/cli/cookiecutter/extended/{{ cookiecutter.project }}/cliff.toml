@@ -1,3 +1,4 @@
+{% raw %}
 # git-cliff ~ configuration file
 # https://git-cliff.org/docs/configuration
 
@@ -103,3 +104,4 @@ topo_order_commits = true
 sort_commits = "oldest"
 # Process submodules commits
 recurse_submodules = false
+{% endraw %}
