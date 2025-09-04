@@ -155,6 +155,9 @@ parse-trailers = true
 
 [tool.pyright]
 pythonVersion = "3.8"
+extraPaths = [
+           "../ckan",
+]
 include = ["ckanext"]
 exclude = [
     "**/test*",
@@ -225,6 +228,8 @@ reportUnsupportedDunderAll = true
 reportUnusedCoroutine = true
 reportUnnecessaryTypeIgnoreComment = true
 reportMatchNotExhaustive = true
+reportAny = false
+reportExplicitAny = false
 
 [tool.commitizen]
 name = "cz_conventional_commits"
