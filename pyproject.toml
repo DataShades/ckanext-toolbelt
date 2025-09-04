@@ -66,6 +66,7 @@ attr = "ckanext.toolbelt.__version__"
 [tool.ruff]
 target-version = "py38"
 exclude = ["ckanext/toolbelt/cli/cookiecutter"]
+line-length = 120
 
 [tool.ruff.lint]
 select = [
