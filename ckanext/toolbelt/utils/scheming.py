@@ -64,7 +64,4 @@ def get_validation_schema(
     if not fields_source:
         fields_source = _field_sources[entity]
 
-    return {
-        f["field_name"]: _field_create_validators(f, schema, False)
-        for f in schema[fields_source]
-    }
+    return {f["field_name"]: _field_create_validators(f, schema, False) for f in schema[fields_source]}

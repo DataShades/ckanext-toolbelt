@@ -34,8 +34,7 @@ class FdtSqlalchemyPlugin(p.SingletonPlugin):
         if not SQLAlchemy:
             version = "3.0" if tk.check_ckan_version("2.11.0") else "2.5"
             log.error(
-                "Flask-SQLAlchemy is not installed. "
-                "Run `pip install flask-sqlalchemy~=%s` and restart the application",
+                "Flask-SQLAlchemy is not installed. Run `pip install flask-sqlalchemy~=%s` and restart the application",
                 version,
             )
             return app

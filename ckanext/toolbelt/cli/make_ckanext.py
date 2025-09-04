@@ -53,9 +53,7 @@ def extended(
         "github_user_name": "",
         "description": "",
     }
-    defaults["plugin_class_name"] = (
-        defaults["project_shortname"].title().replace("_", "") + "Plugin"
-    )
+    defaults["plugin_class_name"] = defaults["project_shortname"].title().replace("_", "") + "Plugin"
     git_config = git.GitConfigParser()
 
     with contextlib.suppress(NoSectionError):

@@ -11,16 +11,8 @@ __all__ = ["browser_context_args", "login", "wait_for_ckan", "goto", "ckan_stand
 @pytest.fixture(autouse=True)
 def ckan_standard(request: pytest.FixtureRequest):
     node = cast(pytest.Function, request.node)
-    standard = {
-        feature
-        for marker in node.iter_markers("ckan_standard")
-        for feature in marker.args
-    }
-    non_standard = {
-        feature
-        for marker in node.iter_markers("ckan_non_standard")
-        for feature in marker.args
-    }
+    standard = {feature for marker in node.iter_markers("ckan_standard") for feature in marker.args}
+    non_standard = {feature for marker in node.iter_markers("ckan_non_standard") for feature in marker.args}
 
     conflict = standard & non_standard
     if conflict:
@@ -28,9 +20,7 @@ def ckan_standard(request: pytest.FixtureRequest):
 
 
 @pytest.fixture
-def browser_context_args(
-    browser_context_args: dict[str, Any], ckan_config: dict[str, Any]
-):
+def browser_context_args(browser_context_args: dict[str, Any], ckan_config: dict[str, Any]):
     """Modify playwright's standard configuration of browser's context."""
     browser_context_args["base_url"] = ckan_config["ckan.site_url"]
     return browser_context_args

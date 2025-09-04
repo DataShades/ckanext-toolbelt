@@ -250,8 +250,7 @@ class Tracker:
     def snapshot(self):
         """Export tracker data."""
         data: dict[bytes, dict[str, Any]] = {
-            hash: {"event": event.decode(), "score": 0}
-            for hash, event in self.redis.hgetall(self.trans_key()).items()
+            hash: {"event": event.decode(), "score": 0} for hash, event in self.redis.hgetall(self.trans_key()).items()
         }
         for k, v in self.redis.zscan_iter(self.distribution_key()):
             data[k]["score"] = float(v)

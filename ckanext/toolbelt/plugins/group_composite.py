@@ -85,17 +85,9 @@ class CompositeMixin:
                         except (ValueError, TypeError):
                             value = []
                         data_dict[ex["key"]] = value
-                data_dict["extras"] = [
-                    ex
-                    for ex in data_dict["extras"]
-                    if ex["key"] not in composite_convert_fields
-                ]
+                data_dict["extras"] = [ex for ex in data_dict["extras"] if ex["key"] not in composite_convert_fields]
         else:
-            group_composite = {
-                f["field_name"]
-                for f in scheming_schema["fields"]
-                if "repeating_subfields" in f
-            }
+            group_composite = {f["field_name"] for f in scheming_schema["fields"] if "repeating_subfields" in f}
             if group_composite:
                 expand_form_composite(data_dict, group_composite)
             # convert composite package fields to extras so they are stored

@@ -73,11 +73,7 @@ def conjure_fast_group_activities():
 
             q = model.Session.query(model.Activity)
             group_activity = q.filter(model.Activity.object_id == group_id)
-            packages_sq = (
-                model.Session.query(model.Package.id)
-                .filter_by(owner_org=group_id, private=False)
-                .subquery()
-            )
+            packages_sq = model.Session.query(model.Package.id).filter_by(owner_org=group_id, private=False).subquery()
 
             member_activity = model.Session.query(model.Activity).filter(
                 model.Activity.object_id.in_(packages_sq),
@@ -178,11 +174,7 @@ def reveal_readonly_scheming_fields(defaults):
             result = func(*args, **kwargs)
 
             # repeating_subfields return a dict here
-            if (
-                result
-                and isinstance(result, list)
-                and result[0] is converters.convert_from_extras
-            ):
+            if result and isinstance(result, list) and result[0] is converters.convert_from_extras:
                 result[0] = patched_convert_from_extras
 
             return result

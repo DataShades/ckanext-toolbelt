@@ -10,10 +10,7 @@ option_plugin = click.option(
     "-p",
     "--plugin",
     default="",
-    help=(
-        "Name of the target plugin."
-        + " By default `ckanext-<PLUGIN>` part of the extension is used."
-    ),
+    help=("Name of the target plugin." + " By default `ckanext-<PLUGIN>` part of the extension is used."),
 )
 
 option_write = click.option(

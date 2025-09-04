@@ -6,9 +6,7 @@ import ckan.plugins.core as pcore
 import ckan.plugins.toolkit as tk
 from ckan.tests.pytest_ckan import fixtures
 
-if not hasattr(pcore, "unload_non_system_plugins") and not tk.check_ckan_version(
-    "2.11"
-):
+if not hasattr(pcore, "unload_non_system_plugins") and not tk.check_ckan_version("2.11"):
 
     @pytest.fixture
     def with_plugins(ckan_config):
