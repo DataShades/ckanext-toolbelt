@@ -3,12 +3,14 @@ from __future__ import annotations
 import pytest
 
 import ckan.plugins.core as pcore
-from ckan.tests.pytest_ckan import fixtures
 import ckan.plugins.toolkit as tk
+from ckan.tests.pytest_ckan import fixtures
 
-if not hasattr(pcore, "unload_non_system_plugins") and not tk.check_ckan_version("2.11"):
+if not hasattr(pcore, "unload_non_system_plugins") and not tk.check_ckan_version(
+    "2.11"
+):
 
-    @pytest.fixture()
+    @pytest.fixture
     def with_plugins(ckan_config):
         """Override CKAN `with_plugins` unloading **all** plugins, even if they
         are not listed in `ckan.plugins`.
@@ -17,7 +19,7 @@ if not hasattr(pcore, "unload_non_system_plugins") and not tk.check_ckan_version
         pcore.load_all()
         yield
 
-        find_system_plugins = getattr(pcore, "find_system_plugins", lambda: [])
+        find_system_plugins = getattr(pcore, "find_system_plugins", list)
         system_plugins = find_system_plugins()
         plugins_to_unload = [
             p
@@ -108,7 +110,7 @@ if not hasattr(fixtures, "reset_redis") and not hasattr(fixtures, "clean_redis")
 
         return cleaner
 
-    @pytest.fixture()
+    @pytest.fixture
     def clean_redis(reset_redis):
         """Remove all keys from Redis.
         This fixture removes all the records from Redis::
@@ -129,7 +131,7 @@ if not hasattr(fixtures, "reset_redis") and not hasattr(fixtures, "clean_redis")
 
 if not hasattr(fixtures, "app_with_session"):
 
-    @pytest.fixture()
+    @pytest.fixture
     def app_with_session(make_app):
         from flask.sessions import SecureCookieSessionInterface
 

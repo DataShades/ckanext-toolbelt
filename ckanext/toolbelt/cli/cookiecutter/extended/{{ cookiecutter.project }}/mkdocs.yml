@@ -1,9 +1,13 @@
 site_name: {{ cookiecutter.project }}
 site_url: https://{{ cookiecutter.github_user_name }}.github.io/{{ cookiecutter.project }}/
-
 repo_url:  https://github.com/{{ cookiecutter.github_user_name }}/{{ cookiecutter.project }}
 
 markdown_extensions:
+  - tables
+  - attr_list
+  - abbr
+  - footnotes
+  - md_in_html
   - pymdownx.snippets
   - pymdownx.highlight
   - pymdownx.inlinehilite
@@ -28,6 +32,7 @@ plugins:
             show_root_full_path: false
             show_root_heading: true
             show_symbol_type_heading: true
+            show_symbol_type_toc: true
             show_source: false
             docstring_section_style: spacy
   - search:
@@ -45,7 +50,7 @@ theme:
   palette:
     - media: "(prefers-color-scheme)"
       toggle:
-        icon: material/brightness-auto
+        icon: material/weather-sunny
         name: Switch to light mode
 
     # Palette toggle for light mode
@@ -53,14 +58,14 @@ theme:
       scheme: default
       primary: blue
       toggle:
-        icon: material/brightness-7
+        icon: material/weather-night
         name: Switch to dark mode
 
     # Palette toggle for dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       toggle:
-        icon: material/brightness-4
+        icon: material/brightness-auto
         name: Switch to system preference
 
   features:
@@ -73,6 +78,8 @@ theme:
     - content.code.copy
     - content.code.select
     - content.code.annotate
+    - content.tooltips
+    - content.footnote.tooltips
 
 nav:
   - index.md

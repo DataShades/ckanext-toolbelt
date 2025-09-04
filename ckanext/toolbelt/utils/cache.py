@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import logging
 import pickle  # nosec: B403
@@ -32,11 +34,9 @@ CacheAwareCallable = Callable[P, MaybeNotCached[T]]
 
 
 class NaiveCallable(Generic[P, TC], Protocol):
-    def reset(self, *args: P.args, **kwargs: P.kwargs) -> int:
-        ...
+    def reset(self, *args: P.args, **kwargs: P.kwargs) -> int: ...
 
-    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> TC:
-        ...
+    def __call__(self, *args: P.args, **kwargs: P.kwargs) -> TC: ...
 
 
 CacheDecorator = Callable[[CacheAwareCallable[P, T]], NaiveCallable[P, T]]
@@ -77,8 +77,8 @@ class Cache(Generic[T]):
 
     def __init__(
         self,
-        duration: Union[DurationStrategy, Duration] = None,
-        key: Union[KeyStrategy, KeyStr] = default_key_strategy,
+        duration: DurationStrategy | Duration = None,
+        key: KeyStrategy | KeyStr = default_key_strategy,
         dumper: Dumper[T] = json.dumps,
         loader: Loader[T] = json.loads,
     ):

@@ -5,7 +5,7 @@ import pytest
 import ckan.plugins.core as pcore
 
 
-@pytest.fixture()
+@pytest.fixture
 def load_text_view():
     if not pcore.plugin_loaded("text_view"):
         pcore.load("text_view")

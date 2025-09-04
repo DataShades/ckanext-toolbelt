@@ -27,7 +27,10 @@ def ckanext():
 @click.option("-d", "--use-defaults", is_flag=True)
 @click.option("--overwrite-existing", is_flag=True)
 def extended(
-    output_dir: str, project: str, use_defaults: bool, overwrite_existing: bool,
+    output_dir: str,
+    project: str,
+    use_defaults: bool,
+    overwrite_existing: bool,
 ):
     """Generate empty extension files to expand CKAN."""
     from cookiecutter.main import cookiecutter
@@ -68,7 +71,8 @@ def extended(
             default=defaults["author_email"],
         )
         defaults["github_user_name"] = click.prompt(
-            "Your Github user or organization name", default="",
+            "Your Github user or organization name",
+            default="",
         )
         defaults["description"] = click.prompt(
             "Brief description of the project",

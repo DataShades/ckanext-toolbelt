@@ -13,12 +13,12 @@ if TYPE_CHECKING:
     from freezegun.api import FrozenDateTimeFactory
 
 
-@pytest.fixture()
+@pytest.fixture
 def tracker_factory():
     return Tracker
 
 
-@pytest.fixture()
+@pytest.fixture
 def tracker(faker: Faker, tracker_factory: type[Tracker]):
     return tracker_factory(faker.word())
 
@@ -138,7 +138,10 @@ class TestAllTrackers:
         ]
 
     def test_obsoletion_period(
-        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory,
+        self,
+        tracker: Tracker,
+        faker: Faker,
+        freezer: FrozenDateTimeFactory,
     ):
         """Most common items ordered by score."""
         if not isinstance(tracker, DateTracker):
@@ -165,9 +168,11 @@ class TestAllTrackers:
         tracker.refresh()
         assert list(tracker.most_common(2)) == []
 
-
     def test_score(
-        self, tracker: Tracker, faker: Faker, freezer: FrozenDateTimeFactory,
+        self,
+        tracker: Tracker,
+        faker: Faker,
+        freezer: FrozenDateTimeFactory,
     ):
         """Most common items ordered by score."""
         event = faker.word()
@@ -181,6 +186,7 @@ class TestAllTrackers:
             assert tracker.score(event) == 125
         else:
             assert tracker.score(event) == 200
+
 
 @pytest.mark.usefixtures("clean_redis")
 class TestTracker:
@@ -218,7 +224,7 @@ class TestTracker:
 
 @pytest.mark.usefixtures("clean_redis")
 class TestDateTracker:
-    @pytest.fixture()
+    @pytest.fixture
     def tracker_factory(self):
         return DateTracker
 

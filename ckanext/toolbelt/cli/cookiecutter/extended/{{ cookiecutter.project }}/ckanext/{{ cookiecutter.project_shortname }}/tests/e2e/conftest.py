@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import Any
 
 import pytest
+
 from playwright.sync_api import expect, Page
 
 expect.set_options(timeout=1000)
@@ -35,3 +36,30 @@ def login(request: pytest.FixtureRequest, api_token_factory: Any, page: Page):
         _page.set_extra_http_headers({"Authorization": token})
 
     return authenticator
+
+
+@pytest.fixture
+def wait_for_ckan(page: Page):
+    """Wait JS initialization before processing with page testing."""
+    def waiter(_page: Page | None = None):
+        if _page is None:
+            _page = page
+
+        page.wait_for_function("() => window.ckan && window.ckan.SITE_ROOT")
+
+    return waiter
+
+
+@pytest.fixture
+def goto(wait_for_ckan: Any, page: Page):
+    """Page transition with autowait for CKAN initialization."""
+
+    def switcher(url: str, _page: Page | None = None, **kwargs: Any):
+        if _page is None:
+            _page = page
+
+        result = page.goto(url, **kwargs)
+        wait_for_ckan(page)
+        return result
+
+    return switcher

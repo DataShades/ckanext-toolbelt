@@ -22,7 +22,15 @@ def pyproject(plugin: str, write: bool):
             _shared.template_source(part),
             {"PLUGIN": plugin},
         )
-        for part in ["black", "ruff", "isort", "pytest", "git_changelog", "pyright", "coverage"]
+        for part in [
+            "black",
+            "ruff",
+            "isort",
+            "pytest",
+            "git_changelog",
+            "pyright",
+            "coverage",
+        ]
     }
     data["PLUGIN"] = plugin
 

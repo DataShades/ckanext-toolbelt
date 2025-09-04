@@ -46,6 +46,7 @@ override existing data, call `reset` before using the snapshot.
   >>> track.restore(snapshot)
 
 """
+
 from __future__ import annotations
 
 import dataclasses
