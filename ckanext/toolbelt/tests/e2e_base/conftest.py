@@ -3,7 +3,10 @@ from __future__ import annotations
 from typing import Any, cast
 
 import pytest
-from playwright.sync_api import Page
+from flask_login import encode_cookie  # pyright: ignore[reportUnknownVariableType]
+from playwright.sync_api import BrowserContext, Page
+
+from ckan import types
 
 __all__ = ["browser_context_args", "login", "wait_for_ckan", "goto", "ckan_standard"]
 
@@ -27,18 +30,38 @@ def browser_context_args(browser_context_args: dict[str, Any], ckan_config: dict
 
 
 @pytest.fixture
-def login(api_token_factory: Any, page: Page):
-    """Provides a function for authentication."""
+def token_login(api_token_factory: Any, page: Page):
+    """Provides a function for authentication using API token."""
 
-    def authenticator(user: str, _page: Page | None = None):
+    def authenticator(user: str | dict[str, Any], _page: Page | None = None):
         if _page is None:
             _page = page
 
-        if user:
-            token: str = api_token_factory(user=user)["token"]
-        else:
-            token = ""
+        if isinstance(user, dict):
+            user = user["name"]
+
+        token: str = api_token_factory(user=user)["token"] if user else ""
+
         _page.set_extra_http_headers({"Authorization": token})
+
+    return authenticator
+
+
+@pytest.fixture
+def login(page: Page, context: BrowserContext, ckan_config: types.FixtureCkanConfig, with_request_context: Any):
+    """Provides a function for authentication by setting the remember cookie."""
+
+    def authenticator(user: str | dict[str, Any], _page: Page | None = None):
+        if _page is None:
+            _page = page
+
+        if isinstance(user, dict):
+            user = user["name"]
+
+        key = ckan_config["REMEMBER_COOKIE_NAME"]
+        url = ckan_config["ckan.site_url"]
+
+        context.add_cookies([{"name": key, "value": encode_cookie(user), "url": url}])
 
     return authenticator
 

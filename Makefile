@@ -7,3 +7,11 @@ help:
 
 changelog:  ## compile changelog
 	git cliff --output CHANGELOG.md $(if $(bump),--tag $(bump))
+
+
+test_config = test.ini
+test-server:  ## start server for frontend testing
+	yes | ckan -c $(test_config) db clean
+	ckan -c $(test_config) db upgrade
+	yes | ckan -c $(test_config) sysadmin add admin password=password123 email=admin@test.net
+	ckan -c $(test_config) run -t

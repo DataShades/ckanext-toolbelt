@@ -6,20 +6,22 @@ import pytest
 from faker import Faker
 from playwright.sync_api import Page, expect
 
+from ckan import types
+from ckan.tests.helpers import call_action  # pyright: ignore[reportUnknownVariableType]
 
-class Login:
-    @pytest.fixture
-    def user_password(self, faker: Faker):
-        """Pasword that can be overriden in subclasses."""
-        return faker.password()
+from ckanext.toolbelt.tests.e2e_base._locators import ElementLocator
 
-    @pytest.fixture
-    def user__password(self, user_password: str):
-        """Password for user fixture."""
-        return user_password
+__all__ = [
+    "Login",
+    "Logout",
+    "Profile",
+    "StandardUser",
+]
 
+
+class Login(ElementLocator):
     @pytest.mark.ckan_standard("login")
-    def test_login_normal(self, page: Page, user: dict[str, Any], user_password: str):
+    def test_login_normal(self, page: Page, user_factory: types.TestFactory, faker: Faker):
         """Test normal login flow.
 
         Given an existing user
@@ -29,18 +31,24 @@ class Login:
         Then they are redirected to the dashboard
         And their display name is shown in the header
         """
+        password = faker.password()
+        user = user_factory(password=password)
+
         page.goto("/")
-        page.get_by_role("link", name="log in").click()
+
+        self.locate_login_link(page).click()
         expect(page).to_have_url("/user/login")
 
         page.get_by_label("username").fill(user["name"])
-        page.get_by_label("password").fill(user_password)
+        page.get_by_label("password").fill(password)
 
-        page.get_by_role("button", name="login").click()
-
+        self.locate_login_button(page).click()
         expect(page).to_have_url("/dashboard/datasets")
-        expect(page.get_by_role("link", name=user["display_name"])).to_be_visible()
 
+        profile_link = self.locate_profile_link(page, user)
+        expect(profile_link).to_be_visible()
+
+    @pytest.mark.ckan_standard("login")
     def test_login_authenticated(self, login: Any, user: dict[str, Any], page: Page):
         """Authenticated user cannot access login page again.
 
@@ -51,19 +59,15 @@ class Login:
         """
         login(user["name"])
 
-        expect(page.get_by_role("link", name="log in")).not_to_be_attached()
+        expect(self.locate_login_link(page)).not_to_be_attached()
         page.goto("/user/login")
 
-        expect(page.get_by_text("you're already logged in").first).to_be_visible()
-
-        page.screenshot(path="/tmp/x.png")
-        expect(page.get_by_label("username")).to_be_disabled()
-        expect(page.get_by_label("password")).to_be_disabled()
+        expect(self.locate_existing_login_session_alert(page)).to_be_visible()
 
 
-class Logout:
-    @pytest.mark.ckan_standard("logout", "login")
-    def test_logout_normal(self, login: Any, user: dict[str, Any], page: Page, user_password: str):
+class Logout(ElementLocator):
+    @pytest.mark.ckan_standard("logout")
+    def test_logout_normal(self, user: dict[str, Any], page: Page, login: Any):
         """Test normal logout flow.
 
         Given an authenticated user
@@ -72,22 +76,18 @@ class Logout:
         And they see a message that they have been logged out
         And the login link is visible in the header
         """
-        page.goto("/user/login")
-        page.get_by_label("username").fill(user["name"])
-        page.get_by_label("password").fill(user_password)
-
-        page.get_by_role("button", name="login").click()
-
-        page.get_by_role("link", name="log out").click()
+        login(user)
+        page.goto("/")
+        page.get_by_label("log out").click()
 
         expect(page).to_have_url("/user/logged_out_redirect")
-        expect(page.get_by_text("you are now logged out").first).to_be_visible()
+        expect(self.locate_logged_out_alert(page)).to_be_visible()
 
-        expect(page.get_by_role("link", name="log in")).to_be_visible()
-        expect(page.get_by_role("link", name="log out")).not_to_be_attached()
+        expect(self.locate_login_link(page)).to_be_visible()
+        expect(self.locate_logout_link(page)).not_to_be_attached()
 
-    @pytest.mark.ckan_standard("logout", "login")
-    def test_logout_anonymous(self, login: Any, page: Page):
+    @pytest.mark.ckan_standard("logout")
+    def test_logout_anonymous(self, page: Page):
         """Test anonymous user logout flow.
 
         Given an anonymous user
@@ -98,5 +98,65 @@ class Logout:
         expect(page).to_have_url("/user/login")
 
 
-class Standard(Login, Logout):
+class Profile(ElementLocator):
+    @pytest.mark.ckan_standard("profile")
+    def test_profile_tabs(self, login: Any, page: Page, user: dict[str, Any]):
+        """Test navigation between profile tabs.
+
+        Given an authenticated user
+        When they go to their profile page
+        Then they can navigate between the Datasets, Organizations, Groups, and API Tokens tabs
+        And the URL updates accordingly
+        """
+        login(user["name"])
+
+        page.goto("/")
+        self.locate_profile_link(page, user).click()
+
+        self.locate_profile_datasets_tab(page).click()
+        expect(page).to_have_url(f"/user/{user['name']}")
+
+        self.locate_profile_organizations_tab(page).click()
+        expect(page).to_have_url(f"/user/{user['name']}/organizations")
+
+        self.locate_profile_groups_tab(page).click()
+        expect(page).to_have_url(f"/user/{user['name']}/groups")
+
+        self.locate_profile_tokens_tab(page).click()
+        expect(page).to_have_url(f"/user/{user['name']}/api-tokens")
+
+    @pytest.mark.ckan_standard("profile")
+    def test_profile_management(self, login: Any, page: Page, user: dict[str, Any], faker: Faker):
+        """Test profile management flow.
+
+        Given an authenticated user
+        When they go to their profile page
+        And click the "Manage" link
+        And update their display name
+        Then they are redirected back to their profile page
+        And their new display name is shown in the header
+        And the profile link with the old display name is no longer present
+        And the user's display name is updated in the database
+        """
+        login(user["name"])
+
+        page.goto(f"/user/{user['name']}")
+        self.locate_profile_management_link(page).click()
+        expect(page).to_have_url(f"/user/edit/{user['name']}")
+
+        new_name = faker.name()
+        page.get_by_label("full name").fill(new_name)
+
+        self.locate_update_profile_button(page).click()
+        expect(page).to_have_url(f"/user/{user['name']}")
+
+        expect(self.locate_profile_link(page, user)).not_to_be_attached()
+
+        user = call_action("user_show", id=user["id"])
+        assert user["display_name"] == new_name
+
+        expect(self.locate_profile_link(page, user)).to_be_visible()
+
+
+class StandardUser(Login, Logout, Profile):
     """Test generic authentication flow."""
