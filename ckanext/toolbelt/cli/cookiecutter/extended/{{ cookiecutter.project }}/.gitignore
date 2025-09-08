@@ -38,6 +38,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 .benchmarks/
+test-results/
 
 # Sphinx documentation
 docs/_build/

@@ -8,7 +8,7 @@ from playwright.sync_api import BrowserContext, Page
 
 from ckan import types
 
-__all__ = ["browser_context_args", "login", "wait_for_ckan", "goto", "ckan_standard"]
+__all__ = ["browser_context_args", "login", "wait_for_ckan", "goto", "ckan_standard", "milestone_screenshot"]
 
 
 @pytest.fixture(autouse=True)
@@ -98,3 +98,23 @@ def goto(wait_for_ckan: Any, page: Page):
         return result
 
     return switcher
+
+
+@pytest.fixture
+def milestone_screenshot(page: Page, request: pytest.FixtureRequest):
+    """Fixture to take screenshots at significant steps in a test."""
+    step = 1
+
+    def func(name: str, _page: Page | None = None, **kwargs: Any):
+        """Takes a screenshot and saves it to the test-results directory."""
+        nonlocal step
+        node = request.node  # pyright: ignore[reportUnknownVariableType]
+        if _page is None:
+            _page = page
+
+        prefix: str = node.originalname[5:]  # pyright: ignore[reportUnknownVariableType]
+        kwargs["path"] = f"test-results/{prefix}__{step:02d}_{name}.jpeg"
+        step += 1
+        return _page.screenshot(**kwargs, full_page=True)
+
+    return func

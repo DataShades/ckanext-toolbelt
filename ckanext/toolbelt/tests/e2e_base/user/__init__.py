@@ -21,7 +21,7 @@ __all__ = [
 
 class Login(ElementLocator):
     @pytest.mark.ckan_standard("login")
-    def test_login_normal(self, page: Page, user_factory: types.TestFactory, faker: Faker):
+    def test_login_normal(self, page: Page, user_factory: types.TestFactory, faker: Faker, milestone_screenshot: Any):
         """Test normal login flow.
 
         Given an existing user
@@ -42,14 +42,18 @@ class Login(ElementLocator):
         page.get_by_label("username").fill(user["name"])
         page.get_by_label("password").fill(password)
 
+        milestone_screenshot("form_with_credentials")
+
         self.locate_login_button(page).click()
         expect(page).to_have_url("/dashboard/datasets")
 
         profile_link = self.locate_profile_link(page, user)
         expect(profile_link).to_be_visible()
 
+        milestone_screenshot("after_login_redirect")
+
     @pytest.mark.ckan_standard("login")
-    def test_login_authenticated(self, login: Any, user: dict[str, Any], page: Page):
+    def test_login_authenticated(self, milestone_screenshot: Any, login: Any, user: dict[str, Any], page: Page):
         """Authenticated user cannot access login page again.
 
         Given an authenticated user
@@ -59,15 +63,16 @@ class Login(ElementLocator):
         """
         login(user["name"])
 
-        expect(self.locate_login_link(page)).not_to_be_attached()
         page.goto("/user/login")
+        expect(self.locate_login_link(page)).not_to_be_attached()
 
         expect(self.locate_existing_login_session_alert(page)).to_be_visible()
+        milestone_screenshot("existing_session_alert")
 
 
 class Logout(ElementLocator):
     @pytest.mark.ckan_standard("logout")
-    def test_logout_normal(self, user: dict[str, Any], page: Page, login: Any):
+    def test_logout_normal(self, milestone_screenshot: Any, user: dict[str, Any], page: Page, login: Any):
         """Test normal logout flow.
 
         Given an authenticated user
@@ -85,9 +90,10 @@ class Logout(ElementLocator):
 
         expect(self.locate_login_link(page)).to_be_visible()
         expect(self.locate_logout_link(page)).not_to_be_attached()
+        milestone_screenshot("post_logout_redirect")
 
     @pytest.mark.ckan_standard("logout")
-    def test_logout_anonymous(self, page: Page):
+    def test_logout_anonymous(self, milestone_screenshot: Any, page: Page):
         """Test anonymous user logout flow.
 
         Given an anonymous user
@@ -96,11 +102,12 @@ class Logout(ElementLocator):
         """
         page.goto("/user/_logout")
         expect(page).to_have_url("/user/login")
+        milestone_screenshot("redirect_to_login")
 
 
 class Profile(ElementLocator):
     @pytest.mark.ckan_standard("profile")
-    def test_profile_tabs(self, login: Any, page: Page, user: dict[str, Any]):
+    def test_profile_tabs(self, milestone_screenshot: Any, login: Any, page: Page, user: dict[str, Any]):
         """Test navigation between profile tabs.
 
         Given an authenticated user
@@ -112,21 +119,28 @@ class Profile(ElementLocator):
 
         page.goto("/")
         self.locate_profile_link(page, user).click()
+        milestone_screenshot("main_page")
 
         self.locate_profile_datasets_tab(page).click()
         expect(page).to_have_url(f"/user/{user['name']}")
+        milestone_screenshot("datasets_tab")
 
         self.locate_profile_organizations_tab(page).click()
         expect(page).to_have_url(f"/user/{user['name']}/organizations")
+        milestone_screenshot("organizations_tab")
 
         self.locate_profile_groups_tab(page).click()
         expect(page).to_have_url(f"/user/{user['name']}/groups")
+        milestone_screenshot("groups_tab")
 
         self.locate_profile_tokens_tab(page).click()
         expect(page).to_have_url(f"/user/{user['name']}/api-tokens")
+        milestone_screenshot("tokens_tab")
 
     @pytest.mark.ckan_standard("profile")
-    def test_profile_management(self, login: Any, page: Page, user: dict[str, Any], faker: Faker):
+    def test_profile_management(
+        self, milestone_screenshot: Any, login: Any, page: Page, user: dict[str, Any], faker: Faker
+    ):
         """Test profile management flow.
 
         Given an authenticated user
@@ -146,6 +160,7 @@ class Profile(ElementLocator):
 
         new_name = faker.name()
         page.get_by_label("full name").fill(new_name)
+        milestone_screenshot("form_with_updad_field")
 
         self.locate_update_profile_button(page).click()
         expect(page).to_have_url(f"/user/{user['name']}")
@@ -154,8 +169,8 @@ class Profile(ElementLocator):
 
         user = call_action("user_show", id=user["id"])
         assert user["display_name"] == new_name
-
         expect(self.locate_profile_link(page, user)).to_be_visible()
+        milestone_screenshot("updated_profile_page")
 
 
 class StandardUser(Login, Logout, Profile):
