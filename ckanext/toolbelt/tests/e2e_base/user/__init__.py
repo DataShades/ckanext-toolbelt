@@ -83,7 +83,7 @@ class Logout(ElementLocator):
         """
         login(user)
         page.goto("/")
-        page.get_by_label("log out").click()
+        self.locate_logout_link(page).click()
 
         expect(page).to_have_url("/user/logged_out_redirect")
         expect(self.locate_logged_out_alert(page)).to_be_visible()
