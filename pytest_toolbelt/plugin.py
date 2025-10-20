@@ -27,8 +27,10 @@ if not hasattr(pcore, "unload_non_system_plugins") and not tk.check_ckan_version
         pcore.unload(*plugins_to_unload)
 
 
-if fixtures.migrate_db_for._pytestfixturefunction.scope == "function":
+_mdf = fixtures.migrate_db_for
+_func = getattr(_mdf, "_pytestfixturefunction", None) or getattr(_mdf, "_fixture_function", None)
 
+if _func and getattr(_func, "scope", None) == "function":
     @pytest.fixture(scope="session")
     def migrate_db_for():
         """Override CKAN `migrate_db_for` using `session` scope for fixture."""
