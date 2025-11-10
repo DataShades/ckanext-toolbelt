@@ -1,0 +1,40 @@
+{% raw %}
+{% ckan_extends %}
+
+{% block secondary_content %}
+    <section class="module module-narrow">
+        <h2 class="module-heading"><i class="fa fa-chart-bar"></i> {{ _('Statistics Menu') }}</h2>
+        <nav data-module="stats-nav">
+            <ul class="unstyled nav nav-simple">
+                <li class="nav-item active"><a href="#stats-total-datasets" data-toggle="tab" data-bs-toggle="tab">{{ _('Total Number of Datasets') }}</a></li>
+                <li class="nav-item"><a href="#stats-dataset-revisions" data-toggle="tab" data-bs-toggle="tab">{{ _('Dataset Revisions per Week') }}</a></li>
+                <li class="nav-item"><a href="#stats-most-edited" data-toggle="tab" data-bs-toggle="tab">{{ _('Most Edited Datasets') }}</a></li>
+                <li class="nav-item"><a href="#stats-largest-groups" data-toggle="tab" data-bs-toggle="tab">{{ _('Largest Groups') }}</a></li>
+                <li class="nav-item"><a href="#stats-top-tags" data-toggle="tab" data-bs-toggle="tab">{{ _('Top Tags') }}</a></li>
+                <li class="nav-item"><a href="#stats-most-create" data-toggle="tab" data-bs-toggle="tab">{{ _('Users Creating Most Datasets') }}</a></li>
+                <li class="nav-item">
+                    <div class="module-content">
+                        <h4 style="color: #333; font-weight:500;">{{ _('Website User Statistics') }}</h4>
+                        <br>
+                        <form id="tracking-export-form" method="GET" action="{{ h.url_for('{% endraw %}{{ cookiecutter.project_shortname }}.export_tracking_data') }}{% raw %}">
+                            <div class="form-group control-medium">
+                                <label class="form-label" for="start-date">{{ _('Start Date') }}</label>
+                                <input class="form-control" type="date" id="start-date" name="start">
+                            </div>
+                            <div class="form-group control-medium">
+                                <label class="form-label" for="end-date">{{ _('End Date') }}</label>
+                                <input class="form-control" type="date" id="end-date" name="end">
+                            </div>
+                            <div class="form-actions">
+                                <button style="margin-inline-start: unset; flex-basis: 100%; display: block;" type="submit" class="btn btn-primary text-center">
+                                    {{ _('Export Data') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </section>
+{% endblock %}
+{% endraw %}

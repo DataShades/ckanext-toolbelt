@@ -15,9 +15,11 @@ Example:
 
 from __future__ import annotations
 
+import io
+import csv
 from typing import Any, cast
 
-from flask import Blueprint
+from flask import Blueprint, make_response
 from flask.views import MethodView
 
 import ckan.plugins.toolkit as tk
@@ -147,6 +149,53 @@ class ComplexView(MethodView):
 
         tk.h.flash_success("Yay! {}".format(result["sum"]))
         return tk.redirect_to("{{ cookiecutter.project_shortname }}.page")
+
+
+@bp.route("/stats/tracking_data", methods=["GET"])
+def export_tracking_data():
+    """Exports tracking data as a CSV file.
+
+    Query params:
+        start (optional) - filter records from this date (inclusive)
+        end (optional) - filter records up to this date (inclusive)
+    """
+    start_date = tk.request.args.get("start")
+    end_date = tk.request.args.get("end")
+
+    query = """
+        SELECT
+            url,
+            tracking_type,
+            COUNT(*) AS total_count,
+            MIN(access_timestamp) AS first_access,
+            MAX(access_timestamp) AS last_access
+        FROM tracking_raw
+        WHERE url IS NOT NULL AND url <> ''
+    """
+
+    # Add date filter if provided
+    params = {}
+    if start_date:
+        query += " AND access_timestamp >= :start_date"
+        params["start_date"] = start_date
+    if end_date:
+        query += " AND access_timestamp <= :end_date"
+        params["end_date"] = end_date
+
+    query += " GROUP BY url, tracking_type ORDER BY total_count DESC;"
+
+    results = model.Session.execute(query, params)
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["url", "tracking_type", "count", "first_access", "last_access"])
+
+    for row in results:
+        writer.writerow(row)
+
+    response = make_response(output.getvalue())
+    response.headers["Content-Disposition"] = "attachment; filename=page_views.csv"
+    response.headers["Content-Type"] = "text/csv"
+    return response
 
 
 # we don't have to specify `methods` parameter, because `MethodView` already

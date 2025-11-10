@@ -33,7 +33,7 @@
 # CKAN core supports this short syntax. But internally it's unfolds into
 ## remote-ckan = https://github.com/ckan/ckan tag ckan-2.10.4
 # if you want to use CKAN fork or specific commit, use this full specification
-ckan_tag = ckan-2.11.1
+ckan_tag = ckan-2.11.4
 
 # items from this list are installed by `make full-upgrade` and `make sync
 # install`. If you specify remote, but did not added extension to this list, it
@@ -55,10 +55,10 @@ ext_list = \
 	resource-indexer \
 	scheming search-tweaks spatial saml syndicate \
 	security \
-	toolbelt \
 	unfold \
 	vip-portal \
-	xloader
+	xloader \
+	sitemap
 
 # information about extension source. Format is `ALTERNATIVE-NAME = URL TYPE
 # REF`, where
@@ -101,12 +101,12 @@ remote-scheming = https://github.com/ckan/ckanext-scheming tag release-3.0.0
 remote-search-tweaks = https://github.com/dataShades/ckanext-search-tweaks tag v0.6.1
 remote-security = https://github.com/data-govt-nz/ckanext-security tag 4.1.1
 
-remote-spatial = https://github.com/ckan/ckanext-spatial tag v2.1.1
+remote-spatial = https://github.com/ckan/ckanext-spatial tag v2.3.1
 remote-syndicate = https://github.com/DataShades/ckanext-syndicate tag v2.2.2
-remote-toolbelt = https://github.com/DataShades/ckanext-toolbelt.git tag v0.4.24
 remote-unfold = https://github.com/DataShades/ckanext-unfold.git tag v1.0.2
 remote-vip-portal = https://github.com/DataShades/ckanext-vip-portal.git tag v0.2.5a1
 remote-xloader = https://github.com/ckan/ckanext-xloader.git tag 2.0.0
+remote-sitemap = https://github.com/DataShades/ckanext-sitemap.git tag v1.0.3
 
 # extras installed with the extension. Produce `pip install
 # 'ckanext-googleanalytics[requirements]'`-like instructions.
