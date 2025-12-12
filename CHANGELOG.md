@@ -1,4 +1,18 @@
 
+## [v0.6.9](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.6.9) - 2025-12-12
+[Compare with v0.6.8](https://github.com/DataShades/ckanext-toolbelt/compare/v0.6.8..v0.6.9)
+
+### 🚀 Features
+
+- e2e base for login and logout ([223dcfe](https://github.com/DataShades/ckanext-toolbelt/commit/223dcfe87a2e473fd0f4e31ab92a3e61c2fb8abc))
+
+## [v0.6.8](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.6.8) - 2025-08-01
+[Compare with v0.6.7](https://github.com/DataShades/ckanext-toolbelt/compare/v0.6.7..v0.6.8)
+
+### 🐛 Bug Fixes
+
+- cannot generate extension ([dc12f36](https://github.com/DataShades/ckanext-toolbelt/commit/dc12f3665181d0d5d64ee5845534165847c01cc8))
+
 ## [v0.6.7](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.6.7) - 2025-08-01
 [Compare with v0.6.6](https://github.com/DataShades/ckanext-toolbelt/compare/v0.6.6..v0.6.7)
 
