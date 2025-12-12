@@ -37,7 +37,6 @@ text = "AGPL"
 Homepage = "https://github.com/{{ cookiecutter.github_user_name }}/{{ cookiecutter.project }}"
 
 [project.optional-dependencies]
-[options.extras_require]
 test = ["pytest-ckan", "pytest-benchmark", "pytest-pretty"]
 docs = ["mkdocs", "mkdocs-material", "pymdown-extensions", "mkdocstrings[python]"]
 dev = ["pytest-ckan", "pytest-benchmark", "pytest-pretty", "mkdocs", "mkdocs-material", "pymdown-extensions", "mkdocstrings[python]", "pre-commit", "pytest-playwright"]
