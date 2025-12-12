@@ -67,7 +67,7 @@ create another extension, here's the example:
    make prepare
    make full-upgrade develop=1
    ```
-   Create config files for 1st and 3rd lavel(details explained in Configuration
+   Create config files for 1st and 3rd level (details explained in Configuration
    section):
    ```sh
    ckan generate config default.ini
@@ -137,10 +137,9 @@ This approach is recommended for the following interfaces: `IConfigurer`,
 
 ---
 
-To hook into one-mehtod interfaces that register additional functions, the
-plugin uses
-[blankets](https://docs.ckan.org/en/2.10/extensions/plugins-toolkit.html#ckan.plugins.toolkit.ckan.plugins.toolkit.blanket). When
-extension is decorated with blanket, it automatically implements corresponding
+To hook into one-method interfaces that register additional functions, the plugin uses
+[blankets](https://docs.ckan.org/en/2.10/extensions/plugins-toolkit.html#ckan.plugins.toolkit.ckan.plugins.toolkit.blanket).
+When an extension is decorated with blanket, it automatically implements corresponding
 interface and registers all public members of corresponding module.
 
 There are 7 blankets in CKAN:
@@ -157,8 +156,8 @@ There are 7 blankets in CKAN:
 
 Because of blankets, you don't need to import views, CLI commands or actions
 into plugin. You don't even have to register `get_actions`-like function. Any
-function defined inside `ckanext.{{ cookiecutter.project_shortname }}.logic.action` will be
-registered as an action with the same name, if it's not prefixed with
+function defined inside `ckanext.{{ cookiecutter.project_shortname }}.logic.action`
+will be registered as an action with the same name, if it's not prefixed with
 underscore. Imported functions are not registered as actions: you have to
 create function inside the `action` module to export it automatically.
 
@@ -232,8 +231,7 @@ readable.
 ### `cli.py`
 
 Define all commands here. It's recommended to create a single `click` group
-that maches the name of the plugin and add this group to `__all__` attribute of
-the module. As result, only this group will be available as `ckan {{
+that matches the name of the plugin and add this group to `__all__` attribute of the module. As result, only this group will be available as `ckan {{
 cookiecutter.project_shortname }}` CLI command.
 
 All commands should be registered under this group or its subgroups.
@@ -392,7 +390,7 @@ Options that should be modified during deployment are kept inside `Environment
 settings` block. Any token/password/ID value must be replaced with placeholder:
 
 ```ini
-## ckaneext-googleanalytics
+## ckanext-googleanalytics
 googleanalytics.id = G-TEST
 ```
 
@@ -424,7 +422,7 @@ configuration:
 This approach solves the following problems:
 
 * Expected configuration can be shared across environments because you have
-  `project.ini` commited in the repo.
+  `project.ini` committed in the repo.
 * Configuration changes are applied automatically, because `project.ini` is a
   link to git-controlled file. You don't need to modify CKAN configuration
   manually after the deploy.
@@ -434,7 +432,7 @@ This approach solves the following problems:
 * Environment specific configuration is kept inside `ckan.ini`. You clearly
   see, what needs to be configured individually on environment because of
   `Environment settings` block. And you can ignored hundreds of options outside
-  this block, because they must be identicall on all environments.
+  this block, because they must be identical on all environments.
 
 ### `solr/`
 
@@ -453,7 +451,7 @@ can be also added here.
 
 ## Included extensions
 
-This exntension includes configuration for a number of popular CKAN
+This extension includes configuration for a number of popular CKAN
 extensions. These extensions are installed when you run `make full-upgrade`.
 
 Usually, you only need to add extension name to `ckan.plugins` config
@@ -508,6 +506,17 @@ example, the following block can be used to add thread to `package/read.html`
 ```
 {% endraw %}
 
+### ckanext-content
+
+Content management extension for CKAN.
+
+It replaces legacy extensions like ckanext-pages and ckanext-showcase with
+a schema-driven, configurable solution that supports custom content types, 
+translations, file uploads, templating, and URL aliasing.
+
+Does not require additional configuration.
+Add `content` to the list of plugins and apply DB migrations: `ckan db upgrade -p content`
+
 ### ckanext-dcat
 
 DCAT translator for CKAN.
@@ -546,7 +555,7 @@ Add `flakes` to the list of plugins and apply DB migrations: `ckan db upgrade -p
 
 Map views for spatial data.
 
-Configure specific view type accoriding to [official
+Configure specific view type according to [official
 documentation](https://github.com/ckan/ckanext-geoview?tab=readme-ov-file#available-plugins)
 
 ### ckanext-googleanalytics
@@ -575,6 +584,14 @@ One-time login links generator.
 Does not require additional configuration. Enabled by default as `let_me_in`
 plugin.
 
+### ckanext-menu
+
+Allows administrators to create and manage custom navigation menus through
+the CKAN interface.
+
+Does not require additional configuration.
+Add `menu` to the list of plugins and apply DB migrations: `ckan db upgrade -p menu`
+
 ### ckanext-officedocs
 
 Views for MS Office documents.
@@ -592,6 +609,13 @@ Add `or_facet` to the list of plugins.
 PDF view for resources.
 
 Enabled by default as `pdf_view`.
+
+### ckanext-permissions
+
+Build an Access Control List system within CKAN.
+
+Does not require additional configuration. Enabled by default as `permissions`
+plugin.
 
 ### ckanext-pygments
 
@@ -624,7 +648,7 @@ plugins.
 
 ### ckanext-syndicate
 
-Push local datasets to extenal CKAN portal
+Push local datasets to external CKAN portal
 
 Add `syndicate` to the list of plugins. Configure details of remote
 portal(syndication profile) specified by `ckanext.syndicate.profile*` options.
@@ -641,9 +665,11 @@ and add corresponding configuration
 
 Features related to spatial search.
 
-Add `spatial_metadata spatial_query` to the list of plugins. Initialize PostGIS extension for CKAN DB
+Add `spatial_metadata spatial_query` to the list of plugins. Initialize PostGIS
+extension for CKAN DB.
 
-If you are using Docker PostGIS image, you need to do something similar to the example below:
+If you are using Docker PostGIS image, you need to do something similar to
+the example below:
 
 ```sh
 PG_VERSION=16
@@ -664,6 +690,11 @@ to `server/solr-webapp/webapp/WEB-INF/lib/` folder of your Solr service.
 [Extra details about search
 backend](https://docs.ckan.org/projects/ckanext-spatial/en/latest/spatial-search.html#choosing-a-backend-for-the-spatial-search).
 
+### ckanext-tables
+
+Display tabular data in a nice way using [Tabulator](http://tabulator.info/).
+
+Does not require additional configuration. Enabled by default as `tables` plugin.
 
 ### ckanext-toolbelt
 
@@ -673,13 +704,22 @@ extensions.
 Functionality of toolbelt usually does not require enabling plugins. Just
 import and use it.
 
+### ckanext-tour
+
+Provide a guided tour feature for CKAN instances.
+
+It allows users to create interactive tours to showcase different features and
+functionalities of a CKAN instance.
+
+Does not require additional configuration. Enabled by default as `tour` plugin.
+
 ### ckanext-unfold
 
 Views for archives
 
 Depending on the format of archive, requirements and configuration can be
 different. Check [official
-documentaion](https://github.com/mutantsan/ckanext-unfold).
+documentation](https://github.com/mutantsan/ckanext-unfold).
 
 ### ckanext-vip-portal
 
@@ -731,7 +771,7 @@ review auto-fixes, add them to index and repeat the commit.
 Note: `ruff` hooks read configuration from `pyproject.toml`.
 
 In addition, as an example, before push repository is checked for presence of
-debug statemens(`print`, `breakpoint`). If you left them in code, push is
+debug statements(`print`, `breakpoint`). If you left them in code, push is
 rejected.
 
 #### Initialization
@@ -747,7 +787,7 @@ only need to run `pre-commit install`.
 
 This command needs to be executed when you created the extension and
 initialized the repo. In addition, this command must be executed when you clone
-the extension, because hooks are not automatically installed inside clonned
+the extension, because hooks are not automatically installed inside cloned
 repo.
 
 Once you executed `pre-commit install` inside the repo, hooks will be
@@ -782,8 +822,8 @@ Now, choose the latest tag of the repository and set it as value of `rev`:
 ```
 
 Finally, open `.pre-commit-hooks.yaml` file of the [repository with
-hooks](https://github.com/markdownlint/markdownlint/blob/main/.pre-commit-hooks.yaml). It
-contains definitions of all hooks provided by the repo. Choose hook and add it
+hooks](https://github.com/markdownlint/markdownlint/blob/main/.pre-commit-hooks.yaml).
+It contains definitions of all hooks provided by the repo. Choose hook and add it
 as `{"id": HOOK_ID}` inside `hooks` attribute of the configuration.
 
 ```yaml
@@ -1072,15 +1112,15 @@ Ruff configuration is managed by `[tool.ruff.*]` sections of `pyproject.toml`.
 
 Majority of tests for the extension is written using `pytest`.
 
-`ckanext/{{ cookiecutter.project_shortname }}/tests` contains examples of tests for standard
-operations. Every `test_*.py` file contains tests. Every `conftest.py` file
+`ckanext/{{ cookiecutter.project_shortname }}/tests` contains examples of tests for
+standard operations. Every `test_*.py` file contains tests. Every `conftest.py` file
 defines fixtures that are available for modules on the same level and child
 modules.
 
-`ckanext/{{ cookiecutter.project_shortname }}/tests/benchmarks` contains benchmarks. They
-are written in the same way as normal tests, but we are using them to measure
+`ckanext/{{ cookiecutter.project_shortname }}/tests/benchmarks` contains benchmarks.
+They are written in the same way as normal tests, but we are using them to measure
 code performance. By default, all benchmarks are excluded from selection when
-pytest in running. You need to run benchmarks explicitely using `-m benchmark`
+pytest in running. You need to run benchmarks explicitly using `-m benchmark`
 argument of `pytest` command.
 
 ```sh
@@ -1163,7 +1203,7 @@ cypress, that pytest, because you can visualize the process.
 
 Cypress is used by this extension to perform testing in browser. Cypress opens
 application in a real browser and visits different pages, so you need a running
-CKAN application to run cyppress tests.
+CKAN application to run cypress tests.
 
 You can use any application that is served on localhost:5000 and has `admin`
 user with password `password123`. There is a make-rule that starts such server

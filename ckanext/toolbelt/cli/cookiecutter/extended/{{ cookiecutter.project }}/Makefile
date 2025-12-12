@@ -58,7 +58,12 @@ ext_list = \
 	unfold \
 	vip-portal \
 	xloader \
-	sitemap
+	sitemap \
+	content \
+	menu \
+	permissions \
+	tour \
+	tables
 
 # information about extension source. Format is `ALTERNATIVE-NAME = URL TYPE
 # REF`, where
@@ -107,6 +112,11 @@ remote-unfold = https://github.com/DataShades/ckanext-unfold.git tag v1.0.2
 remote-vip-portal = https://github.com/DataShades/ckanext-vip-portal.git tag v0.2.5a1
 remote-xloader = https://github.com/ckan/ckanext-xloader.git tag 2.0.0
 remote-sitemap = https://github.com/DataShades/ckanext-sitemap.git tag v1.0.3
+remote-content = https://github.com/DataShades/ckanext-content.git tag v1.0.4
+remote-menu = https://github.com/DataShades/ckanext-menu.git tag v1.0.0
+remote-permissions = https://github.com/DataShades/ckanext-permissions.git tag v0.1.0
+remote-tour = https://github.com/DataShades/ckanext-tour.git tag v0.3.0
+remote-tables = git clone https://github.com/DataShades/ckanext-tables.git tag v1.10.0
 
 # extras installed with the extension. Produce `pip install
 # 'ckanext-googleanalytics[requirements]'`-like instructions.
