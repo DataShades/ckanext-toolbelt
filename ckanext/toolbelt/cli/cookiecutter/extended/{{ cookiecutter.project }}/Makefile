@@ -43,12 +43,12 @@ ckan_tag = ckan-2.11.4
 ext_list = \
 	admin-panel \
 	charts collection cloudstorage comments \
-    dcat \
+	dcat \
 	editable-config \
 	files flakes \
 	ingest \
 	geoview googleanalytics \
-    hierarchy harvest \
+	hierarchy harvest \
 	let-me-in \
 	officedocs or-facet \
 	pdfview pygments \
@@ -116,7 +116,7 @@ remote-content = https://github.com/DataShades/ckanext-content.git tag v1.0.4
 remote-menu = https://github.com/DataShades/ckanext-menu.git tag v1.0.0
 remote-permissions = https://github.com/DataShades/ckanext-permissions.git tag v0.1.0
 remote-tour = https://github.com/DataShades/ckanext-tour.git tag v0.3.0
-remote-tables = git clone https://github.com/DataShades/ckanext-tables.git tag v1.10.0
+remote-tables = https://github.com/DataShades/ckanext-tables.git tag v1.10.0
 
 # extras installed with the extension. Produce `pip install
 # 'ckanext-googleanalytics[requirements]'`-like instructions.
