@@ -639,12 +639,27 @@ saml`. Adapt `ckanext.saml.*` options. If it's not enough, modify
 
 When everything is configured, pull metadata from IdP: `ckanapi action saml_idp_refresh`.
 
+### ckanext-security
+
+Hold various security improvements for CKAN.
+
+Add `security` to the list of plugins.
+Configure `ckanext.security.redis.host`, `ckanext.security.redis.port`
+and `ckanext.security.redis.db` options.
+Optionally, enable TOTP-based 2FA by setting `ckanext.security.enable_totp` to `true`.
+
 ### ckanext-scheming
 
 JSON/YAML definitions of metadata schemas.
 
 Add `scheming_datasets scheming_groups scheming_organizations` to the list of
 plugins.
+
+### ckanext-sitemap
+
+Generates multilingual sitemaps with advanced features.
+
+Add `sitemap` to the list of plugins. Configure `ckanext.sitemap.*` options.
 
 ### ckanext-syndicate
 
