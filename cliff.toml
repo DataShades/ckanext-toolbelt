@@ -83,6 +83,7 @@ commit_parsers = [
     { message = "^chore\\(deps.*\\)", skip = true },
     { message = "^chore\\(pr\\)", skip = true },
     { message = "^chore\\(pull\\)", skip = true },
+    { message = "^[[:upper:]]{3,}-\\d+\\s*/", skip = true },
     { message = "^chore|^ci", group = "<!-- 8 -->⚙️ Miscellaneous Tasks", skip = true},
     { body = ".*security", group = "<!-- 9 -->🛡️ Security" },
     { message = "^revert", group = "<!-- 10 -->◀️ Revert" },
