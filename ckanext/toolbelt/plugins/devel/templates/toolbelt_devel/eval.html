@@ -1,0 +1,45 @@
+{%- extends "admin/base.html" -%}
+{%- import "macros/form.html" as form -%}
+
+{%- block secondary_content -%}
+    <div class="module module-narrow module-shallow">
+        <h4 class="module-header">
+            <i class="fa fa-info-circle"></i>
+            {{ _("Evaluate expression") }}
+        </h4>
+        <div class="module-body">
+            {{ _("Evaluate arbitrary code.") }}
+        </div>
+    </div>
+{%- endblock %}
+
+{%- block primary_content_inner -%}
+    <form hx-post hx-swap="innerHTML" hx-target="#eval-output">
+        {{ h.csrf_input() }}
+
+        {{ form.textarea(name="code", label=_("Code")) }}
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" accesskey="e">{{ _("Evaluate") }}</button>
+        </div>
+    </form>
+
+    <div>
+        <h3>{{ _("Output") }}</h3>
+        <pre><code id="eval-output"></code></pre>
+    </div>
+{%- endblock %}
+
+{%- block styles -%}
+    {{ super() }}
+    <style>
+     #eval-output {
+         display: block;
+         padding: 10px;
+         background: linear-gradient(-90deg, rgba(0, 0, 0, .01) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, .01) 1px, transparent 1px), linear-gradient(-90deg, rgba(0, 0, 0, .01) 1px, transparent 1px), linear-gradient(rgba(0, 0, 0, .01) 1px, transparent 1px), linear-gradient(transparent 3px, transparent 3px, transparent 78px, transparent 78px), linear-gradient(-90deg, transparent 1px, transparent 1px), linear-gradient(-90deg, transparent 3px, transparent 3px, transparent 78px, transparent 78px), linear-gradient(transparent 1px, transparent 1px), transparent;
+         background-size: 12px 12px, 12px 12px, 12px 12px, 12px 12px, 12px 12px, 12px 12px, 12px 12px, 12px 12px;
+         background-color: #f8f8f8;
+     }
+
+    </style>
+{%- endblock %}
