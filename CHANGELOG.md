@@ -1,4 +1,11 @@
 
+## [v0.6.11](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.6.11) - 2026-05-01
+[Compare with v0.6.10](https://github.com/DataShades/ckanext-toolbelt/compare/v0.6.10..v0.6.11)
+
+### 🚀 Features
+
+- add toolbelt_devel plugin ([e94c049](https://github.com/DataShades/ckanext-toolbelt/commit/e94c049d2177d6a31657236a2533dd049a098b63))
+
 ## [v0.6.9](https://github.com/DataShades/ckanext-toolbelt/releases/tag/v0.6.9) - 2025-12-12
 [Compare with v0.6.8](https://github.com/DataShades/ckanext-toolbelt/compare/v0.6.8..v0.6.9)
 
