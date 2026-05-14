@@ -481,12 +481,6 @@ ckanext.cloudstorage.driver = S3
 ckanext.cloudstorage.driver_options = {"key": "<KEY>", "secret": "<SECRET>",  "host": "s3.ap-southeast-2.amazonaws.com"}
 ```
 
-### ckanext-collection
-
-Utilities for building reusable interfaces for data series.
-
-Does not require additional configuration. Enabled by default as `collection`
-plugin.
 
 ### ckanext-comments
 
@@ -511,7 +505,7 @@ example, the following block can be used to add thread to `package/read.html`
 Content management extension for CKAN.
 
 It replaces legacy extensions like ckanext-pages and ckanext-showcase with
-a schema-driven, configurable solution that supports custom content types, 
+a schema-driven, configurable solution that supports custom content types,
 translations, file uploads, templating, and URL aliasing.
 
 Does not require additional configuration.

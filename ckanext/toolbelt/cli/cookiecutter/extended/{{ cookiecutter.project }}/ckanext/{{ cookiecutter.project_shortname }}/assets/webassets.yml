@@ -2,6 +2,8 @@
   filter: rjsmin
   output: ckanext-{{ cookiecutter.project_shortname }}/%(version)s-{{ cookiecutter.project_shortname }}.js
   contents:
+    - scripts/resumable-resource-upload.js
+
     # - vendor/tom-select.base.min.js # slim version of tom-select
     - vendor/tom-select.complete.min.js # tom-select with popular plugins
 

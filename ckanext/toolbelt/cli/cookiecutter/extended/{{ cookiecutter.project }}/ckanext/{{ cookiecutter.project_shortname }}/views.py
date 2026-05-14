@@ -15,8 +15,8 @@ Example:
 
 from __future__ import annotations
 
-import io
 import csv
+import io
 from typing import Any, cast
 
 from flask import Blueprint, make_response
@@ -115,10 +115,7 @@ class ComplexView(MethodView):
         )
 
         username = tk.current_user.name
-        if tk.current_user.is_authenticated:
-            user = cast(model.User, tk.current_user)
-        else:
-            user = None
+        user = cast(model.User, tk.current_user) if tk.current_user.is_authenticated else None
 
         return {
             "word": word,
