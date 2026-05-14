@@ -1,0 +1,67 @@
+{% raw %}
+{% ckan_extends %}
+
+{% block upload_controls %}
+    {%- set pkg_id = data.package_id or request.view_args.id -%}
+    {%- set resource_id = data.package_id or request.view_args.id -%}
+
+    <div data-module="resumable-resource-upload"
+        data-module-resource-id="{{ resource_id }}"
+        data-module-package-id="{{ pkg_id }}"
+    >
+        {% if is_upload %}
+            {# for existing uploads we show the file name in a readonly input box #}
+            <input type="checkbox" id="field-clear-upload" value="true">
+            <div class="upload-type">
+                <button type="button" class="btn btn-danger btn-remove-url" >{{ _('Clear Upload') }}</button>
+                <label class="form-label">{{ upload_label or _('File') }}</label>
+                <div class="controls">
+                    {% set file_name = data.get('url', '').split('/')[-1].split('?')[0].split('#')[0] %}
+                    {%- set file = h.files_get_file(file_name) -%}
+                    {%- if file -%}
+                        {%- set file_name = file.name -%}
+                    {%- endif %}
+                    <input value="{{ file_name }}" class="form-control" readonly>
+                </div>
+            </div>
+        {% endif %}
+        <div class="upload-type">
+
+            {{ remove_button(js="$('#field-resource-upload').replaceWith($('#field-resource-upload').val('').clone(true))") }}
+            {#  do not set name of the field to disable file upload when form is submitted #}
+            {{ ui.file_input(
+               label=upload_label or _('File'),
+               id='field-resource-upload') }}
+            <div class="progress">
+                <div  id="resource-upload-progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block url_type_select %}
+    {% if is_upload_enabled %}
+
+        {%- call ui.util.call(ui.tooltip, tooltip=_('Upload a file on your computer')) -%}
+            {{ ui.button(_("Upload"),
+                                     icon="upload",
+                                     style="secondary",
+                                     attrs={"id": "resource-upload-button", "autofocus": "true"},
+                                     aria={"label": _('Upload a file on your computer')},
+                                     on={"click": "document.getElementById('resource-url-upload').checked = true; document.getElementById('field-resource-upload').click();"}) }}
+        {%- endcall %}
+    {% endif %}
+
+    {%- call ui.util.call(ui.tooltip, tooltip=_('Link to a URL on the internet (you can also link to an API)')) -%}
+        {{ ui.button(_("Link"),
+                                 icon="link",
+                                 style="secondary",
+                                 attrs={"id": "resource-link-button"},
+                                 aria={"label": _('Link to a URL on the internet (you can also link to an API)')},
+                                 on={"click": "document.getElementById('resource-url-link').checked = true; document.getElementById('field-resource-url').focus();"}) }}
+    {%- endcall %}
+{% endblock %}
+{% endraw %}

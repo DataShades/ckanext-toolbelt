@@ -23,6 +23,7 @@ class SomethingFactory(CKANFactory):
     """Factory fixture for Something objects."""
 
     class Meta:
+        """Settings of related model."""
         model = Something
         action = "{{ cookiecutter.project_shortname }}_something_create"
 

@@ -53,6 +53,7 @@ find = {}
 
 [tool.ruff]
 target-version = "py310"
+line-length = 120
 
 [tool.ruff.lint]
 select = [
@@ -93,10 +94,11 @@ ignore = [
        "E712", # comparison to bool: violated by SQLAlchemy filters
        "PLC1901", # simplify comparison to empty string: violated by SQLAlchemy filters
        "RET503", # don't enforce return-None
+       "D100", "D104", # do not require docstrings in modules
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"ckanext/{{ cookiecutter.project_shortname }}/tests*" = ["S", "PL", "ANN"]
+"ckanext/{{ cookiecutter.project_shortname }}/tests*" = ["S", "PL", "ANN", "D101"]
 "ckanext/{{ cookiecutter.project_shortname }}/logic/*" = [
             "D417", # actions don't describe context and data_dict
 ]
@@ -142,6 +144,9 @@ parse-trailers = true
 [tool.pyright]
 pythonVersion = "3.10"
 include = ["ckanext"]
+extraPaths = [
+           "../ckan",
+]
 exclude = [
     "**/test*",
     "**/migration",

@@ -1,0 +1,6 @@
+version: 1
+groups:
+  - annotation: "ckanext-toolbelt: toolbelt_devel"
+    options:
+      - key: ckanext.toolbelt.devel.enable_eval
+        type: bool

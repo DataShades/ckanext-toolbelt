@@ -5,37 +5,28 @@ from typing import Any
 
 import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import Mapped
+from sqlalchemy.orm import Mapped, mapped_column
 
 from ckan.lib.dictization import table_dictize
-from ckan.model.types import make_uuid
-
-from .base import Base
+from ckan.model.meta import registry
 
 
-class Something(Base):  # type: ignore
+@registry.mapped_as_dataclass
+class Something:  # type: ignore
     """Model with details or something."""
 
+    __tablename__ = "{{ cookiecutter.project_shortname }}_something"
     # define columns as a `__table__` attribute. It simplifies typing and you
     # can copy this definition almost unchanged into alembic migration.
-    __table__ = sa.Table(
-        "{{ cookiecutter.project_shortname }}_something",
-        Base.metadata,
-        sa.Column("id", sa.UnicodeText, primary_key=True, default=make_uuid),
-        sa.Column("hello", sa.Text, nullable=False, default=""),
-        sa.Column("world", sa.Text, nullable=False),
-        sa.Column("plugin_data", JSONB, default=dict, server_default="{}"),
-    )
+    __table_args__ = ()
 
-    # typed models. You'll use it - you'll love it.
-    id: Mapped[str]
-
-    hello: Mapped[str]
+    id: Mapped[str] = mapped_column(primary_key=True, init=False)
     world: Mapped[str]
-
-    plugin_data: Mapped[dict[str, Any]]
+    hello: Mapped[str] = mapped_column(default="")
+    plugin_data: Mapped[dict[str, Any]] = mapped_column(JSONB, default_factory=dict)
 
     def dictize(self, context: Any) -> dict[str, Any]:
+        """Transform model into dictionary."""
         result = table_dictize(self, context)
 
         plugin_data = result.pop("plugin_data")
@@ -45,7 +36,8 @@ class Something(Base):  # type: ignore
         return result
 
     @classmethod
-    def by_hello(cls, hello: str, world: str | None = None) -> sa.sql.Select:
+    def by_hello(cls, hello: str, world: str | None = None):
+        """Filter objects by the value of hello column."""
         stmt = sa.select(cls).where(
             cls.hello == hello,
         )

@@ -103,6 +103,20 @@ resource_fields:
   label: URL
   preset: resource_url_upload
 
+- field_name: file_id
+  label: File ID
+  display_snippet: ~
+  validators:
+    ignore_empty
+    files_file_id_exists
+    files_accept_file_with_storage(resources)
+    files_transfer_ownership(resource)
+    {{ cookiecutter.project_shortname }}_set_resource_url
+    ignore
+  form_attrs:
+    data-module: resumable-resumable-upload
+    readonly: true
+
 - field_name: name
   label: Name
   form_placeholder: eg. January 2011 Gold Prices

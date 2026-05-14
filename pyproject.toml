@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ckanext-toolbelt"
-version = "0.6.10"
+version = "0.6.13"
 
 description = ""
 classifiers = [ ]
@@ -38,6 +38,7 @@ ctb = "ckanext.toolbelt.cli:toolbelt"
 
 [project.entry-points."ckan.plugins"]
 toolbelt = "ckanext.toolbelt.plugins:ToolbeltPlugin"
+toolbelt_devel = "ckanext.toolbelt.plugins.devel:DevelPlugin"
 toolbelt_safe_upload = "ckanext.toolbelt.plugins.safe_upload:SafeUploadPlugin"
 toolbelt_group_changes = "ckanext.toolbelt.plugins.group_changes:GroupChangesPlugin"
 toolbelt_composite_groups = "ckanext.toolbelt.plugins.group_composite:CompositeGroupsPlugin"

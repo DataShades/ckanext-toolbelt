@@ -13,4 +13,5 @@ import pytest
 
 @pytest.mark.usefixtures("with_plugins", "clean_db")
 def test_after_show(package: dict[str, Any]):
+    """Test hook execution."""
     assert package["fake"] == 42
