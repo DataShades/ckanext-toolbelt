@@ -113,7 +113,7 @@ remote-xloader = https://github.com/ckan/ckanext-xloader.git tag 2.0.0
 remote-sitemap = https://github.com/DataShades/ckanext-sitemap.git tag v1.0.4
 remote-content = https://github.com/DataShades/ckanext-content.git tag v1.0.4
 remote-menu = https://github.com/DataShades/ckanext-menu.git tag v1.0.1
-remote-permissions = https://github.com/DataShades/ckanext-permissions.git tag v0.3.0
+remote-permissions = https://github.com/DataShades/ckanext-permissions.git tag v0.3.1
 remote-tour = https://github.com/DataShades/ckanext-tour.git tag v0.3.0
 remote-tables = https://github.com/DataShades/ckanext-tables.git tag v1.21.4
 

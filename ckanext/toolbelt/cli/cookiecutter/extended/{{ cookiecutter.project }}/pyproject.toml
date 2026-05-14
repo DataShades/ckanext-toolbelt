@@ -142,6 +142,9 @@ parse-trailers = true
 [tool.pyright]
 pythonVersion = "3.10"
 include = ["ckanext"]
+extraPaths = [
+           "../ckan",
+]
 exclude = [
     "**/test*",
     "**/migration",
