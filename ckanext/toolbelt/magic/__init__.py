@@ -17,12 +17,11 @@
 from __future__ import annotations
 
 import logging
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 import ckan.plugins.toolkit as tk
+from ckan import types
 
-if TYPE_CHECKING:
-    from ckan import types
 
 log = logging.getLogger(__name__)
 
@@ -30,66 +29,39 @@ log = logging.getLogger(__name__)
 def conjure_fast_group_activities():
     log.info("ieiunium sicut ventus")
 
-    if tk.check_ckan_version("2.10"):
-        from ckanext.activity.model.activity import _group_activity_query
+    from ckanext.activity.model.activity import _group_activity_query  # pyright: ignore[reportPrivateUsage]
 
-        def ___group_activity_perfomance_patch(group_id):
-            from ckan import model
+    def ___group_activity_perfomance_patch(group_id: str):
+        from ckan import model
 
-            from ckanext.activity.model import Activity
+        from ckanext.activity.model import Activity
 
-            if not isinstance(group_id, (list, tuple)):
-                group_id = [group_id]
+        if not isinstance(group_id, (list, tuple)):
+            group_id = [group_id]
 
-            q = model.Session.query(Activity)
-            group_activity = q.filter(Activity.object_id.in_(group_id))
-            packages_sq = (
-                model.Session.query(model.Package.id)
-                .filter(
-                    model.Package.owner_org.in_(group_id),
-                    model.Package.private == False,
-                )
-                .subquery()
+        q = model.Session.query(Activity)
+        group_activity = q.filter(Activity.object_id.in_(group_id))
+        packages_sq = (
+            model.Session.query(model.Package.id)
+            .filter(
+                model.Package.owner_org.in_(group_id),
+                model.Package.private == False,
             )
+            .subquery()
+        )
 
-            member_activity = model.Session.query(Activity).filter(
-                Activity.object_id.in_(packages_sq),
-            )
+        member_activity = model.Session.query(Activity).filter(
+            Activity.object_id.in_(packages_sq),
+        )
 
-            group_activity = _filter_activitites_from_users(group_activity)  # noqa
-            member_activity = _filter_activitites_from_users(member_activity)  # noqa
-            return _activities_union_all(group_activity, member_activity)  # noqa
-
-    else:
-        from ckan.model.activity import _group_activity_query
-
-        def ___group_activity_perfomance_patch(group_id, include_hidden_activity=False):
-            from ckan import model
-
-            group = model.Group.get(group_id)
-            if not group:
-                # Return a query with no results.
-                return model.Session.query(model.Activity).filter(text("0=1"))  # noqa
-
-            q = model.Session.query(model.Activity)
-            group_activity = q.filter(model.Activity.object_id == group_id)
-            packages_sq = model.Session.query(model.Package.id).filter_by(owner_org=group_id, private=False).subquery()
-
-            member_activity = model.Session.query(model.Activity).filter(
-                model.Activity.object_id.in_(packages_sq),
-            )
-
-            if not include_hidden_activity:
-                group_activity = _filter_activitites_from_users(group_activity)  # noqa
-                member_activity = _filter_activitites_from_users(
-                    member_activity,
-                )  # noqa
-            return _activities_union_all(group_activity, member_activity)  # noqa
+        group_activity = _filter_activitites_from_users(group_activity)  # noqa
+        member_activity = _filter_activitites_from_users(member_activity)  # noqa
+        return _activities_union_all(group_activity, member_activity)  # noqa
 
     _group_activity_query.__code__ = ___group_activity_perfomance_patch.__code__
 
 
-def transfigure_xloaded_file(func):
+def transfigure_xloaded_file(func: Any):
     """Proces a file before uploading it to datastore.
 
     Accepts callable, that receives path to original file and resource
@@ -97,20 +69,20 @@ def transfigure_xloaded_file(func):
     ingested into datastore.
 
     """
-    from ckanext.xloader import loader
+    from ckanext.xloader import loader  # pyright: ignore[reportMissingImports, reportUnknownVariableType]
 
     log.info("quae non sunt ut simplex")
 
-    _o = loader.load_csv
+    _o: Any = loader.load_csv
 
-    def _wrapper(csv_filepath, resource_id, mimetype="text/csv", logger=None):
+    def _wrapper(csv_filepath: str, resource_id: str, mimetype: str = "text/csv", logger: Any = None) -> Any:
         new_path = func(csv_filepath, resource_id)
         return _o(new_path, resource_id, mimetype, logger)
 
     loader.load_csv = _wrapper
 
 
-def reveal_readonly_scheming_fields(defaults):
+def reveal_readonly_scheming_fields(defaults: dict[types.FlattenKey, Any]):
     """Run missing fields through output validators.
 
     Scheming skips missing fields when output validators applied. Generally
