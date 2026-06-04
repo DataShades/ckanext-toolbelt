@@ -78,14 +78,14 @@ class CompositeMixin:
 
         if action_type == "show":
             if composite_convert_fields:
-                for ex in data_dict["extras"]:
+                for ex in data_dict.get("extras", []):
                     if ex["key"] in composite_convert_fields:
                         try:
                             value = json.loads(ex["value"])
                         except (ValueError, TypeError):
                             value = []
                         data_dict[ex["key"]] = value
-                data_dict["extras"] = [ex for ex in data_dict["extras"] if ex["key"] not in composite_convert_fields]
+                data_dict["extras"] = [ex for ex in data_dict.get("extras", []) if ex["key"] not in composite_convert_fields]
         else:
             group_composite = {f["field_name"] for f in scheming_schema["fields"] if "repeating_subfields" in f}
             if group_composite:
