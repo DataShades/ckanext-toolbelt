@@ -75,9 +75,14 @@ def transfigure_xloaded_file(func: Any):
 
     _o: Any = loader.load_csv
 
-    def _wrapper(csv_filepath: str, resource_id: str, mimetype: str = "text/csv", logger: Any = None) -> Any:
+    def _wrapper(
+        csv_filepath: str,
+        resource_id: str,
+        *args: Any,
+        **kwargs: Any,
+    ) -> Any:
         new_path = func(csv_filepath, resource_id)
-        return _o(new_path, resource_id, mimetype, logger)
+        return _o(new_path, resource_id, *args, **kwargs)
 
     loader.load_csv = _wrapper
 
