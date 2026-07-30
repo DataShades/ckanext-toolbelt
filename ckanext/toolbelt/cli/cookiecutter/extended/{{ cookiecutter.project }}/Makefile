@@ -34,7 +34,7 @@
 ## remote-ckan = https://github.com/ckan/ckan tag ckan-2.10.4
 # if you want to use CKAN fork or specific commit, use this full specification
 # ckan_tag = ckan-2.12.0
-remote-ckan = https://github.com/ckan/ckan commit 2c86ef90d0 # branch dev-2.12, 2026-05-12
+remote-ckan = https://github.com/ckan/ckan commit d300811 # branch dev-2.12, 2026-05-12
 
 # items from this list are installed by `make full-upgrade` and `make sync
 # install`. If you specify remote, but did not added extension to this list, it
@@ -43,28 +43,35 @@ remote-ckan = https://github.com/ckan/ckan commit 2c86ef90d0 # branch dev-2.12, 
 # branch master`
 ext_list = \
 	admin-panel \
-	charts cloudstorage comments \
+	charts \
+	comments \
 	dcat \
 	editable-config \
-	files file-keeper-cloud flakes \
+	file-keeper-cloud \
+	flakes \
 	ingest \
-	geoview googleanalytics \
+	geoview \
+	googleanalytics \
 	hierarchy harvest \
 	let-me-in \
-	officedocs or-facet \
-	pdfview pygments \
+	officedocs \
+	or-facet \
+	pdfview \
+	pygments \
 	resource-indexer \
-	scheming search-tweaks spatial saml syndicate \
+	scheming \
+	search-tweaks \
+	spatial \
+	saml \
+	syndicate \
 	security \
 	unfold \
 	vip-portal \
 	xloader \
 	sitemap \
-	content \
-	menu \
 	permissions \
-	tour \
 	tables \
+	better-stats \
 	theming midnight-blue-theme
 
 # information about extension source. Format is `ALTERNATIVE-NAME = URL TYPE
@@ -79,45 +86,37 @@ ext_list = \
 # * TYPE: type of reference specified by the next part. One of: branch, commit, tag
 #
 # * REF: commit hash, branch name, tag name, depending on TYPE value. Prefer tags
-remote-admin-panel = https://github.com/DataShades/ckanext-admin-panel tag v2.1.2
-# dev is an alternative. You can install it via `make full-upgrade
-# alternative=dev`. Any other prefix can be used instead of `dev`.
-dev-admin-panel = https://github.com/DataShades/ckanext-admin-panel branch master
-
-remote-charts = https://github.com/DataShades/ckanext-charts.git tag v1.10.3
+remote-admin-panel = https://github.com/DataShades/ckanext-admin-panel tag v2.1.3
+remote-charts = https://github.com/DataShades/ckanext-charts.git tag v1.13.5
 remote-comments = https://github.com/DataShades/ckanext-comments.git tag v0.3.2a0
-remote-dcat = https://github.com/ckan/ckanext-dcat.git tag v2.4.2
+remote-dcat = https://github.com/ckan/ckanext-dcat.git tag v2.4.3
 remote-editable-config = https://github.com/ckan/ckanext-editable-config tag v0.0.7
-remote-files = https://github.com/DataShades/ckanext-files.git tag v1.3.1
 remote-file-keeper-cloud = https://github.com/ckan/ckanext-file-keeper-cloud commit 50954e8 # 2026-05-14
 remote-flakes = https://github.com/DataShades/ckanext-flakes.git tag v0.5.0
-remote-geoview = https://github.com/ckan/ckanext-geoview.git tag v0.1.0
-remote-googleanalytics = https://github.com/ckan/ckanext-googleanalytics.git tag v2.4.0
-remote-harvest = https://github.com/ckan/ckanext-harvest.git tag v1.5.6
-remote-hierarchy = https://github.com/ckan/ckanext-hierarchy.git tag v1.2.1
-remote-ingest = https://github.com/DataShades/ckanext-ingest.git tag v1.4.2
+remote-geoview = https://github.com/ckan/ckanext-geoview.git tag v0.3.1
+remote-googleanalytics = https://github.com/ckan/ckanext-googleanalytics.git tag v2.5.1
+remote-harvest = https://github.com/ckan/ckanext-harvest.git tag v1.6.2
+remote-hierarchy = https://github.com/ckan/ckanext-hierarchy.git tag v1.2.2
+remote-ingest = https://github.com/DataShades/ckanext-ingest.git tag v1.4.6
 remote-let-me-in = https://github.com/DataShades/ckanext-let-me-in tag v1.1.3
-remote-officedocs = https://github.com/jqnatividad/ckanext-officedocs tag v1.1.0
+remote-officedocs = https://github.com/jqnatividad/ckanext-officedocs tag v2.0.0
 remote-or-facet = https://github.com/DataShades/ckanext-or_facet tag v0.1.1
-remote-pdfview = https://github.com/ckan/ckanext-pdfview.git tag 0.0.8
-remote-pygments = https://github.com/DataShades/ckanext-pygments tag v1.4.1
-remote-resource-indexer = https://github.com/DataShades/ckanext-resource_indexer.git tag v0.4.1
-remote-saml = https://github.com/DataShades/ckanext-saml.git tag v0.3.3
+remote-pdfview = https://github.com/ckan/ckanext-pdfview.git commit 0715715 # 2026-06-26
+remote-pygments = https://github.com/DataShades/ckanext-pygments tag v1.4.2
+remote-resource-indexer = https://github.com/DataShades/ckanext-resource_indexer.git tag v0.4.3
+remote-saml = https://github.com/DataShades/ckanext-saml.git tag v0.4.1
 remote-scheming = https://github.com/ckan/ckanext-scheming tag release-3.1.0
-remote-search-tweaks = https://github.com/dataShades/ckanext-search-tweaks tag v0.6.1
-remote-security = https://github.com/data-govt-nz/ckanext-security tag 4.1.1
-
+remote-search-tweaks = https://github.com/dataShades/ckanext-search-tweaks tag v1.0.0
+remote-security = https://github.com/dataShades/ckanext-auth tag v0.5.1
 remote-spatial = https://github.com/ckan/ckanext-spatial tag v2.3.1
-remote-syndicate = https://github.com/DataShades/ckanext-syndicate tag v2.2.2
-remote-unfold = https://github.com/DataShades/ckanext-unfold.git tag v2.3.2
-remote-vip-portal = https://github.com/DataShades/ckanext-vip-portal.git tag v0.2.5a1
-remote-xloader = https://github.com/ckan/ckanext-xloader.git tag 2.0.0
-remote-sitemap = https://github.com/DataShades/ckanext-sitemap.git tag v1.0.4
-remote-content = https://github.com/DataShades/ckanext-content.git tag v1.0.4
-remote-menu = https://github.com/DataShades/ckanext-menu.git tag v1.0.1
+remote-syndicate = https://github.com/DataShades/ckanext-syndicate tag v3.0.1
+remote-unfold = https://github.com/DataShades/ckanext-unfold.git tag v3.0.1
+remote-vip-portal = https://github.com/DataShades/ckanext-vip-portal.git tag v0.3.2
+remote-xloader = https://github.com/ckan/ckanext-xloader.git tag 2.4.0
+remote-sitemap = https://github.com/DataShades/ckanext-sitemap.git tag v1.1.0
 remote-permissions = https://github.com/DataShades/ckanext-permissions.git tag v0.3.1
-remote-tour = https://github.com/DataShades/ckanext-tour.git tag v0.3.0
-remote-tables = https://github.com/DataShades/ckanext-tables.git tag v1.21.4
+remote-tables = https://github.com/DataShades/ckanext-tables.git tag v1.21.6
+remote-better-stats = https://github.com/DataShades/ckanext-better-stats.git tag v0.11.0
 
 remote-theming = https://github.com/DataShades/ckanext-theming commit 39de443  # 2026-05-13
 remote-midnight-blue-theme = https://github.com/DataShades/ckanext-midnight-blue-theme commit 2d8469f # 2026-05-13
@@ -125,7 +124,6 @@ remote-midnight-blue-theme = https://github.com/DataShades/ckanext-midnight-blue
 # extras installed with the extension. Produce `pip install
 # 'ckanext-googleanalytics[requirements]'`-like instructions.
 package_extras-remote-googleanalytics = requirements
-package_extras-remote-files = opendal,libcloud
 package_extras-remote-resource-indexer = pdf
 package_extras-remote-file-keeper-cloud = s3
 
