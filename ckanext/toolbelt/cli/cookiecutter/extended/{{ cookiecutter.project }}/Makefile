@@ -64,7 +64,7 @@ ext_list = \
 	spatial \
 	saml \
 	syndicate \
-	security \
+	auth \
 	unfold \
 	vip-portal \
 	xloader \
@@ -107,7 +107,7 @@ remote-resource-indexer = https://github.com/DataShades/ckanext-resource_indexer
 remote-saml = https://github.com/DataShades/ckanext-saml.git tag v0.4.1
 remote-scheming = https://github.com/ckan/ckanext-scheming tag release-3.1.0
 remote-search-tweaks = https://github.com/dataShades/ckanext-search-tweaks tag v1.0.0
-remote-security = https://github.com/dataShades/ckanext-auth tag v0.5.1
+remote-auth = https://github.com/dataShades/ckanext-auth tag v0.5.1
 remote-spatial = https://github.com/ckan/ckanext-spatial tag v2.3.1
 remote-syndicate = https://github.com/DataShades/ckanext-syndicate tag v3.0.1
 remote-unfold = https://github.com/DataShades/ckanext-unfold.git tag v3.0.1
